@@ -1,0 +1,64 @@
+<div class="container">
+
+  <section class="jumbotron text-center">
+    <div class="container">
+      <h1 class="jumbotron-heading">Create your brand new character</h1>
+    </div>
+  </section>
+
+  <form class="text-center" role="form">
+
+    <div class="form-group">
+      <label for="characterName">Character Name</label>
+      <input type="text" id="characterName" class="form-control text-center" placeholder="Bumperstump Bentobox" required>
+    </div>
+
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <label for="championInput">Character level</label>
+          <div class="input-group">
+
+            <span class="input-group-addon">
+              <input type="checkbox" id="championBox" aria-label="Champion Input">
+              <label for="championBox"></label>
+            </span>
+
+            <!-- <input type="checkbox" id="championBox" name="champion" checked>
+            <label for="championBox"></label> -->
+
+            <input type="number" id="championInput" class="form-control text-center" min="3" max="600" placeholder="600" required>
+
+            <div class="input-group-addon">CP</div>
+          </div>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <img id="avatar" class="img-responsive center-block" src="https://i.grogsile.me/esoi/img/new/default_char.png" />
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input type="file" id="newAvatar" class="hidden-input-file">
+
+      <label for="newAvatar">
+        <div class="btn btn-lg btn-success">
+          Upload a new Avatar
+        </div>
+      </label>
+    </div>
+
+    <button type="submit" class="btn btn-default">Submit</button>
+
+  </form>
+
+</div>

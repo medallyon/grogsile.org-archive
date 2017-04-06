@@ -1,0 +1,13 @@
+{
+  "id": "",
+  "eso": {
+    "news": {
+      "active": false,
+      "channel": ""
+    },
+    "youtube": {
+      "active": false,
+      "channel": ""
+    }
+  }
+}

@@ -1,0 +1,37 @@
+<section class="jumbotron text-center">
+  <div class="container">
+    <h1 class="jumbotron-heading">Welcome Home, <b><%- user.username %></b></h1>
+    <p class="lead text-muted">This is your dashboard.</p>
+  </div>
+</section>
+
+<div class="album text-muted">
+
+  <div class="container">
+
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6" style="text-align: center;">
+        <% if (Object.keys(content.characters).length > 0) { %><h2>Your Characters</h2><% } else { %><h4>This is where your characters would go. If you had any.</h4>
+        <p class="pt-4">
+          <a class="btn btn-lg btn-info" href="/new?type=character">Why not create one?</a>
+        </p><% } %>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+
+    <% if (Object.keys(content.characters).length) { %><div class="row">
+
+      <% for (let character in content.characters) { %><div class="card">
+        <% let char = content.characters[character]; %>
+        <img src="https://i.grogsile.me/esoi/users/<%- user.id %>/<%- character %>.png" alt="Card image cap">
+        <h5 class="text-center"><%- char.name %></h5>
+        <p class="card-text">
+          <% if (char.champion) { %><span class="champion"></span><%- user.level %><% } else { %>Level <%- char.level %><% } %><br>
+        </p>
+      </div><% } %>
+
+    </div><% } %>
+
+  </div>
+</div>

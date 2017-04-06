@@ -1,0 +1,114 @@
+{
+  "evaluate": {
+    "description": "Evaluates a given Expression.",
+    "alias": [
+      "eval",
+      "evaluate"
+    ],
+    "arguments": {
+      "expression": {
+        "description": "Any JavaScript code inserted here will be evaluated.",
+        "optional": false
+      }
+    },
+    "userPermissions": 900,
+    "example": "\"Hello There, World!\""
+  },
+
+  "about": {
+    "description": "Shows the `about` panel.",
+    "alias": [
+      "about",
+      "info"
+    ],
+    "arguments": {},
+    "userPermissions": 100,
+    "example": ""
+  },
+
+  "help": {
+    "description": "Displays some help with commands.",
+    "alias": [
+      "help",
+      "man",
+      "commands"
+    ],
+    "arguments": {
+      "command": {
+        "description": "The target command for which help should be displayed.",
+        "optional": true
+      }
+    },
+    "userPermissions": 100,
+    "example": "ping"
+  },
+
+  "kick": {
+    "description": "Kicks a mentioned member or a provided User ID.",
+    "alias": [
+      "kick"
+    ],
+    "arguments": {
+      "@mention": {
+        "description": "The mentioned user to kick.",
+        "optional": false
+      },
+      "User_ID": {
+        "description": "The User ID to kick.",
+        "optional": true
+      }
+    },
+    "userPermissions": 200,
+    "example": "[ @@Medallyon | 129036763367735297 ]"
+  },
+
+  "ban": {
+    "description": "Bans a mentioned member or a provided User ID.",
+    "alias": [
+      "ban"
+    ],
+    "arguments": {
+      "@mention": {
+        "description": "The mentioned user to ban.",
+        "optional": false
+      },
+      "User_ID": {
+        "description": "The User ID to ban.",
+        "optional": true
+      }
+    },
+    "userPermissions": 300,
+    "example": "[ @@Medallyon | 129036763367735297 ]"
+  },
+
+  "ping": {
+    "description": "Pong!",
+    "alias": [
+      "ping"
+    ],
+    "arguments": {
+      "text": {
+        "description": "Text that will be displayed instead of the factory default 'Pong!'.",
+        "optional": true
+      }
+    },
+    "userPermissions": 100,
+    "example": "[ CHIM. Those who know it can reshape the land. Witness the home of the Red King Once Jungled. ]"
+  },
+
+  "wiki": {
+    "description": "Searches the UESP for user input.",
+    "alias": [
+      "wiki",
+      "uesp"
+    ],
+    "arguments": {
+      "input": {
+        "description": "The input to search the wiki for.",
+        "optional": false
+      }
+    },
+    "userPermissions": 100,
+    "example": "Norgred Hardhelm"
+  }
+}
