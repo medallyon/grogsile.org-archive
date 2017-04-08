@@ -10,7 +10,7 @@ function help(msg)
     h.setTimestamp(new Date());
 
     if (msg.args.length === 0) {
-        h.setDescription("Here is a list of commands. You can inspect each command by passing their name to the `help` command.");
+        h.setDescription("Here is a list of commands that **You** have access to. To see what more commands there are, visit the [Grogsile Hub](This is still a work in progress.) You can inspect each command by passing their name to the `help` command (see example below).");
 
         for (let cmd in dClient.commands) {
             if (utils.hasPermission(dClient.commands[cmd], msg.member)) h.addField(cmd, dClient.commands[cmd].description, true);
