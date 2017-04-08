@@ -21,7 +21,7 @@ dClient.on("message", function (msg) {
     if (msg.author.bot) return;
 
     // check whether user is using command prefix or mention to execute a command, and assign them to 'msg' accordingly
-    if (msg.mentions.users.has(dClient.user.id) && splitMsg[0].includes(dClient.user.id)) {
+    if (msg.mentions.users.has(dClient.user.id) && splitMsg[0].includes(dClient.user.id) && splitMsg.length > 1) {
         msg.command = splitMsg[1].toLowerCase();
         msg.args = splitMsg.slice(2);
     } else
