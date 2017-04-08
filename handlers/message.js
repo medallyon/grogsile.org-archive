@@ -6,8 +6,8 @@ dClient.on("message", function (msg) {
     /**
      * today = {Object} Date
      * consoleOutput = {String} "[Formatted Timestamp] + [Author]: [Message Content] + [Message Location]"
-     * command = {String} "[Command]"
-     * args = {Array} [Command Arguments]
+     * msg.command = {String} "[Command]"
+     * msg.args = {Array} [Command Arguments]
     **/
     let guild = msg.guild
         , today = new Date()
@@ -22,12 +22,12 @@ dClient.on("message", function (msg) {
 
     // check whether user is using command prefix or mention to execute a command, and assign them to 'msg' accordingly
     if (msg.mentions.users.has(dClient.user.id) && splitMsg[0].includes(dClient.user.id)) {
-        msg.command = splitMsg[1];
+        msg.command = splitMsg[1].toLowerCase();
         msg.args = splitMsg.slice(2);
     } else
 
     if (splitMsg[0].startsWith(dClient.config.discord.prefix)) {
-        msg.command = splitMsg[0].slice(dClient.config.discord.prefix.length);
+        msg.command = splitMsg[0].slice(dClient.config.discord.prefix.length).toLowerCase();
         msg.args = splitMsg.slice(1);
     }
 
@@ -35,7 +35,7 @@ dClient.on("message", function (msg) {
     // every command in the commands.json
 
     // check if the command prefix exists
-    if (splitMsg[0].slice(0, splitMsg[0].indexOf(command)) === dClient.config.discord.prefix)
+    if (splitMsg[0].slice(0, splitMsg[0].indexOf(msg.command)) === dClient.config.discord.prefix)
     {
         // iterate through all commands
         for (let cmd in dClient.commands)
@@ -44,7 +44,7 @@ dClient.on("message", function (msg) {
             for (let alias of dClient.commands[cmd].alias)
             {
                 // check if some alias matches the filtered command string
-                if (command === alias)
+                if (msg.command === alias)
                 {
                     // check if the member actually has permission to execute the command
                     if (utils.hasPermission(dClient.commands[cmd], msg.member))
