@@ -12,7 +12,7 @@ dClient.on("message", function (msg) {
     let guild = msg.guild
         , today = new Date()
         , consoleOutput = `\n${utils.getFullMonth(today.getUTCMonth()).slice(0, 3)} ${utils.getFullDay(today.getUTCDate())} ${today.getUTCFullYear()}\n${(msg.author.id === dClient.user.id ? "[YOU] " : "")}@${msg.author.username}: "${(msg.content.length > 0) ? msg.content : ((msg.attachments.size > 0) ? "[Attachment]" : "[Embed]")}"\n${msg.guild ? (msg.guild.name + " - [" + msg.channel.name + "]") : ("[Private Message]")}`
-        , command, args;
+        , splitMsg = msg.content.split(" ");
 
     // log the formatted message
     console.log(consoleOutput);
@@ -20,23 +20,22 @@ dClient.on("message", function (msg) {
     // return on bot message - we don't want to interfere with other bots
     if (msg.author.bot) return;
 
-    // check whether user is using command prefix or mention to execute a command
-    if (msg.content.split(" ")[0] === `<@${(guild && guild.member(dClient.user).nickname) ? "!" : ""}${dClient.user.id}>`) {
-        command = msg.content.split(" ")[1];
-        args = msg.content.split(" ").slice(2);
+    // check whether user is using command prefix or mention to execute a command, and assign them to 'msg' accordingly
+    if (msg.mentions.users.has(dClient.user.id) && splitMsg[0].includes(dClient.user.id)) {
+        msg.command = splitMsg[1];
+        msg.args = splitMsg.slice(2);
+    } else
+
+    if (splitMsg[0].startsWith(dClient.config.discord.prefix)) {
+        msg.command = splitMsg[0].slice(dClient.config.discord.prefix.length);
+        msg.args = splitMsg.slice(1);
     }
-    else {
-        command = msg.content.split(" ")[0].slice(dClient.config.discord.prefix.length);
-        args = msg.content.split(" ").slice(1);
-    }
-    // create new variables ({command}, {args}) inside the {msg} object
-    msg["command"] = command, msg["args"] = args;
 
     // establish a command handler for
     // every command in the commands.json
 
     // check if the command prefix exists
-    if (msg.content.split(" ")[0].slice(0, msg.content.split(" ")[0].indexOf(command)) === dClient.config.discord.prefix)
+    if (splitMsg[0].slice(0, splitMsg[0].indexOf(command)) === dClient.config.discord.prefix)
     {
         // iterate through all commands
         for (let cmd in dClient.commands)
