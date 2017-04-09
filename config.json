@@ -1,0 +1,40 @@
+{
+  "discord": {
+    "ownerId": "129036763367735297",
+    "prefix": "/",
+    "token": "",
+    "auth": {
+      "id": "",
+      "secret": ""
+    }
+  },
+  "eso": {
+    "invite": "http://discordapp.com/invite/0jGipOeWW06jNmlL",
+    "news": {
+      "author": {
+        "name": "ESO News",
+        "avatar": "http://files.elderscrollsonline.com/favicon.ico",
+        "url": "http://www.elderscrollsonline.com/en-us/news"
+      },
+      "defaultImage": "http://files.elderscrollsonline.com/img/2/logo.png",
+      "footer": {
+        "avatar": "https://i.grogsile.me/favicon.png"
+      }
+    },
+    "youtube": {
+      "footer": {
+        "icon": "https://i.grogsile.me/esoi/img/api/youtube/youtube.png"
+      }
+    }
+  },
+  "api": {
+    "keys": {
+      "google": ""
+    },
+    "youtube": {
+      "allowedChannels": [
+        "UCvZHe-SP3xC7DdOk4Ri8QBw"
+      ]
+    }
+  }
+}
