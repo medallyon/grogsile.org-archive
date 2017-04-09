@@ -35,7 +35,7 @@ dClient.on("message", function (msg) {
     // every command in the commands.json
 
     // check if the command prefix exists
-    if (splitMsg[0].slice(0, splitMsg[0].indexOf(msg.command)) === dClient.config.discord.prefix)
+    if (msg.command)
     {
         // iterate through all commands
         for (let cmd in dClient.commands)
