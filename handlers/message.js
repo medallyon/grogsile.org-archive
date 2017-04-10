@@ -11,7 +11,7 @@ dClient.on("message", function (msg) {
     **/
     let guild = msg.guild
         , today = new Date()
-        , consoleOutput = `\n${utils.getFullMonth(today.getUTCMonth()).slice(0, 3)} ${utils.getFullDay(today.getUTCDate())} ${today.getUTCFullYear()}\n${(msg.author.id === dClient.user.id ? "[YOU] " : "")}@${msg.author.username}: "${(msg.content.length > 0) ? msg.content : ((msg.attachments.size > 0) ? "[Attachment]" : "[Embed]")}"\n${msg.guild ? (msg.guild.name + " - [" + msg.channel.name + "]") : ("[Private Message]")}`
+        , consoleOutput = `\n${utils.getFullMonth(today.getUTCMonth()).slice(0, 3)} ${utils.getFullDay(today.getUTCDate())} ${today.getUTCFullYear()} ${String(today.getUTCHours()).length === 1 ? ("0" + today.getUTCHours()) : today.getUTCHours()}:${String(today.getUTCMinutes()).length === 1 ? ("0" + today.getUTCMinutes()) : today.getUTCMinutes()}:${String(today.getUTCSeconds()).length === 1 ? ("0" + today.getUTCSeconds()) : today.getUTCSeconds()} UTC\n${(msg.author.id === dClient.user.id ? "[YOU] " : "")}@${msg.author.username}: "${(msg.content.length > 0) ? msg.content : ((msg.attachments.size > 0) ? "[Attachment]" : "[Embed]")}"\n${msg.guild ? (msg.guild.name + " - [" + msg.channel.name + "]") : ("[Private Message]")}`
         , splitMsg = msg.content.split(" ");
 
     // log the formatted message
