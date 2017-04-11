@@ -100,7 +100,13 @@ function resetLocals(req, res, next)
         ],
         user: req.user || null
     };
-    next();
+
+    if (locals.user) fs.readJson(join(__data, "users", locals.user.id, "esoDetails.json"), (err, details) => {
+        if (err) console.error(err);
+        Object.assign(locals.user, details);
+        next();
+    });
+    else next();
 }
 
 function isLoggedIn(req, res, next)
