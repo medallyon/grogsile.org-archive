@@ -1,0 +1,20 @@
+{
+  "id": 0,
+  "name": "Rinkydink Frumblesnatch",
+  "champion": false,
+  "level": 3,
+  "biography": "I am a character.",
+  "alliance": "Aldmeri Dominion",
+  "roles": [
+    "Damage Dealer",
+    "Healer",
+    "Tank"
+  ],
+  "orientations": [
+    "PvP",
+    "PvE",
+    "RP",
+    "Crafter"
+  ],
+  "avatarURL": "https://i.grogsile.me/esoi/users/userId/characters/characterId.png"
+}
