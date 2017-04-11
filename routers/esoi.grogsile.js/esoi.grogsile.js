@@ -94,7 +94,10 @@ function resetLocals(req, res, next)
         location: "",
         content: "",
         styles: [],
-        scripts: [],
+        scripts: [
+            "https://i.grogsile.me/esoi/js/fixedNavbar.js",
+            "https://i.grogsile.me/esoi/js/stickyFooter.js"
+        ],
         user: req.user || null
     };
     next();
@@ -137,7 +140,7 @@ router.get("/new", resetLocals, isLoggedIn, function(req, res)
     if (!req.query.type) req.query.type = "character";
     locals.styles.push("https://i.grogsile.me/css/cropper.min.css");
     locals.scripts.push("https://i.grogsile.me/js/cropper.min.js");
-    locals.scripts.push("https://i.grogsile.me/esoi/js/charForm.js");
+    locals.scripts.push("https://i.grogsile.me/esoi/js/new/charForm.js");
 
     if (req.query.type.toLowerCase() === "character")
     {
@@ -152,31 +155,14 @@ router.get("/new", resetLocals, isLoggedIn, function(req, res)
 
 router.post("/new", resetLocals, isLoggedIn, function(req, res)
 {
-    if (!req.query.type) req.query.type = "character";
-    locals.styles.push("https://i.grogsile.me/css/cropper.min.css");
-    locals.scripts.push("https://i.grogsile.me/js/cropper.min.js");
-    locals.scripts.push("https://i.grogsile.me/esoi/js/charForm.js");
-
-    if (req.query.type.toLowerCase() === "character")
-    {
-        res.render("pages/newChar.ejs", locals);
-    } else
-
-    if (req.query.type.toLowerCase() === "guild")
-    {
-        res.render("pages/newGuild.ejs", locals);
-    }
+    // body...
 });
 
 // ===== [ DISCORD INVITE ] ===== //
 
 router.get("/discord", function(req, res)
 {
-    fs.readJson(join(__base, "config.json"), (err, config) => {
-        if (err) return res.status(400).send(err);
-
-        res.redirect(config.eso.invite);
-    });
+    res.redirect(dClient.config.eso.invite);
 });
 
 module.exports = router;
