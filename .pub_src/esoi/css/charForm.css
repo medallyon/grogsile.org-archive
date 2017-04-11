@@ -1,0 +1,67 @@
+/* CUSTOM SPAN ICONS */
+
+span.aldmeri-icon {
+  display: inline-block;
+  background: url("https://i.grogsile.me/esoi/img/aldmeri-icon.png") no-repeat;
+  background-size: 1.2em;
+  width: 1.2em;
+  height: 1.2em;
+  margin: 0;
+}
+
+span.daggerfall-icon {
+  display: inline-block;
+  background: url("https://i.grogsile.me/esoi/img/daggerfall-icon.png") no-repeat;
+  background-size: 1.2em;
+  width: 1.2em;
+  height: 1.2em;
+  margin: 0;
+}
+
+span.ebonheart-icon {
+  display: inline-block;
+  background: url("https://i.grogsile.me/esoi/img/ebonheart-icon.png") no-repeat;
+  background-size: 1.2em;
+  width: 1.2em;
+  height: 1.2em;
+  margin: 0;
+}
+
+/* INPUT GROUP */
+
+.input-group > div.input-group-addon > img {
+  max-width: 1em;
+}
+
+.hidden-input-file {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+#championBox {
+  display: none;
+}
+
+#championBox + label
+{
+  background: url("https://i.grogsile.me/esoi/img/champion.png") no-repeat;
+  background-size: 1.2em;
+  width: 1.2em;
+  height: 1.2em;
+  display: inline-block;
+  margin: 0;
+}
+
+#championBox:checked + label
+{
+  background: url("https://i.grogsile.me/esoi/img/champion-checked.png") no-repeat;
+  background-size: 1.2em;
+  width: 1.2em;
+  height: 1.2em;
+  display: inline-block;
+  margin: 0;
+}
