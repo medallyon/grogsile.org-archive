@@ -73,7 +73,7 @@ span.inline-icon > img {
 
 #championBox + label
 {
-  background: url("https://i.grogsile.me/esoi/img/champion-checked.png") no-repeat;
+  background: url("https://i.grogsile.me/esoi/img/champion.png") no-repeat;
   background-size: 1.2em;
   width: 1.2em;
   height: 1.2em;
@@ -83,7 +83,7 @@ span.inline-icon > img {
 
 #championBox:checked + label
 {
-  background: url("https://i.grogsile.me/esoi/img/champion.png") no-repeat;
+  background: url("https://i.grogsile.me/esoi/img/champion-checked.png") no-repeat;
   background-size: 1.2em;
   width: 1.2em;
   height: 1.2em;

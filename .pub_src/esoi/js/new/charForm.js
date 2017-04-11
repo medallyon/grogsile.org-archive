@@ -10,6 +10,7 @@ const cropperOptions = {
 
 $().ready(function()
 {
+    let initialChampionPoints = $("#championInput").prop("placeholder");
     let croppedImageData = "";
     $("#avatar").cropper(cropperOptions);
 
@@ -18,14 +19,16 @@ $().ready(function()
         if ($("#championInput").next().length)
         {
             $("#championInput")
+                .prop("disabled", false)
                 .attr("min", 3)
                 .attr("max", 50)
-                .attr("placeholder", 50)
+                .attr("placeholder", "3-50")
                 .next().remove();
         }
 
         else {
             $("#championInput")
+                .prop("disabled", true)
                 .attr("min", 1)
                 .attr("max", 600)
                 .attr("placeholder", 600)
@@ -49,8 +52,10 @@ $().ready(function()
         }
     });
 
-    $("#submit").click(function()
+    $("#submit").click(function(e)
     {
+        e.preventDefault();
+
         let formData = new FormData();
 
         formData.append("croppedImage", blob);
