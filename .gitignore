@@ -38,3 +38,5 @@ jspm_packages
 
 Thumbs.db
 sftp-config.json
+/data/guilds
+/data/users
