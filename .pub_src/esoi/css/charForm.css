@@ -65,3 +65,143 @@ span.ebonheart-icon {
   display: inline-block;
   margin: 0;
 }
+
+/* ROSTER CHECKBOX ICONS */
+
+.roster {
+  display: none;
+}
+
+.roster + label
+{
+  background-repeat: no-repeat;
+  background-size: 3.5rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  display: inline-block;
+  margin: 0;
+  padding: 0 1em;
+}
+.roster:checked + label
+{
+  background-repeat: no-repeat;
+  background-size: 3.5rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  display: inline-block;
+  margin: 0;
+}
+
+.roster#altmer + label {
+  background-image: url("https://i.grogsile.me/esoi/img/races/altmer.png");
+}
+.roster#altmer:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/races/altmer.png");
+  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+}
+.roster#bosmer + label {
+  background-image: url("https://i.grogsile.me/esoi/img/races/bosmer.png");
+}
+.roster#bosmer:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/races/bosmer.png");
+  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+}
+.roster#khajiit + label {
+  background-image: url("https://i.grogsile.me/esoi/img/races/khajiit.png");
+}
+.roster#khajiit:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/races/khajiit.png");
+  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+}
+.roster#breton + label {
+  background-image: url("https://i.grogsile.me/esoi/img/races/breton.png");
+}
+.roster#breton:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/races/breton.png");
+  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+}
+.roster#redguard + label {
+  background-image: url("https://i.grogsile.me/esoi/img/races/redguard.png");
+}
+.roster#redguard:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/races/redguard.png");
+  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+}
+.roster#orsimer + label {
+  background-image: url("https://i.grogsile.me/esoi/img/races/orc.png");
+}
+.roster#orsimer:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/races/orc.png");
+  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+}
+.roster#dunmer + label {
+  background-image: url("https://i.grogsile.me/esoi/img/races/dunmer.png");
+}
+.roster#dunmer:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/races/dunmer.png");
+  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+}
+.roster#nord + label {
+  background-image: url("https://i.grogsile.me/esoi/img/races/nord.png");
+}
+.roster#nord:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/races/nord.png");
+  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+}
+.roster#argonian + label {
+  background-image: url("https://i.grogsile.me/esoi/img/races/argonian.png");
+}
+.roster#argonian:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/races/argonian.png");
+  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+}
+.roster#imperial + label {
+  background-image: url("https://i.grogsile.me/esoi/img/races/imperial.png");
+}
+.roster#imperial:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/races/imperial.png");
+  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+}
+
+.roster#dragonknight + label {
+  background-image: url("https://i.grogsile.me/esoi/img/classes/dragonknight.png");
+}
+.roster#dragonknight:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/classes/dragonknight.png");
+  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+}
+.roster#nightblade + label {
+  background-image: url("https://i.grogsile.me/esoi/img/classes/nightblade.png");
+}
+.roster#nightblade:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/classes/nightblade.png");
+  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+}
+.roster#sorcerer + label {
+  background-image: url("https://i.grogsile.me/esoi/img/classes/sorcerer.png");
+}
+.roster#sorcerer:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/classes/sorcerer.png");
+  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+}
+.roster#templar + label {
+  background-image: url("https://i.grogsile.me/esoi/img/classes/templar.png");
+}
+.roster#templar:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/classes/templar.png");
+  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+}

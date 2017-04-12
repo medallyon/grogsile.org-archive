@@ -9,14 +9,20 @@
   <form class="text-center" role="form">
 
     <div class="form-group">
-      <label for="characterName">Character Name</label>
-      <input type="text" id="characterName" class="form-control text-center" placeholder="Bumperstump Bentobox" required>
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <label for="characterName">Character Name</label>
+          <input type="text" id="characterName" class="form-control text-center" placeholder="Bumperstump Bentobox" required>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
     </div>
 
     <div class="form-group">
       <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
           <label for="championInput">Character level</label>
           <div class="input-group">
 
@@ -25,15 +31,12 @@
               <label for="championBox"></label>
             </span>
 
-            <!-- <input type="checkbox" id="championBox" name="champion" checked>
-            <label for="championBox"></label> -->
-
             <input type="number" id="championInput" class="form-control text-center" min="3" max="600" placeholder="600" required>
 
             <div class="input-group-addon">CP</div>
           </div>
         </div>
-        <div class="col-md-3"></div>
+        <div class="col-md-4"></div>
       </div>
     </div>
 
@@ -44,7 +47,15 @@
 
     <div class="form-group">
       <div class="row">
-        <div class="col-md-4"></div>
+
+        <div class="col-md-4">
+          <label for="alliance">Mega-Server</label>
+          <select class="form-control text-center" id="alliance">
+            <option>Europe</option>
+            <option>North America</option>
+          </select>
+        </div>
+
         <div class="col-md-4">
           <label for="alliance">Alliance</label>
           <select class="form-control text-center" id="alliance">
@@ -53,7 +64,104 @@
             <option><span class="ebonheart-icon"></span>Ebonheart Pact</option>
           </select>
         </div>
-        <div class="col-md-4"></div>
+
+        <div class="col-md-4">
+          <label for="alliance">Platform</label>
+          <select class="form-control text-center" id="alliance">
+            <option>PC</option>
+            <option>Playstation 4</option>
+            <option>XBox One</option>
+          </select>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="row">
+
+        <div class="col-md-6">
+          <label>Race</label>
+          <div class="row">
+            
+            <div class="col-md-12">
+              <div class="form-check form-check-inline">
+                
+                <input type="radio" id="altmer" class="roster" name="race" value="altmer">
+                <label for="altmer"></label>
+                
+                <input type="radio" id="bosmer" class="roster" name="race" value="bosmer">
+                <label for="bosmer"></label>
+                
+                <input type="radio" id="khajiit" class="roster" name="race" value="khajiit">
+                <label for="khajiit"></label>
+                
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-check form-check-inline">
+
+                <input type="radio" id="breton" class="roster" name="race" value="breton">
+                <label for="breton"></label>
+                
+                <input type="radio" id="redguard" class="roster" name="race" value="redguard">
+                <label for="redguard"></label>
+                
+                <input type="radio" id="orsimer" class="roster" name="race" value="orsimer">
+                <label for="orsimer"></label>
+                
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-check form-check-inline">
+
+                <input type="radio" id="dunmer" class="roster" name="race" value="dunmer">
+                <label for="dunmer"></label>
+                
+                <input type="radio" id="nord" class="roster" name="race" value="nord">
+                <label for="nord"></label>
+                
+                <input type="radio" id="argonian" class="roster" name="race" value="argonian">
+                <label for="argonian"></label>
+                
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-check form-check-inline">
+                
+                <input type="radio" id="imperial" class="roster" name="race" value="Altmer">
+                <label for="imperial"></label>
+                
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label>Class</label>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-check form-check-inline">
+              
+                  <input type="radio" id="dragonknight" class="roster" name="class" value="dragonknight">
+                  <label for="dragonknight"></label>
+                  
+                  <input type="radio" id="nightblade" class="roster" name="class" value="nightblade">
+                  <label for="nightblade"></label>
+                  
+                  <input type="radio" id="sorcerer" class="roster" name="class" value="sorcerer">
+                  <label for="sorcerer"></label>
+                  
+                  <input type="radio" id="templar" class="roster" name="class" value="templar">
+                  <label for="templar"></label>
+                  
+                </div>
+              </div>
+            </div>
+
+        </div>
       </div>
     </div>
 
