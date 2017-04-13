@@ -9,5 +9,25 @@
       "active": false,
       "channel": ""
     }
+  },
+  "commands": {
+    "about": {
+      "enabled": true
+    },
+    "help": {
+      "enabled": true
+    },
+    "kick": {
+      "enabled": true
+    },
+    "ban": {
+      "enabled": true
+    },
+    "ping": {
+      "enabled": true
+    },
+    "wiki": {
+      "enabled": true
+    }
   }
 }
