@@ -1,4 +1,16 @@
 {
+  "restart": {
+    "description": "Restarts the bot.",
+    "alias": [
+      "restart",
+      "reload",
+      "rl"
+    ],
+    "arguments": {},
+    "userPermissions": 900,
+    "example": ""
+  },
+
   "evaluate": {
     "description": "Evaluates a given Expression.",
     "alias": [
