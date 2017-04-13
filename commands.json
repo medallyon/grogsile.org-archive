@@ -56,7 +56,7 @@
   },
 
   "kick": {
-    "description": "Kicks a mentioned member or a provided User ID.",
+    "description": "Kicks a mentioned member.",
     "alias": [
       "kick"
     ],
@@ -75,7 +75,7 @@
   },
 
   "ban": {
-    "description": "Bans a mentioned member or a provided User ID.",
+    "description": "Bans a mentioned member.",
     "alias": [
       "ban"
     ],
