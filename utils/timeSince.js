@@ -7,7 +7,7 @@ class timeSince
         this.fullMonths = (date / 30.436875 / 24 / 60 / 60 / 1000);
         this.fullWeeks = (date / 7 / 24 / 60 / 60 / 1000);
         this.fullDays = (date / 24 / 60 / 60 / 1000);
-        this.fullGours = (date / 60 / 60 / 1000);
+        this.fullHours = (date / 60 / 60 / 1000);
         this.fullMinutes = (date / 60 / 1000);
         this.fullSeconds = (date / 1000);
     }
