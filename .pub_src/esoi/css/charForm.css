@@ -54,6 +54,8 @@ span.ebonheart-icon {
   height: 1.2em;
   display: inline-block;
   margin: 0;
+  -webkit-transition: background .15s;
+  transition: background .15s;
 }
 
 #championBox:checked + label
@@ -64,6 +66,8 @@ span.ebonheart-icon {
   height: 1.2em;
   display: inline-block;
   margin: 0;
+  -webkit-transition: background .15s;
+  transition: background .15s;
 }
 
 /* ROSTER CHECKBOX ICONS */
