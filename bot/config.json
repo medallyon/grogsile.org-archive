@@ -3,10 +3,10 @@
   "discord": {
     "ownerId": "129036763367735297",
     "prefix": "/",
-    "token": "",
+    "token": "MjMyOTY2NzU0ODMyMzUxMjQy.C9W8gQ.98X5TAJszAeS1vRHNs4PfNA0XG8",
     "auth": {
-      "id": "",
-      "secret": ""
+      "id": "231606856663957505",
+      "secret": "QJ3crcTv0BZ5VFRpT7dzE22z4_OkaZhF"
     }
   },
   "eso": {
@@ -30,7 +30,7 @@
   },
   "api": {
     "keys": {
-      "google": ""
+      "google": "AIzaSyArx9vDaROOW4xu81Yc1YPo3NFGkt7nO24"
     },
     "youtube": {
       "allowedChannels": [

@@ -6,7 +6,7 @@ function restart(msg)
     console.log(`Restarting in channel #${msg.channel.name}.`);
 
     dClient.config.restarted = msg.channel.id;
-    fs.outputJson(join(__base, "config.json"), dClient.config, (err) => {
+    fs.outputJson(join(__botdir, "config.json"), dClient.config, (err) => {
         if (err) console.error(err);
         process.exit();
     });

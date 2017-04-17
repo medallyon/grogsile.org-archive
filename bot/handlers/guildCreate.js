@@ -15,4 +15,5 @@ dClient.on("guildCreate", (guild) => {
     guildConfig.eso.youtube.channel = newsChannel.id;
 
     fs.outputJson(join(__data, "guilds", guild.id, "config.json"), guildConfig, (err) => { if (err) console.error(err) });
+    fs.outputJson(join(__data, "guilds", guild.id, "welcomeMessage", "savedVariables.json"), { latestMembers: [] }, (err) => { if (err) console.error(err) });
 });
