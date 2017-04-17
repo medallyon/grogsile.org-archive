@@ -61,10 +61,9 @@ watch.createMonitor(path.join(__dirname, "modules"), {
         if (file.replace(/.*(\/|\\)/g, "") === "index.js") modules[file.replace(/.*(\/|\\)/g, "").replace(".js", "")] = require(file);
     })
     .on("changed", (file, curr, prev) => {
-        console.log(`recaching ${file}`);
-
         if (file.replace(/.*(\/|\\)/g, "") === "index.js")
         {
+            console.log(`recaching ${file}`);
             decache(file);
             modules[file.replace(/.*(\/|\\)/g, "").replace(".js", "")] = require(file);
         }
