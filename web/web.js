@@ -29,11 +29,11 @@ app.use(function(req, res, next) {
 // === [ VHOSTS ] === //
 
 for (let subdomain of fs.readdirSync(join(__dirname, "domains"))) {
-    app.use(vhost(subdomain), require(join(__dirname, "domains", subdomain, "index.js")));
+    app.use(vhost(subdomain, require(join(__dirname, "domains", subdomain, "index.js"))));
 }
 
 // === [ LISTENER ] === //
 
 // listen on port 8080, with reverse routing of nginx to port 80
-const server = http.createServer(app);
+var server = http.createServer(app);
 server.listen(8080);
