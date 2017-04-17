@@ -96,6 +96,7 @@ span.ebonheart-icon {
   margin: 0;
 }
 
+/* Race Icon Radios */
 .roster#altmer + label {
   background-image: url("https://i.grogsile.me/esoi/img/races/altmer.png");
 }
@@ -177,6 +178,7 @@ span.ebonheart-icon {
   filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
 }
 
+/* Class Icon Radios */
 .roster#dragonknight + label {
   background-image: url("https://i.grogsile.me/esoi/img/classes/dragonknight.png");
 }
@@ -206,6 +208,32 @@ span.ebonheart-icon {
 }
 .roster#templar:checked + label {
   background-image: url("https://i.grogsile.me/esoi/img/classes/templar.png");
+  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+}
+
+/* Role Icon Checkboxes */
+.roster#dps + label {
+  background-image: url("https://i.grogsile.me/esoi/img/roles/dps.png");
+}
+.roster#dps:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/roles/dps.png");
+  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+}
+.roster#tank + label {
+  background-image: url("https://i.grogsile.me/esoi/img/roles/tank.png");
+}
+.roster#tank:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/roles/tank.png");
+  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+}
+.roster#heal + label {
+  background-image: url("https://i.grogsile.me/esoi/img/roles/heal.png");
+}
+.roster#heal:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/roles/heal.png");
   -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
   filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
 }
