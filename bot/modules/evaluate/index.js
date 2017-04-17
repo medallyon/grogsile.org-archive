@@ -1,4 +1,5 @@
-const fs = require("fs-extra");
+const fs = require("fs-extra")
+, join = require("path").join;
 
 function evaluate(msg)
 {
