@@ -6,7 +6,8 @@ const fs = require("fs-extra")
 
 , Discord = require("discord.js")
 
-, watch = require("watch");
+, watch = require("watch")
+, decache = require("decache");
 
 // === [ DISCORD ] === //
 
