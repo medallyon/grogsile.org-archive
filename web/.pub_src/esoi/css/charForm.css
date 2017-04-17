@@ -84,7 +84,7 @@ span.ebonheart-icon {
   height: 3.5rem;
   display: inline-block;
   margin: 0;
-  padding: 0 1em;
+  padding: 2.5px 1em;
 }
 .roster:checked + label
 {
@@ -102,80 +102,80 @@ span.ebonheart-icon {
 }
 .roster#altmer:checked + label {
   background-image: url("https://i.grogsile.me/esoi/img/races/altmer.png");
-  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
-  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  -webkit-filter: drop-shadow(2px 2px 2.5px #E0AA36) drop-shadow(-2px -2px 2.5px #E0AA36);
+  filter: drop-shadow(2px 2px 2.5px #E0AA36) drop-shadow(-2px -2px 2.5px #E0AA36);
 }
 .roster#bosmer + label {
   background-image: url("https://i.grogsile.me/esoi/img/races/bosmer.png");
 }
 .roster#bosmer:checked + label {
   background-image: url("https://i.grogsile.me/esoi/img/races/bosmer.png");
-  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
-  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  -webkit-filter: drop-shadow(2px 2px 2.5px #E0AA36) drop-shadow(-2px -2px 2.5px #E0AA36);
+  filter: drop-shadow(2px 2px 2.5px #E0AA36) drop-shadow(-2px -2px 2.5px #E0AA36);
 }
 .roster#khajiit + label {
   background-image: url("https://i.grogsile.me/esoi/img/races/khajiit.png");
 }
 .roster#khajiit:checked + label {
   background-image: url("https://i.grogsile.me/esoi/img/races/khajiit.png");
-  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
-  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  -webkit-filter: drop-shadow(2px 2px 2.5px #E0AA36) drop-shadow(-2px -2px 2.5px #E0AA36);
+  filter: drop-shadow(2px 2px 2.5px #E0AA36) drop-shadow(-2px -2px 2.5px #E0AA36);
 }
 .roster#breton + label {
   background-image: url("https://i.grogsile.me/esoi/img/races/breton.png");
 }
 .roster#breton:checked + label {
   background-image: url("https://i.grogsile.me/esoi/img/races/breton.png");
-  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
-  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  -webkit-filter: drop-shadow(2px 2px 2.5px #B14040) drop-shadow(-2px -2px 2.5px #B14040);
+  filter: drop-shadow(2px 2px 2.5px #B14040) drop-shadow(-2px -2px 2.5px #B14040);
 }
 .roster#redguard + label {
   background-image: url("https://i.grogsile.me/esoi/img/races/redguard.png");
 }
 .roster#redguard:checked + label {
   background-image: url("https://i.grogsile.me/esoi/img/races/redguard.png");
-  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
-  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  -webkit-filter: drop-shadow(2px 2px 2.5px #B14040) drop-shadow(-2px -2px 2.5px #B14040);
+  filter: drop-shadow(2px 2px 2.5px #B14040) drop-shadow(-2px -2px 2.5px #B14040);
 }
 .roster#orsimer + label {
   background-image: url("https://i.grogsile.me/esoi/img/races/orc.png");
 }
 .roster#orsimer:checked + label {
   background-image: url("https://i.grogsile.me/esoi/img/races/orc.png");
-  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
-  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  -webkit-filter: drop-shadow(2px 2px 2.5px #B14040) drop-shadow(-2px -2px 2.5px #B14040);
+  filter: drop-shadow(2px 2px 2.5px #B14040) drop-shadow(-2px -2px 2.5px #B14040);
 }
 .roster#dunmer + label {
   background-image: url("https://i.grogsile.me/esoi/img/races/dunmer.png");
 }
 .roster#dunmer:checked + label {
   background-image: url("https://i.grogsile.me/esoi/img/races/dunmer.png");
-  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
-  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  -webkit-filter: drop-shadow(2px 2px 2.5px #3E72E0) drop-shadow(-2px -2px 2.5px #3E72E0);
+  filter: drop-shadow(2px 2px 2.5px #3E72E0) drop-shadow(-2px -2px 2.5px #3E72E0);
 }
 .roster#nord + label {
   background-image: url("https://i.grogsile.me/esoi/img/races/nord.png");
 }
 .roster#nord:checked + label {
   background-image: url("https://i.grogsile.me/esoi/img/races/nord.png");
-  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
-  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  -webkit-filter: drop-shadow(2px 2px 2.5px #3E72E0) drop-shadow(-2px -2px 2.5px #3E72E0);
+  filter: drop-shadow(2px 2px 2.5px #3E72E0) drop-shadow(-2px -2px 2.5px #3E72E0);
 }
 .roster#argonian + label {
   background-image: url("https://i.grogsile.me/esoi/img/races/argonian.png");
 }
 .roster#argonian:checked + label {
   background-image: url("https://i.grogsile.me/esoi/img/races/argonian.png");
-  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
-  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  -webkit-filter: drop-shadow(2px 2px 2.5px #3E72E0) drop-shadow(-2px -2px 2.5px #3E72E0);
+  filter: drop-shadow(2px 2px 2.5px #3E72E0) drop-shadow(-2px -2px 2.5px #3E72E0);
 }
 .roster#imperial + label {
   background-image: url("https://i.grogsile.me/esoi/img/races/imperial.png");
 }
 .roster#imperial:checked + label {
   background-image: url("https://i.grogsile.me/esoi/img/races/imperial.png");
-  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
-  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  -webkit-filter: drop-shadow(2px 2px 2.5px #2C2F33) drop-shadow(-2px -2px 2.5px #2C2F33);
+  filter: drop-shadow(2px 2px 2.5px #2C2F33) drop-shadow(-2px -2px 2.5px #2C2F33);
 }
 
 /* Class Icon Radios */
@@ -184,32 +184,32 @@ span.ebonheart-icon {
 }
 .roster#dragonknight:checked + label {
   background-image: url("https://i.grogsile.me/esoi/img/classes/dragonknight.png");
-  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
-  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  -webkit-filter: drop-shadow(2px 2px 2.5px #2C2F33) drop-shadow(-2px -2px 2.5px #2C2F33);
+  filter: drop-shadow(2px 2px 2.5px #2C2F33) drop-shadow(-2px -2px 2.5px #2C2F33);
 }
 .roster#nightblade + label {
   background-image: url("https://i.grogsile.me/esoi/img/classes/nightblade.png");
 }
 .roster#nightblade:checked + label {
   background-image: url("https://i.grogsile.me/esoi/img/classes/nightblade.png");
-  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
-  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  -webkit-filter: drop-shadow(2px 2px 2.5px #2C2F33) drop-shadow(-2px -2px 2.5px #2C2F33);
+  filter: drop-shadow(2px 2px 2.5px #2C2F33) drop-shadow(-2px -2px 2.5px #2C2F33);
 }
 .roster#sorcerer + label {
   background-image: url("https://i.grogsile.me/esoi/img/classes/sorcerer.png");
 }
 .roster#sorcerer:checked + label {
   background-image: url("https://i.grogsile.me/esoi/img/classes/sorcerer.png");
-  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
-  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  -webkit-filter: drop-shadow(2px 2px 2.5px #2C2F33) drop-shadow(-2px -2px 2.5px #2C2F33);
+  filter: drop-shadow(2px 2px 2.5px #2C2F33) drop-shadow(-2px -2px 2.5px #2C2F33);
 }
 .roster#templar + label {
   background-image: url("https://i.grogsile.me/esoi/img/classes/templar.png");
 }
 .roster#templar:checked + label {
   background-image: url("https://i.grogsile.me/esoi/img/classes/templar.png");
-  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
-  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  -webkit-filter: drop-shadow(2px 2px 2.5px #2C2F33) drop-shadow(-2px -2px 2.5px #2C2F33);
+  filter: drop-shadow(2px 2px 2.5px #2C2F33) drop-shadow(-2px -2px 2.5px #2C2F33);
 }
 
 /* Role Icon Checkboxes */
@@ -218,22 +218,22 @@ span.ebonheart-icon {
 }
 .roster#dps:checked + label {
   background-image: url("https://i.grogsile.me/esoi/img/roles/dps.png");
-  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
-  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  -webkit-filter: drop-shadow(2px 2px 2.5px #2C2F33) drop-shadow(-2px -2px 2.5px #2C2F33);
+  filter: drop-shadow(2px 2px 2.5px #2C2F33) drop-shadow(-2px -2px 2.5px #2C2F33);
 }
 .roster#tank + label {
   background-image: url("https://i.grogsile.me/esoi/img/roles/tank.png");
 }
 .roster#tank:checked + label {
   background-image: url("https://i.grogsile.me/esoi/img/roles/tank.png");
-  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
-  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  -webkit-filter: drop-shadow(2px 2px 2.5px #2C2F33) drop-shadow(-2px -2px 2.5px #2C2F33);
+  filter: drop-shadow(2px 2px 2.5px #2C2F33) drop-shadow(-2px -2px 2.5px #2C2F33);
 }
 .roster#heal + label {
   background-image: url("https://i.grogsile.me/esoi/img/roles/heal.png");
 }
 .roster#heal:checked + label {
   background-image: url("https://i.grogsile.me/esoi/img/roles/heal.png");
-  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
-  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+  -webkit-filter: drop-shadow(2px 2px 2.5px #2C2F33) drop-shadow(-2px -2px 2.5px #2C2F33);
+  filter: drop-shadow(2px 2px 2.5px #2C2F33) drop-shadow(-2px -2px 2.5px #2C2F33);
 }
