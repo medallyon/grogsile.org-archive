@@ -1,0 +1,131 @@
+<div class="container">
+
+  <section class="jumbotron text-center">
+    <div class="container">
+      <h1 class="jumbotron-heading">Adjust some settings for your account on ESOI</h1>
+    </div>
+  </section>
+
+  <form class="text-center" role="form">
+
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <label for="accountName">Account Name</label>
+          <input type="text" id="accountName" class="form-control text-center" pattern="[@a-zA-Z0-9.-'_]{3,20}" placeholder="@<%- content.account.accountName %>" required>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          <label for="championInput">Champion Level</label>
+          <div class="input-group">
+
+            <input type="checkbox" id="championBox" name="champion" aria-label="Champion Input" <% if (content.account.champion) { %> checked <% } %>>
+            <label for="championBox"></label>
+
+            <input type="number" id="championInput" name="level" class="form-control text-center" min="3" max="600" placeholder="<%- content.account.level %>" required>
+          </div>
+        </div>
+        <div class="col-md-4"></div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="about">About Yourself</label>
+      <textarea class="form-control" id="about" rows="3" maxlength="500"></textarea>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+
+        <div class="form-group">
+          <label>Mega-Server</label>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-check form-check-inline">
+              
+                  <input type="radio" id="eu" class="roster" name="server" value="eu">
+                  <label for="eu"></label>
+                  
+                  <input type="radio" id="na" class="roster" name="server" value="na">
+                  <label for="na"></label>
+                  
+                </div>
+              </div>
+            </div>
+
+        </div>
+
+      </div>
+      <div class="col-md-6">
+
+        <div class="form-group">
+          <label>Platform</label>
+          <div class="row">
+            
+            <div class="col-md-12">
+              <div class="form-check form-check-inline">
+                
+                <input type="radio" id="pc" class="roster" name="platform" value="pc">
+                <label for="pc"></label>
+                
+                <input type="radio" id="xbone" class="roster" name="platform" value="xbone">
+                <label for="xbone"></label>
+                
+                <input type="radio" id="ps4" class="roster" name="platform" value="ps4">
+                <label for="ps4"></label>
+                
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="col-md-3"></div>
+
+      <div class="col-md-6">
+          
+        <div class="form-group">
+          <label>Preferred Alliance</label>
+          <div class="row">
+            
+            <div class="col-md-12">
+              <div class="form-check form-check-inline">
+                
+                <input type="checkbox" id="ad" class="roster" name="alliance" value="ad">
+                <label for="ad"></label>
+                
+                <input type="checkbox" id="dc" class="roster" name="alliance" value="dc">
+                <label for="dc"></label>
+                
+                <input type="checkbox" id="ep" class="roster" name="alliance" value="ep">
+                <label for="ep"></label>
+                
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-md-3"></div>
+
+    </div>
+
+    <button type="submit" class="btn btn-default">Submit</button>
+
+  </form>
+
+</div>
