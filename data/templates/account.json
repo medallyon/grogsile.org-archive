@@ -1,10 +1,9 @@
 {
-  "discord": {
-    "username": "username",
-    "discriminator": "0000",
-    "mfa_enabled": false,
-    "id": "0",
-    "avatar": "0",
-    "provider": "discord"
-  }
+  "accountName": "Rinkydink123",
+  "champion": true,
+  "level": 600,
+  "about": "I have an account on ESOI!",
+  "server": "EU|NA",
+  "platform": "PC|XBox One|PlayStation 4",
+  "alliance": "Aldmeri Dominion"
 }
