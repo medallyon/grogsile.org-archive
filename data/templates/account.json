@@ -1,1 +1,10 @@
-{}
+{
+  "discord": {
+    "username": "username",
+    "discriminator": "0000",
+    "mfa_enabled": false,
+    "id": "0",
+    "avatar": "0",
+    "provider": "discord"
+  }
+}
