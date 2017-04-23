@@ -10,13 +10,16 @@ let latest = fs.readJsonSync(join(__dirname, "savedVars.json"))
 , imgIsDifferent = false
 , spamCount = 0;
 
+setTimeout(function()
+{
+    fetchNewestImage();
+    spamCompare();
+}, 60000);
 setInterval(function()
 {
     fetchNewestImage();
     spamCompare();
 }, config.interval * 60 * 1000);
-fetchNewestImage();
-spamCompare();
 
 // checks the newest image on /en-us/news
 function fetchNewestImage()
