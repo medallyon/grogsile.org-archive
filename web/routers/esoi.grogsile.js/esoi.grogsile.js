@@ -92,7 +92,7 @@ function resetLocals(req, res, next)
 {
     locals = {
         location: "",
-        content: "",
+        content: {},
         styles: [],
         scripts: [
             "https://i.grogsile.me/esoi/js/fixedNavbar.js",
@@ -119,7 +119,6 @@ function isLoggedIn(req, res, next)
 
 router.get("/", resetLocals, function(req, res)
 {
-    locals.scripts.push("https://i.grogsile.me/esoi/js/index/hi-rez.js")
     if (!req.user) res.render("pages/cover.ejs", locals);
     else res.redirect("/dashboard");
 });
@@ -134,9 +133,44 @@ router.get("/dashboard", resetLocals, isLoggedIn, function(req, res)
     fs.readJson(join(userDir, "characters.json"), (err, characters) => {
         if (err) console.error(err);
 
-        locals.content = { characters: characters };
+        locals.content.characters = characters;
         res.render("pages/dashboard.ejs", locals);
     });
+});
+
+// ===== [ SETTINGS ] ===== //
+
+router.get("/settings", resetLocals, isLoggedIn, function(req, res)
+{
+    locals.user = req.user;
+
+    let userDir = join(__data, "users", req.user.id);
+    fs.readJson(join(userDir, "settings.json"), (err, settings) => {
+        if (err) console.error(err);
+
+        locals.content.settings = settings;
+        res.render("pages/settings.ejs", locals);
+    });
+});
+
+router.post("/settings", resetLocals, isLoggedIn, function(req, res)
+{
+    if (req.body)
+    {
+        let userDir = join(__data, "users", req.user.id);
+        fs.outputJson(join(userDir, "settings.json"), {
+            accountName: req.body.accountName,
+            champion: req.body.champion,
+            level: req.body.level,
+            biography: req.body.biography,
+            alliance: req.body.alliance
+        }, (err) => {
+            if (err) {
+                console.error(err);
+                res.status(500).end();
+            } else res.status(200).end();
+        });
+    }
 });
 
 // ===== [ NEW CHARACTER | NEW GUILD ] ===== //
