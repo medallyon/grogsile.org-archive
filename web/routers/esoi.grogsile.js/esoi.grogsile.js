@@ -93,11 +93,6 @@ function resetLocals(req, res, next)
     locals = {
         location: "",
         content: {},
-        styles: [],
-        scripts: [
-            "https://i.grogsile.me/esoi/js/fixedNavbar.js",
-            "https://i.grogsile.me/esoi/js/stickyFooter.js"
-        ],
         user: req.user || null
     };
 
@@ -178,9 +173,6 @@ router.post("/settings", resetLocals, isLoggedIn, function(req, res)
 router.get("/new", resetLocals, isLoggedIn, function(req, res)
 {
     if (!req.query.type) req.query.type = "character";
-    locals.styles.push("https://i.grogsile.me/css/cropper.min.css");
-    locals.scripts.push("https://i.grogsile.me/js/cropper.min.js");
-    locals.scripts.push("https://i.grogsile.me/esoi/js/new/charForm.js");
 
     if (req.query.type.toLowerCase() === "character")
     {
