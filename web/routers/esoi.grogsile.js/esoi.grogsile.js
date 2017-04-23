@@ -51,33 +51,13 @@ router.get("/callback", passport.authenticate("discord", { failureRedirect: "/" 
     fs.readdir(join(__data, "users"), (err, files) => {
         if (err) console.error(err);
 
-        if (files.indexOf(req.user.id) > -1)
-        {
-            fs.readJson(join(userDir, "account.json"), (err, account) => {
-                if (err) console.error(err);
+        fs.outputJson(join(userDir, "user.json"), req.user, (err) => {
+            if (err) console.error(err);
 
-                account.discord = req.user;
-                fs.outputJson(join(userDir, "account.json"), account, (err) => {
-                    if (err) console.error(err);
+            res.redirect(continuePath);
+        });
 
-                    res.redirect(continuePath);
-                });
-            });
-        }
-
-        else {
-            fs.readJson(join(__data, "templates", "account.json"), (err, account) => {
-                if (err) console.error(err);
-
-                account.discord = req.user;
-                fs.outputJson(join(userDir, "characters.json"), {}, (err) => { if (err) console.error(err) });
-                fs.outputJson(join(userDir, "account.json"), account, (err) => {
-                    if (err) console.error(err);
-
-                    res.redirect(continuePath);
-                });
-            });
-        }
+        if (files.indexOf(req.user.id) === -1) fs.outputJson(join(userDir, "characters.json"), {}, (err) => { if (err) console.error(err) });
     });
 });
 
@@ -95,13 +75,7 @@ function resetLocals(req, res, next)
         content: {},
         user: req.user || null
     };
-
-    if (locals.user) fs.readJson(join(__data, "users", locals.user.id, "esoDetails.json"), (err, details) => {
-        if (err) console.error(err);
-        Object.assign(locals.user, details);
-        next();
-    });
-    else next();
+    next();
 }
 
 function isLoggedIn(req, res, next)
@@ -133,27 +107,27 @@ router.get("/dashboard", resetLocals, isLoggedIn, function(req, res)
     });
 });
 
-// ===== [ SETTINGS ] ===== //
+// ===== [ ACCOUNT ] ===== //
 
-router.get("/settings", resetLocals, isLoggedIn, function(req, res)
+router.get("/account", resetLocals, isLoggedIn, function(req, res)
 {
     locals.user = req.user;
 
     let userDir = join(__data, "users", req.user.id);
-    fs.readJson(join(userDir, "settings.json"), (err, settings) => {
+    fs.readJson(join(userDir, "account.json"), (err, account) => {
         if (err) console.error(err);
 
-        locals.content.settings = settings;
-        res.render("pages/settings.ejs", locals);
+        locals.content.account = account;
+        res.render("pages/account.ejs", locals);
     });
 });
 
-router.post("/settings", resetLocals, isLoggedIn, function(req, res)
+router.post("/account", resetLocals, isLoggedIn, function(req, res)
 {
     if (req.body)
     {
         let userDir = join(__data, "users", req.user.id);
-        fs.outputJson(join(userDir, "settings.json"), {
+        fs.outputJson(join(userDir, "account.json"), {
             accountName: req.body.accountName,
             champion: req.body.champion,
             level: req.body.level,
