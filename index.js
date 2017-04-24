@@ -13,6 +13,12 @@ global.__src = path.join(__dirname, "web", ".pub_src");
 global.__webdir = path.join(__dirname, "web");
 global.__botdir = path.join(__dirname, "bot");
 
+global._templates = {};
+let templateFiles = fs.readdirSync(join(__data, "templates"));
+for (let i = 0; i < templateFiles.length; i++) {
+    _templates[templateFiles[i].replace(".json", "")] = fs.readJsonSync(join(__data, "templates", templateFiles[i]));
+}
+
 // === [ IMPORTS ] === //
 
 require(join(__botdir, "bot.js"));
