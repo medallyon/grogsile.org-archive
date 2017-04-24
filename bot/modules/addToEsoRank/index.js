@@ -55,9 +55,9 @@ function addToEsoRank(memberId, server, platform, alliance)
             if (member.roles.exists("name", "Daggerfall Covenant")) rolesToRemove.push(member.roles.find("name", "Daggerfall Covenant"));
         }
 
-        member.addRoles(rolesToAdd).catch(console.error);
+        if (rolesToAdd.length > 0) member.addRoles(rolesToAdd).catch(console.error);
         setTimeout(() => {
-            member.removeRoles(rolesToRemove).catch(console.error);
+            if (rolesToRemove.length > 0) member.removeRoles(rolesToRemove).catch(console.error);
         }, 10000);
     }
 }
