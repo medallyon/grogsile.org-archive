@@ -1,0 +1,133 @@
+#championBox {
+  display: none;
+}
+
+#championBox + label
+{
+  background: url("https://i.grogsile.me/esoi/img/champion.png") no-repeat;
+  background-size: 2rem;
+  width: 2rem;
+  height: 2rem;
+  display: inline-block;
+  margin: auto;
+  -webkit-transition: background .15s;
+  transition: background .15s;
+}
+
+#championBox:checked + label
+{
+  background: url("https://i.grogsile.me/esoi/img/champion-checked.png") no-repeat;
+  background-size: 2rem;
+  width: 2rem;
+  height: 2rem;
+  display: inline-block;
+  margin: auto;
+  -webkit-transition: background .15s;
+  transition: background .15s;
+}
+
+#championInput {
+  margin-left: 1.5rem;
+}
+
+/* ROSTER CHECKBOX ICONS */
+
+.roster {
+  display: none;
+}
+
+.roster + label
+{
+  background-repeat: no-repeat;
+  background-size: 3.5rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  display: inline-block;
+  margin: 0;
+  padding: 2.5px 1em;
+  -webkit-transition: background .15s;
+  transition: background .15s;
+}
+.roster:checked + label
+{
+  background-repeat: no-repeat;
+  background-size: 3.5rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  display: inline-block;
+  margin: 0;
+  -webkit-transition: background .15s;
+  transition: background .15s;
+}
+
+/* Server Icon Radios */
+.roster#eu + label {
+  background-image: url("https://i.grogsile.me/esoi/img/megaserver/eu.png");
+}
+.roster#eu:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/megaserver/eu-checked.png");
+}
+.roster#na + label {
+  background-image: url("https://i.grogsile.me/esoi/img/megaserver/na.png");
+}
+.roster#na:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/megaserver/na-checked.png");
+}
+
+/* Platform Icon Radios */
+.roster#pc + label {
+  background-image: url("https://i.grogsile.me/esoi/img/platform/pc.png");
+}
+.roster#pc:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/platform/pc-checked.png");
+}
+.roster#ps4 + label {
+  background-image: url("https://i.grogsile.me/esoi/img/platform/ps4.png");
+}
+.roster#ps4:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/platform/ps4-checked.png");
+}
+.roster#xbone + label {
+  background-image: url("https://i.grogsile.me/esoi/img/platform/xb1.png");
+}
+.roster#xbone:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/platform/xb1-checked.png");
+}
+
+/* Alliance Icon Radios */
+.roster#ad + label {
+  background-image: url("https://i.grogsile.me/esoi/img/alliance/aldmeri-dominion.png");
+  -webkit-transition: -webkit-filter .15s;
+  transition: filter .15s;
+}
+.roster#ad:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/alliance/aldmeri-dominion.png");
+  -webkit-filter: drop-shadow(2px 2px 2.5px #E0AA36) drop-shadow(-2px -2px 2.5px #E0AA36);
+  filter: drop-shadow(2px 2px 2.5px #E0AA36) drop-shadow(-2px -2px 2.5px #E0AA36);
+  -webkit-transition: -webkit-filter .15s;
+  transition: filter .15s;
+}
+.roster#dc + label {
+  background-image: url("https://i.grogsile.me/esoi/img/alliance/daggerfall-covenant.png");
+  -webkit-transition: -webkit-filter .15s;
+  transition: filter .15s;
+}
+.roster#dc:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/alliance/daggerfall-covenant.png");
+  -webkit-filter: drop-shadow(2px 2px 2.5px #3E72E0) drop-shadow(-2px -2px 2.5px #3E72E0);
+  filter: drop-shadow(2px 2px 2.5px #3E72E0) drop-shadow(-2px -2px 2.5px #3E72E0);
+  -webkit-transition: -webkit-filter .15s;
+  transition: filter .15s;
+}
+.roster#ep + label {
+  background-image: url("https://i.grogsile.me/esoi/img/alliance/ebonheart-pact.png");
+  -webkit-transition: -webkit-filter .15s;
+  transition: filter .15s;
+}
+.roster#ep:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/alliance/ebonheart-pact.png");
+  -webkit-filter: drop-shadow(2px 2px 2.5px #B14040) drop-shadow(-2px -2px 2.5px #B14040);
+  filter: drop-shadow(2px 2px 2.5px #B14040) drop-shadow(-2px -2px 2.5px #B14040);
+  -webkit-transition: -webkit-filter .15s;
+  transition: filter .15s;
+}
