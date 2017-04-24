@@ -73,9 +73,19 @@ function resetLocals(req, res, next)
     locals = {
         location: "",
         content: {},
-        user: req.user || null
+        user: req.user || null,
+        account: {}
     };
-    next();
+    
+    if (req.user)
+    {
+        fs.readJson(join(__data, "users", req.user.id, "account.json"), (err, account) => {
+            if (err) console.error(err);
+
+            locals.account = account;
+            next();
+        });
+    } else next();
 }
 
 function isLoggedIn(req, res, next)
@@ -114,30 +124,58 @@ router.get("/account", resetLocals, isLoggedIn, function(req, res)
     locals.user = req.user;
 
     let userDir = join(__data, "users", req.user.id);
-    fs.readJson(join(userDir, "account.json"), (err, account) => {
+    fs.readdir(userDir, (err, files) => {
         if (err) console.error(err);
 
-        locals.content.account = account;
-        res.render("pages/account.ejs", locals);
+        if (files.indexOf("account.json") === -1)
+        {
+            fs.outputJson(join(userDir, "account.json"), _templates.account, (err) => {
+                if (err) console.error(err);
+
+                res.redirect("/account");
+            });
+        }
+
+        else {
+            fs.readJson(join(userDir, "account.json"), (err, account) => {
+                if (err) console.error(err);
+
+                locals.content.account = account;
+                locals.content.success = false;
+                res.render("pages/account.ejs", locals);
+            });
+        }
     });
 });
 
 router.post("/account", resetLocals, isLoggedIn, function(req, res)
 {
+    locals.user = req.user;
+
     if (req.body)
     {
         let userDir = join(__data, "users", req.user.id);
         fs.outputJson(join(userDir, "account.json"), {
-            accountName: req.body.accountName,
-            champion: req.body.champion,
+            accountName: req.body.accountName.replace(/\@/g, ""),
+            champion: ((req.body.champion === "on") ? true : false),
             level: req.body.level,
-            biography: req.body.biography,
+            about: req.body.about,
+            server: req.body.server,
+            platform: req.body.platform,
             alliance: req.body.alliance
         }, (err) => {
             if (err) {
                 console.error(err);
-                res.status(500).end();
-            } else res.status(200).end();
+                res.send("Something went wrong :/\nDo tell the developers over at <a href='https://esoi.grogsile.me/discord'>Discord</a>!");
+            }
+
+            else {
+                locals.content.account = req.body;
+                locals.content.success = true;
+                res.render("pages/account.ejs", locals);
+
+                modules.addToEsoRank(req.user.id, req.body.server, req.body.platform, req.body.alliance);
+            }
         });
     }
 });
