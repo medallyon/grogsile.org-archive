@@ -94,6 +94,9 @@ function isLoggedIn(req, res, next)
     else res.redirect(`/actuallylogin?continue=${req.originalUrl}`);
 }
 
+let testersOnly = require(join(__webdir, "middleware", "testersOnly", "testersOnly.js"))
+, isAccountSetup = require(join(__webdir, "middleware", "isAccountSetup", "isAccountSetup.js"));
+
 // ===== [ HOME ] ===== //
 
 router.get("/", resetLocals, function(req, res)
@@ -104,10 +107,8 @@ router.get("/", resetLocals, function(req, res)
 
 // ===== [ DASHBOARD ] ===== //
 
-router.get("/dashboard", resetLocals, isLoggedIn, function(req, res)
+router.get("/dashboard", isLoggedIn, isAccountSetup, resetLocals, function(req, res)
 {
-    locals.user = req.user;
-
     let userDir = join(__data, "users", req.user.id);
     fs.readJson(join(userDir, "characters.json"), (err, characters) => {
         if (err) console.error(err);
@@ -119,10 +120,8 @@ router.get("/dashboard", resetLocals, isLoggedIn, function(req, res)
 
 // ===== [ ACCOUNT ] ===== //
 
-router.get("/account", resetLocals, isLoggedIn, function(req, res)
+router.get("/account", isLoggedIn, resetLocals, function(req, res)
 {
-    locals.user = req.user;
-
     let userDir = join(__data, "users", req.user.id);
     fs.readdir(userDir, (err, files) => {
         if (err) console.error(err);
@@ -148,10 +147,8 @@ router.get("/account", resetLocals, isLoggedIn, function(req, res)
     });
 });
 
-router.post("/account", resetLocals, isLoggedIn, function(req, res)
+router.post("/account", isLoggedIn, resetLocals, function(req, res)
 {
-    locals.user = req.user;
-
     if (req.body)
     {
         let userDir = join(__data, "users", req.user.id);
@@ -182,7 +179,7 @@ router.post("/account", resetLocals, isLoggedIn, function(req, res)
 
 // ===== [ NEW CHARACTER | NEW GUILD ] ===== //
 
-router.get("/new", resetLocals, isLoggedIn, function(req, res)
+router.get("/new", isLoggedIn, testersOnly, isAccountSetup, resetLocals, function(req, res)
 {
     if (!req.query.type) req.query.type = "character";
 
@@ -197,7 +194,7 @@ router.get("/new", resetLocals, isLoggedIn, function(req, res)
     }
 });
 
-router.post("/new", resetLocals, isLoggedIn, function(req, res)
+router.post("/new", isLoggedIn, testersOnly, isAccountSetup, resetLocals, function(req, res)
 {
     // body...
 });
