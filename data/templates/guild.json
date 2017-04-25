@@ -1,5 +1,13 @@
 {
   "id": "",
+  "guild": {
+    "welcomeMessage": {
+      "enabled": false,
+      "maxMembers": 3,
+      "message": "Welcome {user} to **{guild}**!",
+      "channel": ""
+    }
+  },
   "eso": {
     "news": {
       "active": false,

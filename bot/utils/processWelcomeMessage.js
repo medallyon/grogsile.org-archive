@@ -1,11 +1,14 @@
-function processWelcomeMessage(message, guild, ...members)
+function processWelcomeMessage(message, guild, members)
 {
     for (let i = 0; i < members.length; i++) {
-        if (!message.includes(`{member${i+1}}`)) break;
-        message.replace(`{member${i+1}}`, dClient.users.get(members[i]));
+        if (message.includes(`{member${i+1}}`)) message = message.replace(`{member${i+1}}`, guild.members.get(members[i]));
     }
 
-    if (message.includes("{guild}")) message.replace("{guild}", guild.name);
+    for (let i = 0; i < members.length; i++) {
+        if (message.includes(`{\\member${i+1}}`)) message = message.replace(`{\\member${i+1}}`, guild.members.get(members[i]).displayName);
+    }
+
+    if (message.includes("{guild}")) message = message.replace(/\{guild\}/g, guild.name);
 
     return message;
 }
