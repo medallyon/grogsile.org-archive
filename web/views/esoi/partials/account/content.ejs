@@ -52,7 +52,7 @@
 
             <% if (content.account.champion) { %><input type="number" id="championInput" name="level" class="form-control text-center" value="<%- content.account.level %>" min="1" max="600" placeholder="<%- content.account.level %>" required><% } %>
           </div>
-          <p class="form-text text-muted">If you have achieved the champion level in-game (50), you should check this icon.</p>
+          <p class="form-text text-muted">If you have achieved level 50 in-game, you should check this icon.</p>
         </div>
 
         <div class="col-md-4">
@@ -66,7 +66,7 @@
     </div>
 
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-4">
 
         <div class="form-group">
           <label>Mega-Server</label>
@@ -77,7 +77,7 @@
                   <input type="radio" id="eu" class="roster" name="server" value="EU" required <% if (content.account.server === "EU") { %> checked <% } %>>
                   <label for="eu"></label>
                   
-                  <input type="radio" id="na" class="roster" name="server" value="NA" required <% if (content.account.server === "NA") { %> checked <% } %>>
+                  <input type="radio" id="na" class="roster" name="server" value="NA" <% if (content.account.server === "NA") { %> checked <% } %>>
                   <label for="na"></label>
                   
                 </div>
@@ -87,7 +87,32 @@
         </div>
 
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
+          
+        <div class="form-group">
+          <label>Preferred Alliance</label>
+          <div class="row">
+            
+            <div class="col-md-12">
+              <div class="form-check form-check-inline">
+                
+                <input type="radio" id="ad" class="roster" name="alliance" value="Aldmeri Dominion" required <% if (content.account.alliance === "Aldmeri Dominion") { %> checked <% } %>>
+                <label for="ad"></label>
+                
+                <input type="radio" id="dc" class="roster" name="alliance" value="Daggerfall Covenant" <% if (content.account.alliance === "Daggerfall Covenant") { %> checked <% } %>>
+                <label for="dc"></label>
+                
+                <input type="radio" id="ep" class="roster" name="alliance" value="Ebonheart Pact" <% if (content.account.alliance === "Ebonheart Pact") { %> checked <% } %>>
+                <label for="ep"></label>
+                
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-4">
 
         <div class="form-group">
           <label>Platform</label>
@@ -99,10 +124,10 @@
                 <input type="radio" id="pc" class="roster" name="platform" value="PC" required <% if (content.account.platform === "PC") { %> checked <% } %>>
                 <label for="pc"></label>
                 
-                <input type="radio" id="xbone" class="roster" name="platform" value="XBOne" required <% if (content.account.platform === "XBOne") { %> checked <% } %>>
+                <input type="radio" id="xbone" class="roster" name="platform" value="XBOne" <% if (content.account.platform === "XBOne") { %> checked <% } %>>
                 <label for="xbone"></label>
                 
-                <input type="radio" id="ps4" class="roster" name="platform" value="PS4" required <% if (content.account.platform === "PS4") { %> checked <% } %>>
+                <input type="radio" id="ps4" class="roster" name="platform" value="PS4" <% if (content.account.platform === "PS4") { %> checked <% } %>>
                 <label for="ps4"></label>
                 
               </div>
@@ -119,26 +144,12 @@
       <div class="col-md-3"></div>
 
       <div class="col-md-6">
-          
+        
         <div class="form-group">
-          <label>Preferred Alliance</label>
-          <div class="row">
-            
-            <div class="col-md-12">
-              <div class="form-check form-check-inline">
-                
-                <input type="radio" id="ad" class="roster" name="alliance" value="Aldmeri Dominion" required <% if (content.account.alliance === "Aldmeri Dominion") { %> checked <% } %>>
-                <label for="ad"></label>
-                
-                <input type="radio" id="dc" class="roster" name="alliance" value="Daggerfall Covenant" required <% if (content.account.alliance === "Daggerfall Covenant") { %> checked <% } %>>
-                <label for="dc"></label>
-                
-                <input type="radio" id="ep" class="roster" name="alliance" value="Ebonheart Pact" required <% if (content.account.alliance === "Ebonheart Pact") { %> checked <% } %>>
-                <label for="ep"></label>
-                
-              </div>
-            </div>
-
+          <label>Profile Visibility</label>
+          <div class="abc-checkbox">
+            <input type="checkbox" id="private" name="private" <% if (content.account.private) { %> checked <% } %>>
+            <label for="private">Make my profile <span class="text-muted">invisible</span> to others</label>
           </div>
         </div>
 
