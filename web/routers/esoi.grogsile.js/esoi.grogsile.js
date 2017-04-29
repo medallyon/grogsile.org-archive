@@ -159,11 +159,12 @@ router.post("/account", isLoggedIn, resetLocals, function(req, res)
             about: req.body.about,
             server: req.body.server,
             platform: req.body.platform,
-            alliance: req.body.alliance
+            alliance: req.body.alliance,
+            private: ((req.body.private === "on") ? true : false)
         }, (err) => {
             if (err) {
                 console.error(err);
-                res.send("Something went wrong :/\nDo tell the developers over at <a href='https://esoi.grogsile.me/discord'>Discord</a>!");
+                res.send("Something went wrong :/\nDo tell a developer over at <a href='https://esoi.grogsile.me/discord'>Discord</a>!");
             }
 
             else {
