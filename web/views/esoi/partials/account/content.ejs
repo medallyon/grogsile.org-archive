@@ -30,7 +30,7 @@
 
             <div class="input-group-addon">@</div>
 
-            <input type="text" id="accountName" class="form-control text-center" autocomplete="off" pattern="[a-zA-Z0-9.-'_]{3,20}" name="accountName" value="<%- content.account.accountName %>" placeholder="<%- content.account.accountName %>" required>
+            <input type="text" id="accountName" class="form-control text-center" autocomplete="off" pattern="[a-zA-Z0-9.-'_]{3,20}" name="accountName" value="<% if (account.accountName !== "undefined") { %><%- content.account.accountName %><% } %>" placeholder="RinkydinkFrumblesnatch123" required>
 
           </div>
         </div>
@@ -57,7 +57,7 @@
 
         <div class="col-md-4">
           <label for="about">About Yourself</label>
-          <textarea class="form-control text-center" id="about" form="accountForm" name="about" rows="3" maxlength="500"><%- content.account.about %></textarea>
+          <textarea class="form-control text-center" id="about" form="accountForm" name="about" autocomplete="false" spellcheck="false" rows="3" maxlength="500"><%- content.account.about %></textarea>
         </div>
 
         <div class="col-md-2"></div>
