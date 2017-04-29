@@ -23,7 +23,7 @@ passport.use(new Strategy({
     clientID: dClient.config.discord.auth.id,
     clientSecret: dClient.config.discord.auth.secret,
     callbackURL: "https://esoi.grogsile.me/callback",
-    scope: ["identify", "guilds", "guilds.join"]
+    scope: ["identify", "guilds"]
 }, function(accessToken, refreshToken, profile, done) {
     process.nextTick(function() {
         return done(null, profile);
@@ -42,7 +42,7 @@ router.get("/login", isLoggedIn, function(req, res)
     res.redirect("/dashboard");
 });
 
-router.get("/actuallylogin", passport.authenticate("discord", { scope: ["identify", "guilds", "guilds.join"] }), (req, res) => {});
+router.get("/actuallylogin", passport.authenticate("discord", { scope: ["identify", "guilds"] }), (req, res) => {});
 
 router.get("/callback", passport.authenticate("discord", { failureRedirect: "/" }), function(req, res)
 {
@@ -51,13 +51,16 @@ router.get("/callback", passport.authenticate("discord", { failureRedirect: "/" 
     fs.readdir(join(__data, "users"), (err, files) => {
         if (err) console.error(err);
 
+        fs.outputJson(join(userDir, "characters.json"), {}, (err) => { if (err) console.error(err) });
         fs.outputJson(join(userDir, "user.json"), req.user, (err) => {
             if (err) console.error(err);
 
-            res.redirect(continuePath);
-        });
+            fs.outputJson(join(userDir, "account.json"), _templates.account, (err) => {
+                if (err) console.error(err);
 
-        if (files.indexOf(req.user.id) === -1) fs.outputJson(join(userDir, "characters.json"), {}, (err) => { if (err) console.error(err) });
+                res.redirect(continuePath);
+            });
+        });
     });
 });
 
@@ -94,7 +97,7 @@ function isLoggedIn(req, res, next)
     else res.redirect(`/actuallylogin?continue=${req.originalUrl}`);
 }
 
-let testersOnly = require(join(__webdir, "middleware", "testersOnly", "testersOnly.js"))
+const testersOnly = require(join(__webdir, "middleware", "testersOnly", "testersOnly.js"))
 , isAccountSetup = require(join(__webdir, "middleware", "isAccountSetup", "isAccountSetup.js"));
 
 // ===== [ HOME ] ===== //
@@ -113,7 +116,7 @@ router.get("/dashboard", isLoggedIn, isAccountSetup, resetLocals, function(req, 
     fs.readJson(join(userDir, "characters.json"), (err, characters) => {
         if (err) console.error(err);
 
-        locals.content.characters = characters;
+        locals.characters = characters;
         res.render("pages/dashboard.ejs", locals);
     });
 });
@@ -200,11 +203,85 @@ router.post("/new", isLoggedIn, testersOnly, isAccountSetup, resetLocals, functi
     // body...
 });
 
+// ===== [ PUBLIC PROFILE ] ===== //
+
+router.get("/u/:id", testersOnly, resetLocals, function(req, res)
+{
+    fs.readdir(join(__data, "users"), (err, users) => {
+        if (err) return res.send(err);
+
+        if (users.indexOf(req.params.id) > -1)
+        {
+            fs.readJson(join(__data, "users", req.params.id, "account.json"), (err, account) => {
+                if (err) return res.send(err);
+
+                if (req.user && req.user.id === req.params.id && account.accountName === "undefined") res.redirect("/account");
+
+                if (account.accountName === "undefined")
+                {
+                    locals.error = {
+                        title: "Profile not found",
+                        description: `This profile could not be found. If you believe this is a mistake, talk to us on <a href="/discord">Discord</a>.`
+                    };
+
+                    return res.render("pages/error.ejs", locals);
+                }
+
+                locals.account = account;
+
+                fs.readJson(join(__data, "users", req.params.id, "user.json"), (err, user) => {
+                    if (err) return res.send(err);
+
+                    locals.targetUser = user;
+
+                    fs.readJson(join(__data, "users", req.params.id, "characters.json"), (err, characters) => {
+                        if (err) return res.send(err);
+
+                        locals.characters = characters;
+
+                        if (account.private)
+                        {
+                            if (req.user && req.user.id === req.params.id)
+                            {
+                                res.render("pages/profile.ejs", locals);
+                            }
+
+                            else
+                            {
+                                locals.error = {
+                                    title: `${user.discord.username}#${user.discord.discriminator}'s profile is private!`,
+                                    description: `This profile has been set to private. If you think this is an error, speak to <b>${user.discord.username}#${user.discord.discriminator}</b> or a developer on <a href="/discord">Discord</a>.`
+                                };
+
+                                res.render("pages/error.ejs", locals);
+                            }
+                        }
+
+                        else return res.render("pages/profile.ejs", locals);
+                    });
+                });
+            });
+        }
+
+        else
+        {
+            locals.error = {
+                title: "Profile not found",
+                description: `This profile could not be found. If you believe this is a mistake, talk to us on <a href="/discord">Discord</a>.`
+            };
+
+            res.render("pages/error.ejs", locals);
+        }
+    });
+});
+
 // ===== [ DISCORD INVITE ] ===== //
 
 router.get("/discord", function(req, res)
 {
     res.redirect(dClient.config.eso.invite);
 });
+
+// ===== [ ROUTER EXPORT ] ===== //
 
 module.exports = router;
