@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("../partials/defaultHead") %>
+  </head>
+
+  <body>
+    <%- include("../partials/defaultNavbar") %>
+
+    <section class="jumbotron text-center">
+      <div class="container">
+        <h1 class="jumbotron-heading"><%- error.title %></h1>
+        <p class="lead text-muted"><%- error.description %></p>
+      </div>
+    </section>
+
+    <%- include("../partials/defaultFooter") %>
+
+    <%- include("../partials/defaultScripts") %>
+  </body>
+</html>
