@@ -45,27 +45,42 @@
       <textarea class="form-control" id="biography" rows="3" maxlength="500"></textarea>
     </div>
 
-    <div class="form-group">
-      <div class="row">
+    <div class="row">
 
-        <div class="col-md-4"></div>
+      <div class="col-md-4"></div>
 
-        <div class="col-md-4">
-          <label for="alliance">Alliance</label>
-          <select class="form-control text-center" id="alliance">
-            <option>Aldmeri Dominion</option>
-            <option>Daggerfall Covenant</option>
-            <option>Ebonheart Pact</option>
-          </select>
+      <div class="col-md-4">
+        
+        <div class="form-group">
+          <label>Alliance</label>
+          <div class="row">
+            
+            <div class="col-md-12">
+              <div class="form-check form-check-inline">
+                
+                <input type="radio" id="dc" class="roster" name="alliance" value="Daggerfall Covenant">
+                <label for="dc" data-toggle="tooltip" data-placement="top" title="Daggerfall Covenant"></label>
+                
+                <input type="radio" id="ad" class="roster" name="alliance" value="Aldmeri Dominion" required>
+                <label for="ad" data-toggle="tooltip" data-placement="top" title="Aldmeri Dominion"></label>
+                
+                <input type="radio" id="ep" class="roster" name="alliance" value="Ebonheart Pact">
+                <label for="ep" data-toggle="tooltip" data-placement="top" title="Ebonheart Pact"></label>
+                
+              </div>
+            </div>
+
+          </div>
         </div>
 
-        <div class="col-md-4"></div>
-
       </div>
+
+      <div class="col-md-4"></div>
+
     </div>
 
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-4 hidden-xs-down">
 
         <div class="form-group">
           <label>Class</label>
@@ -150,6 +165,33 @@
               </div>
             </div>
           </div>
+        </div>
+
+      </div>
+      <div class="col-md-4 hidden-sm-up">
+
+        <div class="form-group">
+          <label>Class</label>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-check form-check-inline">
+                  
+                  <input type="radio" id="mobile-dragonknight" class="roster" name="class" value="dragonknight">
+                  <label for="mobile-dragonknight" data-toggle="tooltip" data-placement="top" title="Dragon Knight"></label>
+                  
+                  <input type="radio" id="mobile-nightblade" class="roster" name="class" value="nightblade">
+                  <label for="mobile-nightblade" data-toggle="tooltip" data-placement="top" title="Nightblade"></label>
+                
+                  <input type="radio" id="mobile-sorcerer" class="roster" name="class" value="sorcerer">
+                  <label for="mobile-sorcerer" data-toggle="tooltip" data-placement="top" title="Sorcerer"></label>
+                
+                  <input type="radio" id="mobile-templar" class="roster" name="class" value="templar">
+                  <label for="mobile-templar" data-toggle="tooltip" data-placement="top" title="Templar"></label>
+                  
+                </div>
+              </div>
+            </div>
+
         </div>
 
       </div>
