@@ -34,7 +34,6 @@ router.post("/eso/news", (req, res) => {
     fs.readJson(path.join(__dirname, "content", "eso", "news", "savedVars.json"), (err, savedVars) => {
         if (err) console.error(err);
 
-        console.log(req.body.pubDate, savedVars.pubDate)
         if (req.body.pubDate > savedVars.pubDate) {
             savedVars = req.body;
             fs.writeJson(path.join(__dirname, "content", "eso", "news", "savedVars.json"), savedVars, (err) => {
@@ -46,7 +45,6 @@ router.post("/eso/news", (req, res) => {
 
             res.status(200).json(item);
         } else {
-            console.log("time is smaller than update");
             res.json(req.body);
         }
     });

@@ -13,12 +13,19 @@ function distributeESONews(item)
         .setImage(item.image || dClient.config.eso.news.defaultImage || "")
         .setFooter(`Provided to you by Grogsile Inc. | ${utils.fancyESODate(new Date(item.pubDate))}`, dClient.config.eso.news.footer.avatar || dClient.user.avatarURL);
 
-    fs.readJson(join(__data, "subscriptions.json"), (err, subscriptions) => {
+    fs.readdir(join(__data, "guilds"), (err, guilds) => {
         if (err) console.error(err);
 
-        for (let channel of subscriptions.eso)
+        for (let g of guilds)
         {
-            dClient.channels.get(channel).sendEmbed(newsEmbed).catch(console.error);
+            fs.readJson(join(__data, "guilds", g, "config.json"), (err, config) => {
+                if (err) console.error(err);
+
+                if (config.eso.news.active)
+                {
+                    dClient.channels.get(config.eso.news.channel).sendEmbed(newsEmbed).catch(console.error);
+                }
+            });
         }
     });
 }
