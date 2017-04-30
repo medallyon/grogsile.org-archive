@@ -241,23 +241,19 @@ router.get("/u/:id", testersOnly, resetLocals, function(req, res)
 
                         if (account.private)
                         {
-                            if (req.user && req.user.id === req.params.id)
-                            {
-                                res.render("pages/profile.ejs", locals);
-                            }
-
+                            if (req.user && req.user.id === req.params.id) res.render("pages/profile.ejs", locals);
                             else
                             {
                                 locals.error = {
-                                    title: `${user.discord.username}#${user.discord.discriminator}'s profile is private!`,
-                                    description: `This profile has been set to private. If you think this is an error, speak to <b>${user.discord.username}#${user.discord.discriminator}</b> or a developer on <a href="/discord">Discord</a>.`
+                                    title: `${user.username}#${user.discriminator}'s profile is private!`,
+                                    description: `This profile has been set to private. If you think this is an error, speak to <b>${user.username}#${user.discriminator}</b> or a developer on <a href="/discord">Discord</a>.`
                                 };
 
                                 res.render("pages/error.ejs", locals);
                             }
                         }
 
-                        else return res.render("pages/profile.ejs", locals);
+                        else res.render("pages/profile.ejs", locals);
                     });
                 });
             });
