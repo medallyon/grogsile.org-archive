@@ -46,21 +46,24 @@ router.get("/actuallylogin", passport.authenticate("discord", { scope: ["identif
 
 router.get("/callback", passport.authenticate("discord", { failureRedirect: "/" }), function(req, res)
 {
-    let userDir = join(__data, "users", req.user.id)
-    , continuePath = req.query.continue || "/dashboard";
-    fs.readdir(join(__data, "users"), (err, files) => {
+    let userDir = join(__data, "users", req.user.id);
+    fs.readdir(userDir, (err, files) => {
         if (err) console.error(err);
 
-        fs.outputJson(join(userDir, "characters.json"), {}, (err) => { if (err) console.error(err) });
         fs.outputJson(join(userDir, "user.json"), req.user, (err) => {
             if (err) console.error(err);
 
-            fs.outputJson(join(userDir, "account.json"), _templates.account, (err) => {
-                if (err) console.error(err);
+            if (files.indexOf("account.json") === -1)
+            {
+                fs.outputJson(join(userDir, "account.json"), _templates.account, (err) => {
+                    if (err) console.error(err);
 
-                res.redirect(continuePath);
-            });
+                    res.redirect("/dashboard");
+                });
+            } else res.redirect("/dashboard");
         });
+
+        if (files.indexOf("characters.json") === -1) fs.outputJson(join(userDir, "characters.json"), {}, (err) => { if (err) console.error(err) });
     });
 });
 
@@ -94,7 +97,7 @@ function resetLocals(req, res, next)
 function isLoggedIn(req, res, next)
 {
     if (req.isAuthenticated()) next();
-    else res.redirect(`/actuallylogin?continue=${req.originalUrl}`);
+    else res.redirect(`/actuallylogin`);
 }
 
 const testersOnly = require(join(__webdir, "middleware", "testersOnly", "testersOnly.js"))
@@ -215,7 +218,7 @@ router.get("/u/:id", testersOnly, resetLocals, function(req, res)
             fs.readJson(join(__data, "users", req.params.id, "account.json"), (err, account) => {
                 if (err) return res.send(err);
 
-                if (req.user && req.user.id === req.params.id && account.accountName === "undefined") res.redirect("/account");
+                if (req.user && req.user.id === req.params.id && account.accountName === "undefined") return res.redirect("/account");
 
                 if (account.accountName === "undefined")
                 {
@@ -241,7 +244,7 @@ router.get("/u/:id", testersOnly, resetLocals, function(req, res)
 
                         if (account.private)
                         {
-                            if (req.user && req.user.id === req.params.id) res.render("pages/profile.ejs", locals);
+                            if (req.user && req.user.id === req.params.id) return res.render("pages/profile.ejs", locals);
                             else
                             {
                                 locals.error = {
@@ -249,7 +252,7 @@ router.get("/u/:id", testersOnly, resetLocals, function(req, res)
                                     description: `This profile has been set to private. If you think this is an error, speak to <b>${user.username}#${user.discriminator}</b> or a developer on <a href="/discord">Discord</a>.`
                                 };
 
-                                res.render("pages/error.ejs", locals);
+                                return res.render("pages/error.ejs", locals);
                             }
                         }
 
