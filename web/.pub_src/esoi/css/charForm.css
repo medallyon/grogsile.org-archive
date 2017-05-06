@@ -1,32 +1,3 @@
-/* CUSTOM SPAN ICONS */
-
-span.aldmeri-icon {
-  display: inline-block;
-  background: url("https://i.grogsile.me/esoi/img/aldmeri-icon.png") no-repeat;
-  background-size: 1.2em;
-  width: 1.2em;
-  height: 1.2em;
-  margin: 0;
-}
-
-span.daggerfall-icon {
-  display: inline-block;
-  background: url("https://i.grogsile.me/esoi/img/daggerfall-icon.png") no-repeat;
-  background-size: 1.2em;
-  width: 1.2em;
-  height: 1.2em;
-  margin: 0;
-}
-
-span.ebonheart-icon {
-  display: inline-block;
-  background: url("https://i.grogsile.me/esoi/img/ebonheart-icon.png") no-repeat;
-  background-size: 1.2em;
-  width: 1.2em;
-  height: 1.2em;
-  margin: 0;
-}
-
 /* INPUT GROUP */
 
 .input-group > div.input-group-addon > img {
@@ -290,26 +261,131 @@ span.ebonheart-icon {
 
 /* Role Icon Checkboxes */
 .roster#dps + label {
-  background-image: url("https://i.grogsile.me/esoi/img/roles/dps.png");
+  background-image: url("https://i.grogsile.me/esoi/img/ui/gameui/lfg/lfg_dps_up_64.png");
 }
 .roster#dps:checked + label {
-  background-image: url("https://i.grogsile.me/esoi/img/roles/dps.png");
+  background-image: url("https://i.grogsile.me/esoi/img/ui/gameui/lfg/lfg_dps_up_64.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #1361A5) drop-shadow(-2px -2px 2.5px #008000);
   filter: drop-shadow(2px 2px 2.5px #1361A5) drop-shadow(-2px -2px 2.5px #008000);
 }
 .roster#tank + label {
-  background-image: url("https://i.grogsile.me/esoi/img/roles/tank.png");
+  background-image: url("https://i.grogsile.me/esoi/img/ui/gameui/lfg/lfg_tank_up_64.png");
 }
 .roster#tank:checked + label {
-  background-image: url("https://i.grogsile.me/esoi/img/roles/tank.png");
+  background-image: url("https://i.grogsile.me/esoi/img/ui/gameui/lfg/lfg_tank_up_64.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #990D0D) drop-shadow(-2px -2px 2.5px #990D0D);
   filter: drop-shadow(2px 2px 2.5px #990D0D) drop-shadow(-2px -2px 2.5px #990D0D);
 }
 .roster#heal + label {
-  background-image: url("https://i.grogsile.me/esoi/img/roles/heal.png");
+  background-image: url("https://i.grogsile.me/esoi/img/ui/gameui/lfg/lfg_healer_up_64.png");
 }
 .roster#heal:checked + label {
-  background-image: url("https://i.grogsile.me/esoi/img/roles/heal.png");
+  background-image: url("https://i.grogsile.me/esoi/img/ui/gameui/lfg/lfg_healer_up_64.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #B7A51D) drop-shadow(-2px -2px 2.5px #B7A51D);
   filter: drop-shadow(2px 2px 2.5px #B7A51D) drop-shadow(-2px -2px 2.5px #B7A51D);
+}
+
+.roster#blacksmithing + label {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/servicemappins/servicepin_smithy.png");
+}
+.roster#blacksmithing:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/servicemappins/servicepin_smithy.png");
+  -webkit-filter: drop-shadow(2px 2px 2.5px #626567) drop-shadow(-2px -2px 2.5px #626567);
+  filter: drop-shadow(2px 2px 2.5px #626567) drop-shadow(-2px -2px 2.5px #626567);
+}
+.roster#clothing + label {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/servicemappins/servicepin_clothier.png");
+}
+.roster#clothing:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/servicemappins/servicepin_clothier.png");
+  -webkit-filter: drop-shadow(2px 2px 2.5px #641E16) drop-shadow(-2px -2px 2.5px #641E16);
+  filter: drop-shadow(2px 2px 2.5px #641E16) drop-shadow(-2px -2px 2.5px #641E16);
+}
+.roster#woodworking + label {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/servicemappins/servicepin_woodworking.png");
+}
+.roster#woodworking:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/servicemappins/servicepin_woodworking.png");
+  -webkit-filter: drop-shadow(2px 2px 2.5px #C0392B) drop-shadow(-2px -2px 2.5px #C0392B);
+  filter: drop-shadow(2px 2px 2.5px #C0392B) drop-shadow(-2px -2px 2.5px #C0392B);
+}
+.roster#alchemy + label {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/servicemappins/servicepin_alchemy.png");
+}
+.roster#alchemy:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/servicemappins/servicepin_alchemy.png");
+  -webkit-filter: drop-shadow(2px 2px 2.5px #17A589) drop-shadow(-2px -2px 2.5px #17A589);
+  filter: drop-shadow(2px 2px 2.5px #17A589) drop-shadow(-2px -2px 2.5px #17A589);
+}
+.roster#enchanting + label {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/servicemappins/servicepin_enchanting.png");
+}
+.roster#enchanting:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/servicemappins/servicepin_enchanting.png");
+  -webkit-filter: drop-shadow(2px 2px 2.5px #9B59B6) drop-shadow(-2px -2px 2.5px #9B59B6);
+  filter: drop-shadow(2px 2px 2.5px #9B59B6) drop-shadow(-2px -2px 2.5px #9B59B6);
+}
+.roster#provisioning + label {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/servicemappins/servicepin_inn.png");
+}
+.roster#provisioning:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/servicemappins/servicepin_inn.png");
+  -webkit-filter: drop-shadow(2px 2px 2.5px #BB9613) drop-shadow(-2px -2px 2.5px #BB9613);
+  filter: drop-shadow(2px 2px 2.5px #BB9613) drop-shadow(-2px -2px 2.5px #BB9613);
+}
+.roster#fishing + label {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/gameui/inventory/gamepad/gp_inventory_icon_craftbag_fishing.png"), url("https://i.grogsile.me/esoi/img/ui/gameui/inventory/gamepad/gp_inventory_icon_craftbag_fishing.png");
+}
+.roster#fishing:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/gameui/inventory/gamepad/gp_inventory_icon_craftbag_fishing.png"), url("https://i.grogsile.me/esoi/img/ui/gameui/inventory/gamepad/gp_inventory_icon_craftbag_fishing.png");
+  -webkit-filter: drop-shadow(2px 2px 2.5px #3498DB) drop-shadow(-2px -2px 2.5px #3498DB);
+  filter: drop-shadow(2px 2px 2.5px #3498DB) drop-shadow(-2px -2px 2.5px #3498DB);
+}
+.roster#banker + label {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/servicemappins/servicepin_bank.png");
+}
+.roster#banker:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/servicemappins/servicepin_bank.png");
+  -webkit-filter: drop-shadow(2px 2px 2.5px #B7950B) drop-shadow(-2px -2px 2.5px #B7950B);
+  filter: drop-shadow(2px 2px 2.5px #B7950B) drop-shadow(-2px -2px 2.5px #B7950B);
+}
+.roster#thieving + label {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/servicemappins/servicepin_thievesguild.png");
+}
+.roster#thieving:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/servicemappins/servicepin_thievesguild.png");
+  -webkit-filter: drop-shadow(2px 2px 2.5px #566573) drop-shadow(-2px -2px 2.5px #566573);
+  filter: drop-shadow(2px 2px 2.5px #566573) drop-shadow(-2px -2px 2.5px #566573);
+}
+.roster#pve + label {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/mapkey/mapkey_groupinstance.png");
+}
+.roster#pve:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/mapkey/mapkey_groupinstance.png");
+  -webkit-filter: drop-shadow(2px 2px 2.5px #27AE60) drop-shadow(-2px -2px 2.5px #27AE60);
+  filter: drop-shadow(2px 2px 2.5px #27AE60) drop-shadow(-2px -2px 2.5px #27AE60);
+}
+.roster#pvp + label {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/mapkey/mapkey_keep.png");
+}
+.roster#pvp:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/mapkey/mapkey_keep.png");
+  -webkit-filter: drop-shadow(2px 2px 2.5px #C0392B) drop-shadow(-2px -2px 2.5px #C0392B);
+  filter: drop-shadow(2px 2px 2.5px #C0392B) drop-shadow(-2px -2px 2.5px #C0392B);
+}
+.roster#dueling + label {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/gameui/notifications/gamepad/gp_notificationicon_duel.png"), url("https://i.grogsile.me/esoi/img/ui/gameui/notifications/gamepad/gp_notificationicon_duel.png");
+}
+.roster#dueling:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/gameui/notifications/gamepad/gp_notificationicon_duel.png"), url("https://i.grogsile.me/esoi/img/ui/gameui/notifications/gamepad/gp_notificationicon_duel.png");
+  -webkit-filter: drop-shadow(2px 2px 2.5px #4A235A) drop-shadow(-2px -2px 2.5px #4A235A);
+  filter: drop-shadow(2px 2px 2.5px #4A235A) drop-shadow(-2px -2px 2.5px #4A235A);
+}
+.roster#roleplay + label {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/store/esoplus_01_white.png"), url("https://i.grogsile.me/esoi/img/ui/icons/store/esoplus_01_white.png");
+}
+.roster#roleplay:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/store/esoplus_01_white.png"), url("https://i.grogsile.me/esoi/img/ui/icons/store/esoplus_01_white.png");
+  -webkit-filter: drop-shadow(2px 2px 2.5px #CC00CC) drop-shadow(-2px -2px 2.5px #CC00CC);
+  filter: drop-shadow(2px 2px 2.5px #CC00CC) drop-shadow(-2px -2px 2.5px #CC00CC);
 }
