@@ -9,22 +9,20 @@
 
   <div class="container">
 
-    <div class="row">
-      <div class="col-md-3"></div>
+    <div class="row justify-content-center">
       <div class="col-md-6" style="text-align: center;">
         <% if (Object.keys(characters).length > 0) { %><h2>Your Characters</h2><% } else { %><h4>This is where your characters would go. If you had any.</h4>
         <p class="pt-4">
           <a class="btn btn-lg btn-info" href="/new?type=character">Why not create one?</a>
         </p><% } %>
       </div>
-      <div class="col-md-3"></div>
     </div>
 
-    <% if (Object.keys(characters).length) { %><div class="row">
+    <% if (Object.keys(characters).length) { %><div class="row justify-content-center">
 
       <% for (let character in characters) { %><div class="card">
-        <% let char = content.characters[character]; %>
-        <img src="https://i.grogsile.me/esoi/users/<%- user.id %>/<%- character %>.png" alt="Card image cap">
+        <% let char = characters[character]; %>
+        <img src="<%- char.avatarURL %>" alt="<%- char.name %> image">
         <h5 class="text-center"><%- char.name %></h5>
         <p class="card-text">
           <% if (char.champion) { %><span class="champion"></span><%- user.level %><% } else { %>Level <%- char.level %><% } %><br>
