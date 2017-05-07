@@ -6,14 +6,14 @@
     </div>
   </section>
 
-  <form id="form" class="text-center" role="form">
+  <form id="form" action="/api/users/@me/characters" class="text-center" role="form" method="POST" enctype="multipart/form-data">
 
     <div class="form-group">
       <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
           <label for="characterName">Character Name</label>
-          <input type="text" id="characterName" class="form-control text-center" placeholder="Bumperstump Bentobox" autocomplete="off" required>
+          <input type="text" id="characterName" class="form-control text-center" name="characterName" placeholder="Bumperstump Bentobox" autocomplete="off" required>
         </div>
         <div class="col-md-3"></div>
       </div>
@@ -26,11 +26,11 @@
           <div class="input-group">
 
             <span class="input-group-addon">
-              <input type="checkbox" id="championBox" aria-label="Champion Input" <% if (account.champion) { %> checked<% } else { %> disabled<% } %>>
+              <input type="checkbox" id="championBox" name="champion" aria-label="Champion Input" <% if (account.champion) { %> checked<% } else { %> disabled<% } %>>
               <label for="championBox"></label>
             </span>
 
-            <input type="number" id="championInput" class="form-control text-center" <% if (account.champion) { %> min="1" max="600" placeholder="<%- account.level %>"<% } else { %> min="3" max="49" placeholder="3-50"<% } %> <% if (account.champion) { %> readonly <% } %> required>
+            <input type="number" id="championInput" name="level" class="form-control text-center" <% if (account.champion) { %> min="1" max="600" placeholder="<%- account.level %>"<% } else { %> min="3" max="49" placeholder="3-50"<% } %> <% if (account.champion) { %> readonly <% } %> required>
 
             <% if (account.champion) { %><div class="input-group-addon">CP</div><% } %>
           </div>
@@ -40,7 +40,7 @@
 
     <div class="form-group">
       <label for="biography">Biography</label>
-      <textarea class="form-control" id="biography" rows="3" maxlength="500"></textarea>
+      <textarea class="form-control" id="biography" name="biography" rows="3" maxlength="500"></textarea>
     </div>
 
     <div class="row justify-content-center">
@@ -267,17 +267,17 @@
     </div>
 
     <div class="form-group">
-      <div class="row">
-        <div class="col-md-3"></div>
+      <div class="row justify-content-center">
         <div class="col-md-6">
           <img id="avatar" class="img-responsive center-block" src="https://i.grogsile.me/esoi/img/new/default_char.png" />
+          <small id="avatarHelp" class="form-text text-muted">It might take some time for bigger images to be submitted.</small>
+          <input type="text" id="avatarData" class="hidden-input-file" name="avatarData">
         </div>
-        <div class="col-md-3"></div>
       </div>
     </div>
 
     <div class="form-group">
-      <input type="file" id="newAvatar" class="hidden-input-file">
+      <input type="file" id="newAvatar" name="avatar" class="hidden-input-file" accept="image/*">
 
       <label for="newAvatar">
         <div class="btn btn-lg btn-success">

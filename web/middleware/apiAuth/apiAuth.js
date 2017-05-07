@@ -3,6 +3,9 @@ const fs = require("fs-extra")
 
 function apiAuth(req, res, next)
 {
+    if (req.originalUrl.indexOf("@me") > -1 && req.isAuthenticated()) return next();
+    else if (req.originalUrl.indexOf("@me") > -1 && !req.isAuthenticated()) return res.status(400).send("You may not request @me data without being authenticated.");
+
     fs.readJson(join(__dirname, "keys.json"), (err, keys) => {
         if (err) console.error(err);
 

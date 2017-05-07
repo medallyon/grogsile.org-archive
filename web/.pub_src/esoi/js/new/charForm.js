@@ -52,55 +52,11 @@ $().ready(function()
     {
         e.preventDefault();
 
-        $("#avatar").cropper("getCroppedCanvas").toBlob(function(blob)
-        {
-            let formData = new FormData();
+        $('button[type="submit"]').replaceWith('<img id="loading" src="https://i.grogsile.me/esoi/img/ui/gameui/screens_app/gamepad/ouroboros_loading-128.png">');
 
-            formData.set("avatar", blob);
-            formData.set("characterName", $("#characterName").val());
-            formData.set("champion", $("#championBox").prop("checked"));
-            formData.set("level", $("#championInput").val());
-            formData.set("biography", $("#biography").val());
-            formData.set("alliance", $('input[name="alliance"]:checked').prop("value"));
-            formData.set("race", $('input[name="race"]:checked').prop("value"));
-            formData.set("class", $('input[name="class"]:checked').prop("value"));
+        $("#avatarData").val(JSON.stringify($("#avatar").cropper("getData"), null, 2));
 
-            let roles = [];
-            $('input[name="roles"]:checked').each(function()
-            {
-                roles.push($(this).prop("value"));
-            });
-            formData.set("roles", roles);
-
-            let professions = [];
-            $('input[name="professions"]:checked').each(function()
-            {
-                professions.push($(this).prop("value"));
-            });
-            formData.set("professions", professions);
-
-            $('button[type="submit"]').replaceWith('<img id="loading" src="https://i.grogsile.me/esoi/img/ui/gameui/screens_app/gamepad/ouroboros_loading-128.png">');
-
-            $.ajax("/new", {
-                method: "POST",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(data, status, xhr) {
-                  console.log(data);
-                  console.log(status);
-                  console.log(xhr);
-                  window.location.replace("/dashboard");
-                },
-                error: function(xhr, status, err) {
-                  console.log(xhr);
-                  console.log(status);
-                  console.log(err);
-                  window.alert(err);
-                  $("#loading").replaceWith('<button type="submit" class="btn btn-default">Submit</button>');
-                }
-            });
-        });
+        e.target.submit();
     });
 
     $('[data-toggle="tooltip"]').tooltip();

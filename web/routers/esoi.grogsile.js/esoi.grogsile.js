@@ -1,6 +1,7 @@
 const Discord = require("discord.js")
 , express = require("express")
 , multer = require("multer")
+, jimp = require("jimp")
 , passport = require("passport")
 , Strategy = require("passport-discord").Strategy
 , session = require("express-session")
@@ -37,7 +38,7 @@ router.use(session({
 router.use(passport.initialize());
 router.use(passport.session());
 
-router.get("/login", isLoggedIn, function(req, res)
+router.get("/login", middleware.isLoggedIn, function(req, res)
 {
     res.redirect("/dashboard");
 });
@@ -94,15 +95,6 @@ function resetLocals(req, res, next)
     } else next();
 }
 
-function isLoggedIn(req, res, next)
-{
-    if (req.isAuthenticated()) next();
-    else res.redirect(`/actuallylogin`);
-}
-
-const testersOnly = require(join(__webdir, "middleware", "testersOnly", "testersOnly.js"))
-, isAccountSetup = require(join(__webdir, "middleware", "isAccountSetup", "isAccountSetup.js"));
-
 // ===== [ HOME ] ===== //
 
 router.get("/", resetLocals, function(req, res)
@@ -113,7 +105,7 @@ router.get("/", resetLocals, function(req, res)
 
 // ===== [ DASHBOARD ] ===== //
 
-router.get("/dashboard", isLoggedIn, isAccountSetup, resetLocals, function(req, res)
+router.get("/dashboard", middleware.isLoggedIn, middleware.isAccountSetup, resetLocals, function(req, res)
 {
     let userDir = join(__data, "users", req.user.id);
     fs.readJson(join(userDir, "characters.json"), (err, characters) => {
@@ -126,7 +118,7 @@ router.get("/dashboard", isLoggedIn, isAccountSetup, resetLocals, function(req, 
 
 // ===== [ ACCOUNT ] ===== //
 
-router.get("/account", isLoggedIn, resetLocals, function(req, res)
+router.get("/account", middleware.isLoggedIn, resetLocals, function(req, res)
 {
     let userDir = join(__data, "users", req.user.id);
     fs.readdir(userDir, (err, files) => {
@@ -153,7 +145,7 @@ router.get("/account", isLoggedIn, resetLocals, function(req, res)
     });
 });
 
-router.post("/account", isLoggedIn, resetLocals, function(req, res)
+router.post("/account", middleware.isLoggedIn, resetLocals, function(req, res)
 {
     if (req.body)
     {
@@ -186,7 +178,7 @@ router.post("/account", isLoggedIn, resetLocals, function(req, res)
 
 // ===== [ NEW CHARACTER | NEW GUILD ] ===== //
 
-router.get("/new", isLoggedIn, testersOnly, isAccountSetup, resetLocals, function(req, res)
+router.get("/new", middleware.isLoggedIn, middleware.testersOnly, middleware.isAccountSetup, resetLocals, function(req, res)
 {
     if (!req.query.type) req.query.type = "character";
 
@@ -201,49 +193,9 @@ router.get("/new", isLoggedIn, testersOnly, isAccountSetup, resetLocals, functio
     }
 });
 
-let upload = multer();
-router.post("/new", isLoggedIn, testersOnly, isAccountSetup, resetLocals, upload.single("avatar"), function(req, res)
-{
-    console.log(req.body);
-    const userDir = join(__data, "users", req.user.id);
-    fs.readJson(join(userDir, "characters.json"), (err, characters) => {
-        if (err) return res.status(500).send("Cannot read characters.json");
-
-        if (Object.keys(characters).length >= 12) return res.status(409).send("Characters are limited to 12 per user.");
-
-        let character = {};
-
-        if (req.body.characterName) character.name = req.body.characterName;
-        if (req.body.champion) character.champion = req.body.champion;
-        if (req.body.level) character.level = req.body.level;
-        if (req.body.biography) character.biography = req.body.biography;
-        if (req.body.alliance) character.biography = req.body.alliance;
-        if (req.body.roles) character.roles = req.body.roles.split(",");
-        if (req.body.professions) character.professions = req.body.professions.split(",");
-
-        const userAvatarDir = join(__webdir, ".pub_src", "esoi", "users", req.user.id);
-        fs.ensureDir(userAvatarDir, (err) => {
-            if (err) console.error(err);
-
-            fs.writeFile(join(userAvatarDir, `${Object.keys(characters).length}.png`), req.file.buffer, (err) => {
-                if (err) console.error(err);
-
-                character.avatarURL = `https://i.grogsile.me/esoi/users/${req.user.id}/${Object.keys(characters).length}.png`;
-                characters[Object.keys(characters).length] = character;
-
-                fs.writeJson(join(userDir, "characters.json"), characters, (err) => {
-                    if (err) return res.status(500).send("Could not save characters.json");
-
-                    res.status(200).send(req.body);
-                });
-            });
-        });
-    });
-});
-
 // ===== [ PUBLIC PROFILE ] ===== //
 
-router.get("/u/:id", testersOnly, resetLocals, function(req, res)
+router.get("/u/:id", middleware.testersOnly, resetLocals, function(req, res)
 {
     fs.readdir(join(__data, "users"), (err, users) => {
         if (err) return res.send(err);
@@ -306,6 +258,79 @@ router.get("/u/:id", testersOnly, resetLocals, function(req, res)
 
             res.render("pages/error.ejs", locals);
         }
+    });
+});
+
+// ===== [ ESOI END-POINTS ] ===== //
+
+router.get("/api/users/:id/characters", middleware.apiAuth, function(req, res)
+{
+    const userId = (req.params.id === "@me" ? req.user.id : req.params.id);
+    const userDir = join(__data, "users", userId);
+    fs.access(userDir, (err) => {
+        if (err && err.code === "ENOENT") return res.status(400).send("This user does not exist.");
+        else if (err) return res.status(500).send("Something went wrong while reading characters for this user.");
+
+        fs.readJson(join(userDir, "characters.json"), (err, characters) => {
+            if (err) return res.status(500).send("Something went wrong while reading characters for this user.");
+
+            res.send(JSON.stringify(characters, null, 2));
+        });
+    });
+});
+
+// New Character POST Method
+let upload = multer();
+router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avatar"), function(req, res)
+{
+    const userId = (req.params.id === "@me" ? req.user.id : req.params.id);
+    const userDir = join(__data, "users", userId);
+
+    fs.access(userDir, (err) => {
+        if (err && err.code === "ENOENT") return res.status(400).send("This user does not exist.");
+        else if (err) return res.status(500).send(err);
+
+        fs.readJson(join(userDir, "characters.json"), (err, characters) => {
+            if (err) return res.status(500).send("Cannot read characters from user.");
+
+            if (Object.keys(characters).length >= 12) return res.status(409).send("Characters are limited to 12 per user.");
+
+            let character = {};
+            if (req.body.characterName) character.name = req.body.characterName;
+            if (req.body.champion) character.champion = req.body.champion;
+            if (req.body.level) character.level = req.body.level;
+            if (req.body.biography) character.biography = req.body.biography;
+            if (req.body.alliance) character.alliance = req.body.alliance;
+            if (req.body.race) character.race = req.body.race;
+            if (req.body.class) character.class = req.body.class;
+            if (req.body.roles) character.roles = req.body.roles;
+            if (req.body.professions) character.professions = req.body.professions;
+
+            const userAvatarDir = join(__webdir, ".pub_src", "esoi", "users", userId);
+            fs.ensureDir(userAvatarDir, (err) => {
+                if (err) return res.status(500).send("Could not establish user avatar directory.");
+
+                if (!req.file) req.file = { buffer: join(__src, "esoi", "img", "new", "default_char.png") };
+                jimp.read(req.file.buffer).then(function(image)
+                {
+                    const avatarData = JSON.parse(req.body.avatarData);
+                    image.crop(avatarData.x, avatarData.y, avatarData.width, avatarData.height);
+
+                    image.write(join(userAvatarDir, `${Object.keys(characters).length}.png`), (err) => {
+                        if (err) return res.status(500).send("Cannot write avatar to file.");
+
+                        character.avatarURL = `https://i.grogsile.me/esoi/users/${userId}/${Object.keys(characters).length}.png`;
+                        characters[Object.keys(characters).length] = character;
+
+                        fs.writeJson(join(userDir, "characters.json"), characters, (err) => {
+                            if (err) return res.status(500).send("Could not save character to file.");
+
+                            res.status(200).send(Object.assign(req.body, { statusCode: 200, statusMessage: "Success!" }));
+                        });
+                    });
+                }).catch(console.error);
+            });
+        });
     });
 });
 
