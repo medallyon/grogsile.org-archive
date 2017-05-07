@@ -27,7 +27,7 @@ $().ready(function()
                 .prop("readonly", true)
                 .attr("min", 1)
                 .attr("max", 600)
-                .attr("placeholder", 600)
+                .attr("placeholder", initialChampionPoints)
                 .parent().append("<div class=\"input-group-addon\">CP</div>");
         }
     });
