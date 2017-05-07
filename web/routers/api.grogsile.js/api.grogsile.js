@@ -1,14 +1,16 @@
 const fs = require("fs-extra")
 , path = require("path")
+, join = path.join
 , request = require("request")
-, express = require("express");
+, express = require("express")
+, multer = require("multer");
 
 let router = express.Router();
 
 // ===== [ YOUTUBE ] ===== //
 
 // returns the newest video snippet of any YouTube channel
-router.get("/youtube/newestVideo", (req, res) => {
+router.get("/youtube/newestVideo", middleware.apiAuth, (req, res) => {
     if (!req.query.hasOwnProperty("channel")) return res.status(400).end();
 
     let channelId = req.query.channel;
@@ -24,10 +26,10 @@ router.get("/youtube/newestVideo", (req, res) => {
     });
 });
 
-// ===== [ ELDER SCROLLS ONLINE ] ===== //
+// ===== [ ELDER SCROLLS ONLINE NEWS ] ===== //
 
 // processes updates over at elderscrollsonline.com/news
-router.post("/eso/news", (req, res) => {
+router.post("/eso/news", middleware.apiAuth, (req, res) => {
     console.log("got a new request: " + JSON.stringify(req.body, null, 2));
     if (!req.body) return res.status(400).end();
 
@@ -51,7 +53,7 @@ router.post("/eso/news", (req, res) => {
 });
 
 // Zapier.com - posts whenever a new video by Bethesda has been detected
-router.post("/eso/youtube/newest", (req, res) => {
+router.post("/eso/youtube/newest", middleware.apiAuth, (req, res) => {
     if (dClient.config.api.youtube.allowedChannels.some(x => x === req.body.author_id)) {
         let video = req.body;
 
