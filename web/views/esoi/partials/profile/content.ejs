@@ -1,27 +1,36 @@
-<section class="jumbotron text-center">
-  <div class="container">
-    <h1 class="jumbotron-heading">@<%- account.accountName %></h1>
-    <p class="lead"><%- targetUser.username %>#<%- targetUser.discriminator %></p>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <% if (targetAccount.private) { %><div class="alert alert-info alert-dismissible fade show" role="alert" style="margin-top: 2rem;">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>Your profile is private, so only you can see this page.</strong>
+      </div><% } %>
+    </div>
   </div>
-</section>
+
+  <section class="jumbotron text-center">
+      <h1 class="jumbotron-heading">@<%- targetAccount.accountName %></h1>
+      <p class="lead"><%- targetUser.username %>#<%- targetUser.discriminator %></p>
+  </section>
+</div>
 
 <div class="album text-muted">
 
   <div class="container">
 
-    <div class="row">
-      <div class="col-md-3"></div>
+    <div class="row justify-content-center">
       <div class="col-md-6" style="text-align: center;">
-        <% if (Object.keys(characters).length > 0) { %><h2>Characters</h2><% } else { %><h4><%- account.accountName %> does not have any characters yet.</h4><% } %>
+        <% if (Object.keys(characters).length > 0) { %><h2>Characters</h2><% } else { %><h4><%- targetAccount.accountName %> does not have any characters yet.</h4><% } %>
       </div>
-      <div class="col-md-3"></div>
     </div>
 
     <% if (Object.keys(characters).length) { %><div class="row">
 
       <% for (let character in characters) { %><div class="card">
         <% let char = characters[character]; %>
-        <img src="https://i.grogsile.me/esoi/users/<%- targetUser.id %>/<%- character %>.png" alt="<%- char.name %>">
+        <img src="<%- char.avatarURL %>" alt="<%- char.name %>">
         <h5 class="text-center"><%- char.name %></h5>
         <p class="card-text">
           <% if (char.champion) { %><span class="champion"></span><%- user.level %><% } else { %>Level <%- char.level %><% } %><br>
