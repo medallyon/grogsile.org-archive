@@ -10,8 +10,8 @@
         </ul>
       </div>
       <div class="col-8 py-4 text-center">
-        <h4 class="text-white">Welcome Home, <% if (typeof user !== "undefined") { %><%- user.username %><% } %></h4>
-        <p class="text-muted">[Placeholder Text]</p>
+        <h4 class="text-white">Welcome Home, <%- user.username %></h4>
+        <p id="userId" class="text-muted"><%- user.id %></p>
       </div>
       <div class="col-2 py-4">
         <h4 class="text-white">User Links</h4>
