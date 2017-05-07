@@ -10,6 +10,7 @@ const fs = require("fs-extra")
 , express = require("express")
 , vhost = require("vhost")
 , favicon = require("serve-favicon")
+, bodyparser = require("body-parser")
 , cookieParser = require("cookie-parser");
 
 // === [ APPS ] === //
@@ -20,6 +21,9 @@ var app = express();
 app.set("view engine", "ejs");
 
 app.use(cookieParser());
+
+app.use( bodyparser.json({ limit: "10mb" }) );
+app.use( bodyparser.urlencoded({ limit: "10mb", extended: true }) );
 
 app.use(function(req, res, next) {
     res.setHeader("Access-Control-Allow-Origin", "*");
