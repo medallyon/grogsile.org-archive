@@ -23,7 +23,7 @@ passport.use(new Strategy({
     clientID: dClient.config.discord.auth.id,
     clientSecret: dClient.config.discord.auth.secret,
     callbackURL: "https://esoi.grogsile.me/callback",
-    scope: ["identify", "guilds"]
+    scope: ["identify"]
 }, function(accessToken, refreshToken, profile, done) {
     process.nextTick(function() {
         return done(null, profile);
@@ -42,7 +42,7 @@ router.get("/login", isLoggedIn, function(req, res)
     res.redirect("/dashboard");
 });
 
-router.get("/actuallylogin", passport.authenticate("discord", { scope: ["identify", "guilds"] }), (req, res) => {});
+router.get("/actuallylogin", passport.authenticate("discord", { scope: ["identify"] }), (req, res) => {});
 
 router.get("/callback", passport.authenticate("discord", { failureRedirect: "/" }), function(req, res)
 {
@@ -201,9 +201,44 @@ router.get("/new", isLoggedIn, testersOnly, isAccountSetup, resetLocals, functio
     }
 });
 
-router.post("/new", isLoggedIn, testersOnly, isAccountSetup, resetLocals, function(req, res)
+let upload = multer();
+router.post("/new", isLoggedIn, testersOnly, isAccountSetup, resetLocals, upload.single("avatar"), function(req, res)
 {
-    // body...
+    console.log(req.body);
+    const userDir = join(__data, "users", req.user.id);
+    fs.readJson(join(userDir, "characters.json"), (err, characters) => {
+        if (err) return res.status(500).send("Cannot read characters.json");
+
+        if (Object.keys(characters).length >= 12) return res.status(409).send("Characters are limited to 12 per user.");
+
+        let character = {};
+
+        if (req.body.characterName) character.name = req.body.characterName;
+        if (req.body.champion) character.champion = req.body.champion;
+        if (req.body.level) character.level = req.body.level;
+        if (req.body.biography) character.biography = req.body.biography;
+        if (req.body.alliance) character.biography = req.body.alliance;
+        if (req.body.roles) character.roles = req.body.roles.split(",");
+        if (req.body.professions) character.professions = req.body.professions.split(",");
+
+        const userAvatarDir = join(__webdir, ".pub_src", "esoi", "users", req.user.id);
+        fs.ensureDir(userAvatarDir, (err) => {
+            if (err) console.error(err);
+
+            fs.writeFile(join(userAvatarDir, `${Object.keys(characters).length}.png`), req.file.buffer, (err) => {
+                if (err) console.error(err);
+
+                character.avatarURL = `https://i.grogsile.me/esoi/users/${req.user.id}/${Object.keys(characters).length}.png`;
+                characters[Object.keys(characters).length] = character;
+
+                fs.writeJson(join(userDir, "characters.json"), characters, (err) => {
+                    if (err) return res.status(500).send("Could not save characters.json");
+
+                    res.status(200).send(req.body);
+                });
+            });
+        });
+    });
 });
 
 // ===== [ PUBLIC PROFILE ] ===== //
@@ -230,7 +265,7 @@ router.get("/u/:id", testersOnly, resetLocals, function(req, res)
                     return res.render("pages/error.ejs", locals);
                 }
 
-                locals.account = account;
+                locals.targetAccount = account;
 
                 fs.readJson(join(__data, "users", req.params.id, "user.json"), (err, user) => {
                     if (err) return res.send(err);
