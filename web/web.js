@@ -30,6 +30,13 @@ app.use(function(req, res, next) {
     next();
 });
 
+// === [ MIDDLEWARE ] === //
+
+global.middleware = {};
+for (let script of fs.readdirSync(join(__dirname, "middleware"))) {
+    middleware[script] = require(join(__dirname, "middleware", script, `${script}.js`));
+}
+
 // === [ VHOSTS ] === //
 
 for (let subdomain of fs.readdirSync(join(__dirname, "domains"))) {
