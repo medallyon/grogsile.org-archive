@@ -4,7 +4,7 @@
 
 #championBox + label
 {
-  background: url("https://i.grogsile.me/esoi/img/champion.png") no-repeat;
+  background: url("https://i.grogsile.me/esoi/img/ui/gameui/lfg/gamepad/lfg_menuicon_normaldungeon.png") no-repeat;
   background-size: 2rem;
   width: 2rem;
   height: 2rem;
@@ -16,7 +16,7 @@
 
 #championBox:checked + label
 {
-  background: url("https://i.grogsile.me/esoi/img/champion-checked.png") no-repeat;
+  background: url("https://i.grogsile.me/esoi/img/ui/gameui/champion/champion_icon.png") no-repeat;
   background-size: 2rem;
   width: 2rem;
   height: 2rem;
