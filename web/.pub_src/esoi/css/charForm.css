@@ -1,3 +1,15 @@
+/* LOADING ICON */
+
+#loading {
+  -webkit-animation: spin 4s linear infinite;
+  -moz-animation: spin 4s linear infinite;
+  animation: spin 4s linear infinite;
+}
+
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
 /* INPUT GROUP */
 
 .input-group > div.input-group-addon > img {
@@ -19,7 +31,7 @@
 
 #championBox + label
 {
-  background: url("https://i.grogsile.me/esoi/img/champion.png") no-repeat;
+  background: url("https://i.grogsile.me/esoi/img/ui/gameui/lfg/gamepad/lfg_menuicon_normaldungeon.png") no-repeat;
   background-size: 1.2em;
   width: 1.2em;
   height: 1.2em;
@@ -31,7 +43,7 @@
 
 #championBox:checked + label
 {
-  background: url("https://i.grogsile.me/esoi/img/champion-checked.png") no-repeat;
+  background: url("https://i.grogsile.me/esoi/img/ui/gameui/champion/champion_icon.png") no-repeat;
   background-size: 1.2em;
   width: 1.2em;
   height: 1.2em;
