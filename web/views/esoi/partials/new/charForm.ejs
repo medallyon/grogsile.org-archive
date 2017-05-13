@@ -9,13 +9,12 @@
   <form id="form" action="/api/users/@me/characters" class="text-center" role="form" method="POST" enctype="multipart/form-data">
 
     <div class="form-group">
-      <div class="row">
-        <div class="col-md-3"></div>
+      <div class="row justify-content-center">
         <div class="col-md-6">
           <label for="characterName">Character Name</label>
-          <input type="text" id="characterName" class="form-control text-center" name="characterName" placeholder="Bumperstump Bentobox" autocomplete="off" required>
+          <input type="text" id="characterName" class="form-control text-center" name="characterName" placeholder="Bumperstump Bentobox" autocomplete="off" minlength="3" maxlength="25" required>
+          <small class="form-text text-muted">Your name must adhere to the standard Elder Scrolls rules of naming.</small>
         </div>
-        <div class="col-md-3"></div>
       </div>
     </div>
 
@@ -53,10 +52,10 @@
             <div class="col-md-12">
               <div class="form-check form-check-inline">
                 
-                <input type="radio" id="dc" class="roster" name="alliance" value="Daggerfall Covenant">
+                <input type="radio" id="dc" class="roster" name="alliance" value="Daggerfall Covenant" required>
                 <label for="dc" data-toggle="tooltip" data-placement="top" title="Daggerfall Covenant"></label>
                 
-                <input type="radio" id="ad" class="roster" name="alliance" value="Aldmeri Dominion" required>
+                <input type="radio" id="ad" class="roster" name="alliance" value="Aldmeri Dominion" >
                 <label for="ad" data-toggle="tooltip" data-placement="top" title="Aldmeri Dominion"></label>
                 
                 <input type="radio" id="ep" class="roster" name="alliance" value="Ebonheart Pact">
@@ -80,7 +79,7 @@
               <div class="col-md-12">
                 <div class="form-check form-check-inline">
                   
-                  <input type="radio" id="dragonknight" class="roster" name="class" value="dragonknight">
+                  <input type="radio" id="dragonknight" class="roster" name="class" value="dragonknight" required>
                   <label for="dragonknight" data-toggle="tooltip" data-placement="top" title="Dragon Knight"></label>
                   
                   <input type="radio" id="nightblade" class="roster" name="class" value="nightblade">
@@ -108,7 +107,7 @@
             <div class="col-md-12">
               <div class="form-check form-check-inline">
                 
-                <input type="radio" id="breton" class="roster" name="race" value="breton">
+                <input type="radio" id="breton" class="roster" name="race" value="breton" required>
                 <label for="breton" data-toggle="tooltip" data-placement="left" title="Breton"></label>
                 
                 <input type="radio" id="altmer" class="roster" name="race" value="altmer">
@@ -168,7 +167,7 @@
               <div class="col-md-12">
                 <div class="form-check form-check-inline">
                   
-                  <input type="radio" id="mobile-dragonknight" class="roster" name="class" value="dragonknight">
+                  <input type="radio" id="mobile-dragonknight" class="roster" name="class" value="dragonknight" required>
                   <label for="mobile-dragonknight" data-toggle="tooltip" data-placement="top" title="Dragon Knight"></label>
                   
                   <input type="radio" id="mobile-nightblade" class="roster" name="class" value="nightblade">
@@ -268,9 +267,9 @@
 
     <div class="form-group">
       <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-9">
           <img id="avatar" class="img-responsive center-block" src="https://i.grogsile.me/esoi/img/new/default_char.png" />
-          <small id="avatarHelp" class="form-text text-muted">It might take some time for bigger images to be submitted.</small>
+          <small class="form-text text-muted">It might take some time for bigger images to be submitted (images are limited to 2MB)</small>
           <input type="text" id="avatarData" class="hidden-input-file" name="avatarData">
         </div>
       </div>

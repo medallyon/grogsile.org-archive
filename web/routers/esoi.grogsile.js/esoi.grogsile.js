@@ -268,68 +268,86 @@ router.get("/api/users/:id/characters", middleware.apiAuth, function(req, res)
     const userId = (req.params.id === "@me" ? req.user.id : req.params.id);
     const userDir = join(__data, "users", userId);
     fs.access(userDir, (err) => {
-        if (err && err.code === "ENOENT") return res.status(400).send("This user does not exist.");
-        else if (err) return res.status(500).send("Something went wrong while reading characters for this user.");
+        if (err && err.code === "ENOENT") return res.status(400).send("This user does not exist");
+        else if (err) return res.status(500).send("Something went wrong while reading characters for this user");
 
         fs.readJson(join(userDir, "characters.json"), (err, characters) => {
-            if (err) return res.status(500).send("Something went wrong while reading characters for this user.");
+            if (err) return res.status(500).send("Something went wrong while reading characters for this user");
 
             res.send(JSON.stringify(characters, null, 2));
         });
     });
 });
 
+function validateFormElements(form)
+{
+    if (form.characterName.length < 3 || form.characterName.length > 25) return res.status(400).send("Character Name length is out of bounds");
+    if (/[^a-zA-Z-'öüäß ]/g.test(form.characterName)) return res.status(400).send("Character Name contains special characters");
+    if ("abcdefghijklmopqrstuvwxyzABCDEFGHIJKLMOPQRSTUVWXYZ-'öüäß ".split("").some(x => form.characterName.includes(x*3))) return res.status(400).send("Character name contains a character three consecutive times");
+
+    if (form.champion === "on") form.champion = true;
+    else form.champion = false;
+
+    if (!form.champion)
+    {
+        if (form.level > 49) form.champion = true;
+    }
+
+    if (form.biography.length > 500) return res.status(400).send("Biography is too long (max. 500 characters)");
+}
+
 // New Character POST Method
 let upload = multer();
 router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avatar"), function(req, res)
 {
+    console.log(req.body);
+
+    if (!req.body) return res.status(400).send("No form data was sent with the request");
+
     const userId = (req.params.id === "@me" ? req.user.id : req.params.id);
     const userDir = join(__data, "users", userId);
 
     fs.access(userDir, (err) => {
-        if (err && err.code === "ENOENT") return res.status(400).send("This user does not exist.");
+        if (err && err.code === "ENOENT") return res.status(400).send("This user does not exist");
         else if (err) return res.status(500).send(err);
 
         fs.readJson(join(userDir, "characters.json"), (err, characters) => {
-            if (err) return res.status(500).send("Cannot read characters from user.");
+            if (err) return res.status(500).send("Cannot read characters from user");
 
-            if (Object.keys(characters).length >= 12) return res.status(409).send("Characters are limited to 12 per user.");
+            if (Object.keys(characters).length >= 12) return res.status(409).send("Characters are limited to 12 per user");
 
-            let character = {};
-            if (req.body.characterName) character.name = req.body.characterName;
-            if (req.body.champion) character.champion = req.body.champion;
-            if (req.body.level) character.level = req.body.level;
-            if (req.body.biography) character.biography = req.body.biography;
-            if (req.body.alliance) character.alliance = req.body.alliance;
-            if (req.body.race) character.race = req.body.race;
-            if (req.body.class) character.class = req.body.class;
-            if (req.body.roles) character.roles = req.body.roles;
-            if (req.body.professions) character.professions = req.body.professions;
+            validateFormElements(req.body)
+            .then((charData) => {
+                let character = charData;
+                character.name = character.characterName;
+                delete character.characterName;
 
-            const userAvatarDir = join(__webdir, ".pub_src", "esoi", "users", userId);
-            fs.ensureDir(userAvatarDir, (err) => {
-                if (err) return res.status(500).send("Could not establish user avatar directory.");
+                const userAvatarDir = join(__webdir, ".pub_src", "esoi", "users", userId);
+                fs.ensureDir(userAvatarDir, (err) => {
+                    if (err) return res.status(500).send("Could not establish user avatar directory");
 
-                if (!req.file) req.file = { buffer: join(__src, "esoi", "img", "new", "default_char.png") };
-                jimp.read(req.file.buffer).then(function(image)
-                {
-                    const avatarData = JSON.parse(req.body.avatarData);
-                    image.crop(avatarData.x, avatarData.y, avatarData.width, avatarData.height);
+                    if (!req.file) req.file = { buffer: join(__src, "esoi", "img", "new", "default_char.png") };
+                    jimp.read(req.file.buffer).then(function(image)
+                    {
+                        const avatarData = JSON.parse(req.body.avatarData);
+                        image.crop(avatarData.x, avatarData.y, avatarData.width, avatarData.height);
 
-                    image.write(join(userAvatarDir, `${Object.keys(characters).length}.png`), (err) => {
-                        if (err) return res.status(500).send("Cannot write avatar to file.");
+                        image.write(join(userAvatarDir, `${Object.keys(characters).length}.png`), (err) => {
+                            if (err) return res.status(500).send("Cannot write avatar to file");
 
-                        character.avatarURL = `https://i.grogsile.me/esoi/users/${userId}/${Object.keys(characters).length}.png`;
-                        characters[Object.keys(characters).length] = character;
+                            character.avatarURL = `https://i.grogsile.me/esoi/users/${userId}/${Object.keys(characters).length}.png`;
+                            characters[Object.keys(characters).length] = character;
 
-                        fs.writeJson(join(userDir, "characters.json"), characters, (err) => {
-                            if (err) return res.status(500).send("Could not save character to file.");
+                            fs.writeJson(join(userDir, "characters.json"), characters, (err) => {
+                                if (err) return res.status(500).send("Could not save character to file");
 
-                            res.status(200).send(Object.assign(req.body, { statusCode: 200, statusMessage: "Success!" }));
+                                res.status(200).send(Object.assign(req.body, { statusCode: 200, statusMessage: "Success!" }));
+                            });
                         });
-                    });
-                }).catch(console.error);
-            });
+                    }).catch(console.error);
+                });
+            })
+            .catch(res.send);
         });
     });
 });
