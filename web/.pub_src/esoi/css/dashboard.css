@@ -30,28 +30,36 @@
 .card {
   float: left;
   width: 33.333%;
-  padding: .75rem;
+  max-width: 50%;
   margin-bottom: 2rem;
   border: 0;
-}
-
-.card > img {
-  margin-bottom: .75rem;
-  max-width: 100%;
-  object-fit: cover;
+  flex: 1 0 auto !important;
+  transition: background-color .25s ease-in-out;
+  -webkit-transition: background-color .25s ease-in-out;
 }
 
 .card-text {
   font-size: 85%;
 }
 
-span.inline-icon > img:before {
-  content: "";
-  display: inline-block;
+.card > img {
+  margin-bottom: .75rem;
+  width: 100%;
+  object-fit: cover;
 }
 
-span.inline-icon > img {
-  max-width: 1.25em;
+.card-group .card:nth-child(3n+3) img {
+  border-top-right-radius: .25rem !important;
+}
+.card-group .card:nth-child(3n+1) img {
+  border-top-left-radius: .25rem !important;
+}
+.card-group .card:last-child img {
+  border-top-right-radius: .25rem !important;
+}
+
+.card-footer {
+  background-color: rgba(0, 0, 0, .125);
 }
 
 footer {
