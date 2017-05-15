@@ -1,0 +1,294 @@
+<div class="container">
+
+  <section class="jumbotron text-center">
+    <div class="container">
+      <h1 class="jumbotron-heading">Edit your existing Character</h1>
+    </div>
+  </section>
+
+  <form id="form" action="/api/users/@me/characters" class="text-center" role="form" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="_method" value="PUT">
+    <input type="hidden" name="id" value="<%- charId %>">
+
+    <div class="form-group">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <label for="characterName">Character Name</label>
+          <input type="text" id="characterName" class="form-control text-center" name="characterName" value="<%- character.name %>" placeholder="Bumperstump Bentobox" autocomplete="off" minlength="3" maxlength="25" required>
+          <small class="form-text text-muted">Your name must adhere to the standard Elder Scrolls rules of naming.</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+          <label for="championInput">Character level</label>
+          <div class="input-group">
+
+            <span class="input-group-addon">
+              <input type="checkbox" id="championBox" name="champion" aria-label="Champion Input" <% if (character.champion) { %> checked<% } %>>
+              <label for="championBox"></label>
+            </span>
+
+            <input type="number" id="championInput" name="level" class="form-control text-center" <% if (character.champion) { %> min="1" max="600" placeholder="<%- account.level %>"<% } else { %> min="3" max="49" value="<%- character.level %>" placeholder="3-50"<% } %> <% if (character.champion) { %> readonly <% } %> required>
+
+            <% if (character.champion) { %><div class="input-group-addon">CP</div><% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="biography">Biography</label>
+      <textarea class="form-control" id="biography" name="biography" rows="3" maxlength="500"><%- character.biography %></textarea>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-md-4">
+        
+        <div class="form-group">
+          <label>Alliance</label>
+          <div class="row">
+            
+            <div class="col-md-12">
+              <div class="form-check form-check-inline">
+                
+                <input type="radio" id="dc" class="roster" name="alliance" value="Daggerfall Covenant" <% if (character.alliance === "Daggerfall Covenant") { %> checked<% } %> required>
+                <label for="dc" data-toggle="tooltip" data-placement="top" title="Daggerfall Covenant"></label>
+                
+                <input type="radio" id="ad" class="roster" name="alliance" value="Aldmeri Dominion" <% if (character.alliance === "Aldmeri Dominion") { %> checked<% } %>>
+                <label for="ad" data-toggle="tooltip" data-placement="top" title="Aldmeri Dominion"></label>
+                
+                <input type="radio" id="ep" class="roster" name="alliance" value="Ebonheart Pact" <% if (character.alliance === "Ebonheart Pact") { %> checked<% } %>>
+                <label for="ep" data-toggle="tooltip" data-placement="top" title="Ebonheart Pact"></label>
+                
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 hidden-sm-down">
+
+        <div class="form-group">
+          <label>Class</label>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-check form-check-inline">
+                  
+                  <input type="radio" id="dragonknight" class="roster" name="class" value="dragonknight" <% if (character.class === "dragonknight") { %> checked<% } %> required>
+                  <label for="dragonknight" data-toggle="tooltip" data-placement="top" title="Dragon Knight"></label>
+                  
+                  <input type="radio" id="nightblade" class="roster" name="class" value="nightblade" <% if (character.class === "nightblade") { %> checked<% } %>>
+                  <label for="nightblade" data-toggle="tooltip" data-placement="top" title="Nightblade"></label>
+                
+                  <input type="radio" id="sorcerer" class="roster" name="class" value="sorcerer" <% if (character.class === "sorcerer") { %> checked<% } %>>
+                  <label for="sorcerer" data-toggle="tooltip" data-placement="top" title="Sorcerer"></label>
+                
+                  <input type="radio" id="templar" class="roster" name="class" value="templar" <% if (character.class === "templar") { %> checked<% } %>>
+                  <label for="templar" data-toggle="tooltip" data-placement="top" title="Templar"></label>
+                  
+                </div>
+              </div>
+            </div>
+
+        </div>
+
+      </div>
+      <div class="col-md-4">
+
+        <div class="form-group">
+          <label>Race</label>
+          <div class="row">
+            
+            <div class="col-md-12">
+              <div class="form-check form-check-inline">
+                
+                <input type="radio" id="breton" class="roster" name="race" value="breton" <% if (character.race === "breton") { %> checked<% } %> required>
+                <label for="breton" data-toggle="tooltip" data-placement="left" title="Breton"></label>
+                
+                <input type="radio" id="altmer" class="roster" name="race" value="altmer" <% if (character.race === "altmer") { %> checked<% } %>>
+                <label for="altmer" data-toggle="tooltip" data-placement="top" title="Altmer/High Elf"></label>
+                
+                <input type="radio" id="argonian" class="roster" name="race" value="argonian" <% if (character.race === "argonian") { %> checked<% } %>>
+                <label for="argonian" data-toggle="tooltip" data-placement="right" title="Argonian"></label>
+                
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-check form-check-inline">
+
+                <input type="radio" id="orsimer" class="roster" name="race" value="orsimer" <% if (character.race === "orsimer") { %> checked<% } %>>
+                <label for="orsimer" data-toggle="tooltip" data-placement="left" title="Orsimer/Orc"></label>
+                
+                <input type="radio" id="bosmer" class="roster" name="race" value="bosmer" <% if (character.race === "bosmer") { %> checked<% } %>>
+                <label for="bosmer" data-toggle="tooltip" data-placement="top" title="Bosmer/Wood Elf"></label>
+                
+                <input type="radio" id="dunmer" class="roster" name="race" value="dunmer" <% if (character.race === "dunmer") { %> checked<% } %>>
+                <label for="dunmer" data-toggle="tooltip" data-placement="right" title="Dunmer/Dark Elf"></label>
+                
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-check form-check-inline">
+
+                <input type="radio" id="redguard" class="roster" name="race" value="redguard" <% if (character.race === "redguard") { %> checked<% } %>>
+                <label for="redguard" data-toggle="tooltip" data-placement="left" title="Redguard"></label>
+                
+                <input type="radio" id="khajiit" class="roster" name="race" value="khajiit" <% if (character.race === "khajiit") { %> checked<% } %>>
+                <label for="khajiit" data-toggle="tooltip" data-placement="top" title="Khajiit"></label>
+                
+                <input type="radio" id="nord" class="roster" name="race" value="nord" <% if (character.race === "nord") { %> checked<% } %>>
+                <label for="nord" data-toggle="tooltip" data-placement="right" title="Nord"></label>
+                
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-check form-check-inline">
+                
+                <input type="radio" id="imperial" class="roster" name="race" value="imperial" <% if (character.race === "imperial") { %> checked<% } %>>
+                <label for="imperial" data-toggle="tooltip" data-placement="top" title="Imperial"></label>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-4 hidden-md-up">
+
+        <div class="form-group">
+          <label>Class</label>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-check form-check-inline">
+                  
+                  <input type="radio" id="mobile-dragonknight" class="roster" name="class" value="dragonknight">
+                  <label for="mobile-dragonknight" data-toggle="tooltip" data-placement="top" title="Dragon Knight"></label>
+                  
+                  <input type="radio" id="mobile-nightblade" class="roster" name="class" value="nightblade">
+                  <label for="mobile-nightblade" data-toggle="tooltip" data-placement="top" title="Nightblade"></label>
+                
+                  <input type="radio" id="mobile-sorcerer" class="roster" name="class" value="sorcerer">
+                  <label for="mobile-sorcerer" data-toggle="tooltip" data-placement="top" title="Sorcerer"></label>
+                
+                  <input type="radio" id="mobile-templar" class="roster" name="class" value="templar">
+                  <label for="mobile-templar" data-toggle="tooltip" data-placement="top" title="Templar"></label>
+                  
+                </div>
+              </div>
+            </div>
+
+        </div>
+
+      </div>
+      <div class="col-md-4">
+        
+        <div class="form-group">
+          <label>Roles</label>
+          <div class="row">
+            
+            <div class="col-md-12">
+              <div class="form-check form-check-inline">
+                
+                <input type="checkbox" id="dps" class="roster" name="roles" value="dps" <% if (character.roles.indexOf("dps") > -1) { %> checked<% } %>>
+                <label for="dps" data-toggle="tooltip" data-placement="top" title="DPS"></label>
+                
+                <input type="checkbox" id="tank" class="roster" name="roles" value="tank" <% if (character.roles.indexOf("tank") > -1) { %> checked<% } %>>
+                <label for="tank" data-toggle="tooltip" data-placement="top" title="Tank"></label>
+                
+                <input type="checkbox" id="heal" class="roster" name="roles" value="heal" <% if (character.roles.indexOf("heal") > -1) { %> checked<% } %>>
+                <label for="heal" data-toggle="tooltip" data-placement="top" title="Heal"></label>
+                
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Professions</label>
+      <div class="row">
+        
+        <div class="col-md-12">
+          <div class="form-check form-check-inline">
+              
+            <input type="checkbox" id="blacksmithing" class="roster" name="professions" value="blacksmithing" <% if (character.professions.indexOf("blacksmithing") > -1) { %> checked<% } %>>
+            <label for="blacksmithing" data-toggle="tooltip" data-placement="top" title="Blacksmithing"></label>
+            
+            <input type="checkbox" id="clothing" class="roster" name="professions" value="clothing" <% if (character.professions.indexOf("clothing") > -1) { %> checked<% } %>>
+            <label for="clothing" data-toggle="tooltip" data-placement="top" title="Clothing"></label>
+            
+            <input type="checkbox" id="woodworking" class="roster" name="professions" value="woodworking" <% if (character.professions.indexOf("woodworking") > -1) { %> checked<% } %>>
+            <label for="woodworking" data-toggle="tooltip" data-placement="top" title="Woodworking"></label>
+            
+            <input type="checkbox" id="alchemy" class="roster" name="professions" value="alchemy" <% if (character.professions.indexOf("alchemy") > -1) { %> checked<% } %>>
+            <label for="alchemy" data-toggle="tooltip" data-placement="top" title="Alchemy"></label>
+            
+            <input type="checkbox" id="enchanting" class="roster" name="professions" value="enchanting" <% if (character.professions.indexOf("enchanting") > -1) { %> checked<% } %>>
+            <label for="enchanting" data-toggle="tooltip" data-placement="top" title="Enchanting"></label>
+            
+            <input type="checkbox" id="provisioning" class="roster" name="professions" value="provisioning" <% if (character.professions.indexOf("provisioning") > -1) { %> checked<% } %>>
+            <label for="provisioning" data-toggle="tooltip" data-placement="top" title="Provisioning"></label>
+            
+            <input type="checkbox" id="fishing" class="roster" name="professions" value="fishing" <% if (character.professions.indexOf("fishing") > -1) { %> checked<% } %>>
+            <label for="fishing" data-toggle="tooltip" data-placement="top" title="Fishing"></label>
+            
+            <input type="checkbox" id="banker" class="roster" name="professions" value="banker" <% if (character.professions.indexOf("banker") > -1) { %> checked<% } %>>
+            <label for="banker" data-toggle="tooltip" data-placement="top" title="Banker"></label>
+            
+            <input type="checkbox" id="thieving" class="roster" name="professions" value="thieving" <% if (character.professions.indexOf("thieving") > -1) { %> checked<% } %>>
+            <label for="thieving" data-toggle="tooltip" data-placement="top" title="Thief"></label>
+            
+            <input type="checkbox" id="pve" class="roster" name="professions" value="pve" <% if (character.professions.indexOf("pve") > -1) { %> checked<% } %>>
+            <label for="pve" data-toggle="tooltip" data-placement="top" title="PvE"></label>
+            
+            <input type="checkbox" id="pvp" class="roster" name="professions" value="pvp" <% if (character.professions.indexOf("pvp") > -1) { %> checked<% } %>>
+            <label for="pvp" data-toggle="tooltip" data-placement="top" title="PvP"></label>
+            
+            <input type="checkbox" id="dueling" class="roster" name="professions" value="dueling" <% if (character.professions.indexOf("dueling") > -1) { %> checked<% } %>>
+            <label for="dueling" data-toggle="tooltip" data-placement="top" title="Dueling"></label>
+            
+            <input type="checkbox" id="roleplay" class="roster" name="professions" value="roleplay" <% if (character.professions.indexOf("roleplay") > -1) { %> checked<% } %>>
+            <label for="roleplay" data-toggle="tooltip" data-placement="top" title="Roleplay"></label>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="row justify-content-center">
+        <div class="col-md-9">
+          <img id="avatar" class="img-responsive center-block" src="<%- character.avatarURL %>" />
+          <small class="form-text text-muted">It might take some time for bigger images to be submitted (images are limited to 2MB)</small>
+          <input type="text" id="avatarData" class="hidden-input-file" name="avatarData">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input type="file" id="newAvatar" name="avatar" class="hidden-input-file" accept="image/*">
+
+      <label for="newAvatar">
+        <div class="btn btn-lg btn-success">
+          Upload a new Avatar
+        </div>
+      </label>
+    </div>
+
+    <button type="submit" class="btn btn-default">Submit</button>
+
+  </form>
+
+</div>
