@@ -7,6 +7,7 @@
   </section>
 
   <form id="form" action="/api/users/@me/characters" class="text-center" role="form" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="_method" value="POST">
 
     <div class="form-group">
       <div class="row justify-content-center">
@@ -55,7 +56,7 @@
                 <input type="radio" id="dc" class="roster" name="alliance" value="Daggerfall Covenant" required>
                 <label for="dc" data-toggle="tooltip" data-placement="top" title="Daggerfall Covenant"></label>
                 
-                <input type="radio" id="ad" class="roster" name="alliance" value="Aldmeri Dominion" >
+                <input type="radio" id="ad" class="roster" name="alliance" value="Aldmeri Dominion">
                 <label for="ad" data-toggle="tooltip" data-placement="top" title="Aldmeri Dominion"></label>
                 
                 <input type="radio" id="ep" class="roster" name="alliance" value="Ebonheart Pact">
@@ -150,7 +151,7 @@
             <div class="col-md-12">
               <div class="form-check form-check-inline">
                 
-                <input type="radio" id="imperial" class="roster" name="race" value="Altmer">
+                <input type="radio" id="imperial" class="roster" name="race" value="imperial">
                 <label for="imperial" data-toggle="tooltip" data-placement="top" title="Imperial"></label>
                 
               </div>

@@ -7,10 +7,30 @@ const cropperOptions = {
 
 $().ready(function()
 {
-    let initialChampionPoints = $("#championInput").prop("placeholder");
+    let initialChampionPoints;
+    $.ajax({
+        url: `/api/users/${$("#userId").text()}?key=GM72HW6CGJr5khtS`,
+        dataType: "json",
+        success: function(data)
+        {
+            initialChampionPoints = data.level;
+        }
+    });
+
+    let initialLevel = $("#championInput").val();
     $("#championBox").change(function()
     {
-        if ($("#championInput").next().length)
+        if ($("#championBox").prop("checked"))
+        {
+            $("#championInput")
+                .prop("readonly", true)
+                .attr("min", 1)
+                .attr("max", 600)
+                .attr("value", initialChampionPoints)
+                .parent().append("<div class=\"input-group-addon\">CP</div>");
+        }
+
+        else
         {
             $("#championInput")
                 .prop("readonly", false)
@@ -18,22 +38,12 @@ $().ready(function()
                 .attr("max", 50)
                 .attr("placeholder", "3-50")
                 .next().remove();
-        }
-
-        else
-        {
-            $("#championInput")
-                .prop("readonly", true)
-                .attr("min", 1)
-                .attr("max", 600)
-                .attr("placeholder", initialChampionPoints)
-                .parent().append("<div class=\"input-group-addon\">CP</div>");
+            if (initialLevel.length) $("#championInput").attr("value", initialLevel);
+            else $("#championInput").attr("value", "");
         }
     });
 
     $("#avatar").cropper(cropperOptions);
-
-    $('[data-toggle="tooltip"]').tooltip();
 
     if ($("div.hidden-sm-down").css("display").includes("none")) $("input#dragonknight").prop("required", false);
     else if ($("div.hidden-md-up").css("display").includes("none")) $("input#mobile-dragonknight").prop("required", false);
