@@ -2,6 +2,14 @@ let initialLevel;
 $(document).ready(function()
 {
     initialLevel = $("#championInput").val();
+
+    if ($("div.alert-success").length)
+    {
+        setTimeout(function()
+        {
+            window.location.replace("/dashboard");
+        }, 5000);
+    }
 });
 
 $("#championBox").change(function(e)
