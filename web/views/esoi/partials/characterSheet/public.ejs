@@ -1,0 +1,30 @@
+<div class="card-group text-center justify-content-center">
+
+  <% for (let character in characters) { %><div class="card">
+    <% let char = characters[character]; %>
+    <img class="card-img-top" src="<%- char.avatarURL %>" alt="<%- char.name %>">
+    <div class="card-block">
+      <h4 class="card-title"><%- char.name %></h4>
+      <p class="card-text"><%- char.biography %></p>
+    </div>
+    <ul class="list-group list-group-flush">
+
+      <li class="list-group-item d-inline-block">
+        <span class="inline-icon icon-<% if (char.champion) { %>champion<% } else { %>non-champion<% } %>" data-toggle="tooltip" data-placement="top" title="<% if (char.champion) { %><%- account.level %><% } else { %><%- char.level %><% } %>"></span>
+        <span class="inline-icon icon-<%- char.alliance.split(" ")[0].toLowerCase() %>" data-toggle="tooltip" data-placement="top" title="<%- char.alliance %>"></span>
+        <span class="inline-icon icon-<%- char.race.toLowerCase() %>" data-toggle="tooltip" data-placement="top" title="<%- char.race[0].toUpperCase() + char.race.slice(1) %>"></span>
+        <span class="inline-icon icon-<%- char.class.toLowerCase() %>" data-toggle="tooltip" data-placement="top" title="<%- char.class[0].toUpperCase() + char.class.slice(1) %>"></span>
+      </li>
+
+      <li class="list-group-item d-inline-block">
+        <% for (let i = 0; i < char.roles.length; i++) { %><span class="inline-icon icon-<%- char.roles[i].toLowerCase() %>" data-toggle="tooltip" data-placement="top" title="<%- char.roles[i][0].toUpperCase() + char.roles[i].slice(1) %>"></span><% } %>
+      </li>
+
+      <% if (Object.keys(char.professions).length) { %><li class="list-group-item d-inline-block">
+        <% for (let i = 0; i < char.professions.length; i++) { %><span class="inline-icon icon-<%- char.professions[i].toLowerCase() %>" data-toggle="tooltip" data-placement="top" title="<%- char.professions[i][0].toUpperCase() + char.professions[i].slice(1) %>"></span><% } %>
+      </li><% } %>
+
+    </ul>
+  </div><% } %>
+
+</div>

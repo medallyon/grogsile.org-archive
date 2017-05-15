@@ -21,23 +21,12 @@
   <div class="container">
 
     <div class="row justify-content-center">
-      <div class="col-md-6" style="text-align: center;">
+      <div class="col-md-9" style="text-align: center;">
         <% if (Object.keys(characters).length > 0) { %><h2>Characters</h2><% } else { %><h4><%- targetAccount.accountName %> does not have any characters yet.</h4><% } %>
       </div>
     </div>
 
-    <% if (Object.keys(characters).length) { %><div class="row">
-
-      <% for (let character in characters) { %><div class="card">
-        <% let char = characters[character]; %>
-        <img src="<%- char.avatarURL %>" alt="<%- char.name %>">
-        <h5 class="text-center"><%- char.name %></h5>
-        <p class="card-text">
-          <% if (char.champion) { %><span class="champion"></span><%- user.level %><% } else { %>Level <%- char.level %><% } %><br>
-        </p>
-      </div><% } %>
-
-    </div><% } %>
+    <%- include("../characterSheet/public") %>
 
   </div>
 </div>
