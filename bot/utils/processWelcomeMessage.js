@@ -1,13 +1,18 @@
-function processWelcomeMessage(message, guild, members)
+function processWelcomeMessage(message, guild, users)
 {
-    for (let i = 0; i < members.length; i++) {
-        if (message.includes(`{member${i+1}}`)) message = message.replace(`{member${i+1}}`, guild.members.get(members[i]));
+    // replace '{member#}' with mention
+    for (let i = 0; i < users.length; i++)
+    {
+        message = message.replace(`{member${i + 1}}`, `<@${users[i].id}>`);
     }
 
-    for (let i = 0; i < members.length; i++) {
-        if (message.includes(`{\\member${i+1}}`)) message = message.replace(`{\\member${i+1}}`, guild.members.get(members[i]).displayName);
+    // replace '{\member#}' with username
+    for (let i = 0; i < users.length; i++)
+    {
+        message = message.replace(`{\\member${i + 1}}`, users[i].username);
     }
 
+    // replace '{guild}' with guild name
     if (message.includes("{guild}")) message = message.replace(/\{guild\}/g, guild.name);
 
     return message;
