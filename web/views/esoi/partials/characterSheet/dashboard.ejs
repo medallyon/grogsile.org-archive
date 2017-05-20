@@ -1,7 +1,6 @@
 <div class="card-group text-center justify-content-center">
 
-  <% for (let character in characters) { %><div class="card">
-    <% let char = characters[character]; %>
+  <% for (let char of characters) { %><div class="card">
     <img class="card-img-top" src="<%- char.avatarURL %>" alt="<%- char.name %>">
     <div class="card-block">
       <h4 class="card-title"><%- char.name %></h4>
