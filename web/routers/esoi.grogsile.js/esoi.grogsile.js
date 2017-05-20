@@ -57,7 +57,7 @@ router.get("/callback", passport.authenticate("discord", { failureRedirect: "/" 
             fs.outputJson(join(userDir, "user.json"), req.user, (err) => {
                 if (err) console.error(err);
 
-                if (files.indexOf("characters.json") === -1) fs.outputJson(join(userDir, "characters.json"), {});
+                if (files.indexOf("characters.json") === -1) fs.outputJson(join(userDir, "characters.json"), {}, (err) => { if (err) console.error(err) });
                 if (files.indexOf("account.json") === -1)
                 {
                     fs.outputJson(join(userDir, "account.json"), _templates.account, (err) => {
@@ -68,8 +68,6 @@ router.get("/callback", passport.authenticate("discord", { failureRedirect: "/" 
                 } else res.redirect("/dashboard");
             });
         });
-
-        if (files.indexOf("characters.json") === -1) fs.outputJson(join(userDir, "characters.json"), {}, (err) => { if (err) console.error(err) });
     });
 });
 
