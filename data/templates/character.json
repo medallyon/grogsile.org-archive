@@ -6,15 +6,24 @@
   "biography": "I am a character.",
   "alliance": "Aldmeri Dominion",
   "roles": [
-    "Damage Dealer",
-    "Healer",
-    "Tank"
+    "dps",
+    "healer",
+    "tank"
   ],
-  "orientations": [
-    "PvP",
-    "PvE",
-    "RP",
-    "Crafter"
+  "professions": [
+    "blacksmithing",
+    "clothing",
+    "woodworking",
+    "alchemy",
+    "enchanting",
+    "provisioning",
+    "fishing",
+    "banker",
+    "thieving",
+    "pve",
+    "pvp",
+    "dueling",
+    "roleplay"
   ],
   "avatarURL": "https://i.grogsile.me/esoi/users/userId/characters/characterId.png"
 }
