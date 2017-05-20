@@ -27,8 +27,7 @@
     "showdown": "^1.6.4",
     "to-markdown": "^3.0.4",
     "uws": "^0.14.0",
-    "vhost": "^3.0.2",
-    "watch": "^1.0.2"
+    "vhost": "^3.0.2"
   },
   "devDependencies": {},
   "scripts": {
