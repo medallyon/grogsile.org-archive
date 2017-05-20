@@ -2,13 +2,27 @@
   "restart": {
     "description": "Restarts the bot.",
     "alias": [
-      "restart",
-      "reload",
-      "rl"
+      "restart"
     ],
     "arguments": {},
     "userPermissions": 900,
     "example": ""
+  },
+
+  "reload": {
+    "description": "Reloads the specified partition of the bot. Reloads both partitions (web and bot) if no parameter is specified.",
+    "alias": [
+      "reload",
+      "rl"
+    ],
+    "arguments": {
+      "partition": {
+        "description": "Can be either BOT or WEB, or none.",
+        "optional": true
+      }
+    },
+    "userPermissions": 900,
+    "example": "[ BOT | WEB ]"
   },
 
   "evaluate": {
@@ -122,5 +136,20 @@
     },
     "userPermissions": 100,
     "example": "Norgred Hardhelm"
+  },
+
+  "profile": {
+    "description": "Displays your ESOI profile.",
+    "alias": [
+      "profile"
+    ],
+    "arguments": {
+      "user": {
+        "description": "An optional @mention to show the profile for.",
+        "optional": true
+      }
+    },
+    "userPermissions": 100,
+    "example": "[ @Medallyon#5012 ]"
   }
 }

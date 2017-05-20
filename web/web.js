@@ -46,5 +46,5 @@ for (let subdomain of fs.readdirSync(join(__dirname, "domains"))) {
 // === [ LISTENER ] === //
 
 // listen on port 8080, with reverse routing of nginx to port 80
-var server = http.createServer(app);
+global.server = http.createServer(app);
 server.listen(8080);
