@@ -104,5 +104,5 @@ function postNews(item)
     imgIsDifferent = false;
 }
 
-// stop process from dying
-process.on("uncaughtException", console.error);
+/*// stop process from dying
+process.on("uncaughtException", console.error);*/
