@@ -151,5 +151,15 @@
     },
     "userPermissions": 100,
     "example": "[ @Medallyon#5012 ]"
+  },
+
+  "servers": {
+    "description": "Shows the status of every ESO server.",
+    "alias": [
+      "servers"
+    ],
+    "arguments": {},
+    "userPermissions": 100,
+    "example": ""
   }
 }
