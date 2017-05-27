@@ -5,7 +5,12 @@
       "enabled": false,
       "maxMembers": 3,
       "message": "Welcome {user} to **{guild}**!",
-      "channel": ""
+      "channel": "",
+      "direct": {
+        "enabled": false,
+        "disableGuildWelcome": true,
+        "message": "Welcome {user} to **{guild}**!"
+      }
     }
   },
   "eso": {
