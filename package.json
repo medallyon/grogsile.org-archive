@@ -1,6 +1,6 @@
 {
   "name": "grogsile.me",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "main": "index.js",
   "dependencies": {
     "body-parser": "^1.16.1",
