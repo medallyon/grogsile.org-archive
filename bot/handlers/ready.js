@@ -10,4 +10,9 @@ dClient.once("ready", () => {
         dClient.config.restarted = false;
         fs.outputJson(join(__botdir, "config.json"), dClient.config, (err) => { if (err) console.error(err) });
     }
+
+    dClient.setInterval(function()
+    {
+        modules.liveServerStatus();
+    }, 1000 * 60 * 5 );
 });
