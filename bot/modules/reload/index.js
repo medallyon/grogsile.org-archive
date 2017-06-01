@@ -93,7 +93,13 @@ function reload(msg)
 
         else
         {
-            if (!["web", "bot"].some(p => partition === p)) return msg.channel.send("Specified partition is not recognised.");
+            if (!["web", "bot"].some(p => partition === p))
+            {
+                dClient.config.reloading = false;
+                fs.outputJson(join(__botdir, "config.json"), dClient.config);
+
+                return msg.channel.send("Specified partition is not recognised.");
+            }
 
             if (partition === "bot") reloadBot(msg);
             else if (partition === "web") reloadWeb(msg);
