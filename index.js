@@ -6,13 +6,19 @@ const fs = require("fs-extra")
 
 // === [ GLOBALS ] === //
 
+// ./
 global.__base = __dirname;
-global.__data = path.join(__dirname, "data");
-global.__src = path.join(__dirname, "web", ".pub_src");
+// ./data/
+global.__data = join(__dirname, "data");
+// ./web/.pub_src/
+global.__src = join(__dirname, "web", ".pub_src");
 
-global.__webdir = path.join(__dirname, "web");
-global.__botdir = path.join(__dirname, "bot");
+// ./web/
+global.__webdir = join(__dirname, "web");
+// ./bot/
+global.__botdir = join(__dirname, "bot");
 
+// a global object containing re-usable templates for files that need to be saved during runtime
 global._templates = {};
 let templateFiles = fs.readdirSync(join(__data, "templates"));
 for (let i = 0; i < templateFiles.length; i++) {
@@ -21,5 +27,7 @@ for (let i = 0; i < templateFiles.length; i++) {
 
 // === [ IMPORTS ] === //
 
+// initialize the BOT partition
 require(join(__botdir, "bot.js"));
+// initialize the WEB partition
 require(join(__webdir, "web.js"));
