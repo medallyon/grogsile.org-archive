@@ -1,19 +1,12 @@
-const fs = require("fs-extra")
-, path = require("path")
-, join = path.join
-
-, Discord = require("discord.js");
-
-const ESOI_GUILD = "130716876937494528",
-LIVE_CHANNEL = "319641305388941315";
+const LIVE_CHANNEL = "319641305388941315"
+, STATUS_DOMAIN = "https://eso.xc.ms/";
 
 function structureEmbed(status)
 {
-    let e = new Discord.RichEmbed()
-        .setColor(utils.randColor())
-        .setAuthor("ESO Server Status", dClient.user.displayAvatarURL, "https://eso.xc.ms/")
+    let e = new Discord.RichEmbed(constants.discord.embed)
+        .setAuthor("ESO Server Status", dClient.user.displayAvatarURL, STATUS_DOMAIN)
         .setDescription("This live panel is updated every 5 minutes to check for all ESO Server Statuses.")
-        .setFooter(`Brought to you by Grogsile Inc. | ${utils.fancyESODate(new Date())} ${new Date().getUTCHours()}:${new Date().getUTCMinutes()} UTC`);
+        .setFooter(`Brought to you by Grogsile, Inc. | ${utils.fancyESODate(new Date())} ${new Date().getUTCHours()}:${new Date().getUTCMinutes()} UTC`);
 
     e.addField("\u200b", "**[PC]**");
     for (let server in status["PC"])
@@ -38,7 +31,7 @@ function structureEmbed(status)
 
 function liveServerStatus()
 {
-    let statusChannel = dClient.guilds.get(ESOI_GUILD).channels.get(LIVE_CHANNEL);
+    let statusChannel = dClient.guilds.get(constants.discord.esoi.id).channels.get(LIVE_CHANNEL);
 
     fs.readJson(join(__dirname, "savedVars.json"), function(err, savedVars)
     {

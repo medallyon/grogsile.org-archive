@@ -1,6 +1,3 @@
-const fs = require("fs-extra")
-, join = require("path").join;
-
 function restart(msg)
 {
     console.log(`Restarting in channel #${msg.channel.name}.`);

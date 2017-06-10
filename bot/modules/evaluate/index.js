@@ -1,13 +1,10 @@
-const fs = require("fs-extra")
-, join = require("path").join;
-
 function evaluate(msg)
 {
     try {
         let evaluated = eval(msg.args.join(" "));
-        msg.channel.sendMessage("```js\n" + evaluated + "```");
+        msg.channel.send(evaluated, { code: "js" });
     } catch (err) {
-        msg.channel.sendMessage("```js\n" + err + "```");
+        msg.channel.send(err, { code: "js" });
     }
 }
 

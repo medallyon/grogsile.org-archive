@@ -1,12 +1,6 @@
 // === [ LIBRARIES ] === //
 
-const fs = require("fs-extra")
-, path = require("path")
-, join = path.join
-
-, Discord = require("discord.js")
-
-, http = require("http")
+const http = require("http")
 , express = require("express")
 , vhost = require("vhost")
 , favicon = require("serve-favicon")

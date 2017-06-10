@@ -1,10 +1,4 @@
-const fs = require("fs-extra")
-, path = require("path")
-, join = path.join
-
-, Discord = require("discord.js")
-
-, request = require("request")
+const request = require("request")
 , cheerio = require("cheerio");
 
 const STATUS_DOMAIN = "https://eso.xc.ms/ajax";

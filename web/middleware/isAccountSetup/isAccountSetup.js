@@ -1,6 +1,3 @@
-const fs = require("fs-extra")
-, join = require("path").join;
-
 function isAccountSetup(req, res, next)
 {
     fs.readJson(join(__data, "users", req.user.id, "account.json"), (err, account) => {

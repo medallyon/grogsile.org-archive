@@ -1,12 +1,9 @@
-const Discord = require("discord.js")
-, express = require("express")
+const express = require("express")
 , multer = require("multer")
 , jimp = require("jimp")
 , passport = require("passport")
 , Strategy = require("passport-discord").Strategy
 , session = require("express-session")
-, fs = require("fs-extra")
-, join = require("path").join;
 
 let router = express.Router()
 , locals = {};

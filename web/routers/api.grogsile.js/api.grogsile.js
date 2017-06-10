@@ -1,7 +1,4 @@
-const fs = require("fs-extra")
-, path = require("path")
-, join = path.join
-, request = require("request")
+const request = require("request")
 , express = require("express")
 , multer = require("multer");
 

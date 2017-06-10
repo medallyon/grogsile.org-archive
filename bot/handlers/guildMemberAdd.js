@@ -1,7 +1,3 @@
-const Discord = require("discord.js")
-, fs = require("fs-extra")
-, join = require("path").join;
-
 dClient.on("guildMemberAdd", function(member)
 {
     // process welcome message

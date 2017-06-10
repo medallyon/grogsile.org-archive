@@ -1,12 +1,8 @@
-const Discord = require("discord.js");
-
 function constructHelpFor(perm)
 {
-    let h = new Discord.RichEmbed()
-        .setColor(utils.randColor())
+    let h = new Discord.RichEmbed(constants.discord.embed)
         .setAuthor("Commands", dClient.user.avatarURL)
         .setDescription("Here is a list of commands that **You** have access to. To see what more commands there are, visit the [Grogsile Hub](This is still a work in progress.) You can inspect each command by passing their name to the `help` command (see example below).")
-        .setFooter("Brought to you by Grogsile, Inc.", "https://i.grogsile.me/img/favicon.png")
         .setTimestamp(new Date());
 
     for (let cmd in dClient.commands) {
@@ -35,10 +31,8 @@ function help(msg)
     // help embed for individual commands
     else
     {
-        e = new Discord.RichEmbed()
-            .setColor(utils.randColor())
+        e = new Discord.RichEmbed(constants.discord.embed)
             .setAuthor("Commands", dClient.user.avatarURL)
-            .setFooter("Brought to you by Grogsile, Inc.", "https://i.grogsile.me/favicon.png")
             .setTimestamp(new Date());
 
         let command;
@@ -67,7 +61,7 @@ function help(msg)
         e.addField("Example Usage", `\`\`\`fix\n${dClient.config.discord.prefix}${command.alias[0]} ${command.example}\`\`\``);
     }
 
-    return msg.channel.sendEmbed(e).catch(console.error);
+    return msg.channel.send({ embed: e }).catch(console.error);
 }
 
 module.exports = help;

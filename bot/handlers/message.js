@@ -55,7 +55,7 @@ dClient.on("message", function (msg) {
                         } catch (err) {
                             // catch an error in case the command module is faulty
                             console.error(err);
-                            msg.channel.send(`\`\`\`js\n${err}\`\`\``);
+                            msg.channel.send(err, { code: "js" });
                         }
                     }
                 }

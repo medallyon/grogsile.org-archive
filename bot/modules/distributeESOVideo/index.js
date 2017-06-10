@@ -1,11 +1,7 @@
-const fs = require("fs-extra")
-, join = require("path").join
-, Discord = require("discord.js");
-
 function distributeESOVideo(video)
 {
-    console.log(video.items[0]);
-    let videoEmbed = new Discord.RichEmbed()
+    /*console.log(video.items[0]);
+    let videoEmbed = new Discord.RichEmbed(constants.discord.embed)
         .setColor(parseInt("B31217", 16))
         .setAuthor(video.snippet.channelTitle, video.items[0].snippet.thumbnails.high.url || "", `https://youtube.com/channel/${video.snippet.channelId}`)
         .setTitle(video.snippet.title)
@@ -22,9 +18,9 @@ function distributeESOVideo(video)
 
         for (let channel of subscriptions.youtube)
         {
-            dClient.channels.get(channel).sendEmbed(videoEmbed).catch(console.error);
+            dClient.channels.get(channel).send({ embed: videoEmbed }).catch(console.error);
         }
-    });
+    });*/
 }
 
 module.exports = distributeESOVideo;

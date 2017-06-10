@@ -1,12 +1,9 @@
 // === [ LIBRARIES ] === //
 
-const fs = require("fs-extra")
-, path = require("path")
-, join = path.join
-
-, Discord = require("discord.js")
-
-, decache = require("decache");
+// a global object containing re-usable process-wide constants
+global.constants = require(join(__dirname, "constants", "constants.json"));
+// a script to add / alter pre-existing constants that may only be alter-able during runtime (circular objects)
+require(join(__dirname, "constants", "constants.js"));
 
 // === [ DISCORD ] === //
 

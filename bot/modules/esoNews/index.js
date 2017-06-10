@@ -1,6 +1,4 @@
 const exec = require("child_process").exec
-, fs = require("fs-extra")
-, join = require("path").join
 , request = require("request")
 , FeedParser = require("feedparser");
 

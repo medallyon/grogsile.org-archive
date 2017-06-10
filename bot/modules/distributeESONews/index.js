@@ -1,11 +1,6 @@
-const fs = require("fs-extra")
-, join = require("path").join
-, Discord = require("discord.js");
-
 function distributeESONews(item)
 {
-    let newsEmbed = new Discord.RichEmbed()
-        .setColor(utils.randColor())
+    let newsEmbed = new Discord.RichEmbed(constants.discord.embed)
         .setAuthor(dClient.config.eso.news.author.name, dClient.config.eso.news.author.avatar, dClient.config.eso.news.author.url)
         .setTitle(item.title)
         .setURL(item.link)
@@ -23,7 +18,7 @@ function distributeESONews(item)
 
                 if (config.eso.news.active)
                 {
-                    dClient.channels.get(config.eso.news.channel).sendEmbed(newsEmbed).catch(console.error);
+                    dClient.channels.get(config.eso.news.channel).send({ embed: newsEmbed }).catch(console.error);
                 }
             });
         }

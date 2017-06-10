@@ -1,6 +1,4 @@
-// packages
-const Discord = require("discord.js")
-, request = require("request")
+const request = require("request")
 , cheerio = require("cheerio")
 , toMarkdown = require("to-markdown");
 
@@ -152,7 +150,7 @@ function constructEmbed(data)
 {
     return new Promise(function(resolve, reject)
     {
-        let e = new Discord.RichEmbed()
+        let e = new Discord.RichEmbed(constants.discord.embed)
             .setColor("#FAEBD7")
             .setAuthor(data.title.split(":")[0], getCategoryIcon(data.title.split(":")[0]), `http://en.uesp.net/wiki/${data.title.split(":")[0]}:Main_Page`)
             .setTitle(data.title.split(":").slice(1).join(":"))
@@ -188,10 +186,10 @@ function searchQuery(string)
             if (err) reject(err);
 
             let results = JSON.parse(body).query;
-            if (results.searchinfo.totalhits === 0) reject("No results found.");
+            if (results.searchinfo.totalhits === 0) return reject("No results found");
 
             let firstResult = results.search[0];
-            if (!firstResult) return reject();
+            if (!firstResult) return reject("Unknown Error");
             request(constructAPIString({ action: "parse", page: firstResult.title }), (err2, res2, wikipage) => {
                 if (err2) reject(err2);
 
@@ -205,12 +203,12 @@ function searchQuery(string)
 }
 
 function wiki(msg) {
-    if (!msg.args.length) return msg.channel.sendMessage("This command cannot be initiated without any query to search for. Try again with a search parameter.\nTry `/help wiki` if you're unsure.");
+    if (!msg.args.length) return msg.channel.send("This command cannot be initiated without any query to search for. Try again with a search parameter.\nTry `/help wiki` if you're unsure.");
 
     searchQuery(msg.args.join()).then(embed => {
-        msg.channel.sendEmbed(embed).catch(console.error);
+        msg.channel.send({ embed: embed }).catch(console.error);
     }).catch((err) => {
-        msg.channel.sendMessage("```js\n" + err + "```\n**Try to be more concise with your queries.**");
+        msg.channel.send("```js\n" + err + "```The specified page could not be found.");
     });
 }
 

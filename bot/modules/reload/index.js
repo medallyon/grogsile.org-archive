@@ -1,7 +1,4 @@
-const fs = require("fs-extra")
-, path = require("path")
-, join = path.join
-, decache = require("decache");
+const decache = require("decache");
 
 function reloadBot(msg)
 {
@@ -106,6 +103,10 @@ function reload(msg)
 
                 return msg.channel.send("Specified partition is not recognised.");
             }
+
+            decache(join(__base, "constants", "constants.json"));
+            decache(join(__base, "constants", "constants.js"));
+            global.constants = {};
 
             if (partition === "bot") reloadBot(msg);
             else if (partition === "web") reloadWeb(msg);

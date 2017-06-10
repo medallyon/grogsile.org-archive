@@ -1,5 +1,3 @@
-const Discord = require("discord.js");
-
 function banList(members)
 {
     let banned = []
@@ -26,9 +24,8 @@ function banList(members)
 
 function constructEmbed(members, author)
 {
-    let e = new Discord.RichEmbed()
+    let e = new Discord.RichEmbed(constants.discord.embed)
         .setColor("#8E1919")
-        .setFooter("Brought to you by Grogsile Inc.", "https://i.grogsile.me/favicon.png")
         .setTimestamp(new Date().toISOString());
 
     if (members.length === 1)
@@ -59,7 +56,7 @@ function ban(msg)
     {
         let toBebanned = [];
 
-        if (msg.mentions.users.size === 1 && utils.determinePermissions(msg.member) < utils.determinePermissions(msg.guild.member(msg.mentions.users.first()))) return msg.channel.sendMessage(`You do not have the necessary permissions to ban **${msg.mentions.users.first().username}**.`);
+        if (msg.mentions.users.size === 1 && utils.determinePermissions(msg.member) < utils.determinePermissions(msg.guild.member(msg.mentions.users.first()))) return msg.channel.send(`You do not have the necessary permissions to ban **${msg.mentions.users.first().username}**.`);
 
         for (let user of msg.mentions.users.values()) {
             if (msg.guild.members.has(user.id) && utils.determinePermissions(msg.member) > utils.determinePermissions(msg.guild.member(user)));
@@ -68,10 +65,10 @@ function ban(msg)
             }
         }
 
-        if (toBebanned.length === 0) msg.channel.sendMessage("No members are eligible to be banned.");
+        if (toBebanned.length === 0) msg.channel.send("No members are eligible to be banned.");
         else banList(toBebanned)
             .then(banned => {
-                msg.channel.sendEmbed(constructEmbed(banned, msg.author));
+                msg.channel.send({ embed: constructEmbed(banned, msg.author) });
             }).catch(console.error);
     }
 
@@ -86,10 +83,10 @@ function ban(msg)
             }
         }
 
-        if (toBeBanned.length === 0) msg.channel.sendMessage("No members are eligible to be banned.");
+        if (toBeBanned.length === 0) msg.channel.send("No members are eligible to be banned.");
         else banList(toBeBanned)
             .then(banned => {
-                msg.channel.sendEmbed(constructEmbed(banned, msg.author));
+                msg.channel.send({ embed: constructEmbed(banned, msg.author) });
             }).catch(console.error);
     }
 };

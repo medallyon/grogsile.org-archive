@@ -1,6 +1,3 @@
-const fs = require("fs-extra")
-, join = require("path").join;
-
 function apiAuth(req, res, next)
 {
     if (req.originalUrl.indexOf("@me") > -1 && req.isAuthenticated()) return next();

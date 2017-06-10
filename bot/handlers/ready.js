@@ -6,7 +6,7 @@ dClient.once("ready", () => {
 
     if (dClient.config.restarted)
     {
-        dClient.channels.get(dClient.config.restarted).sendMessage(":white_check_mark: Successfully restarted!");
+        dClient.channels.get(dClient.config.restarted).send(":white_check_mark: Successfully restarted!");
         dClient.config.restarted = false;
         fs.outputJson(join(__botdir, "config.json"), dClient.config, (err) => { if (err) console.error(err) });
     }

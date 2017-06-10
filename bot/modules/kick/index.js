@@ -1,5 +1,3 @@
-const Discord = require("discord.js");
-
 function kickList(members)
 {
     let kicked = []
@@ -59,7 +57,7 @@ function kick(msg)
     {
         let toBeKicked = [];
 
-        if (msg.mentions.users.size === 1 && utils.determinePermissions(msg.member) < utils.determinePermissions(msg.guild.member(msg.mentions.users.first()))) return msg.channel.sendMessage(`You do not have the necessary permissions to kick **${msg.mentions.users.first().username}**.`);
+        if (msg.mentions.users.size === 1 && utils.determinePermissions(msg.member) < utils.determinePermissions(msg.guild.member(msg.mentions.users.first()))) return msg.channel.send(`You do not have the necessary permissions to kick **${msg.mentions.users.first().username}**.`);
 
         for (let user of msg.mentions.users.values()) {
             if (msg.guild.members.has(user.id) && utils.determinePermissions(msg.member) > utils.determinePermissions(msg.guild.member(user)));
@@ -68,10 +66,10 @@ function kick(msg)
             }
         }
 
-        if (toBeKicked.length === 0) msg.channel.sendMessage("No members are eligible to be kicked.");
+        if (toBeKicked.length === 0) msg.channel.send("No members are eligible to be kicked.");
         else kickList(toBeKicked)
             .then(kicked => {
-                msg.channel.sendEmbed(constructEmbed(kicked, msg.author));
+                msg.channel.send({ embed: constructEmbed(kicked, msg.author) });
             }).catch(console.error);
     }
 
@@ -86,10 +84,10 @@ function kick(msg)
             }
         }
 
-        if (toBeKicked.length === 0) msg.channel.sendMessage("No members are eligible to be kicked.");
+        if (toBeKicked.length === 0) msg.channel.send("No members are eligible to be kicked.");
         else kickList(toBeKicked)
             .then(kicked => {
-                msg.channel.sendEmbed(constructEmbed(kicked, msg.author));
+                msg.channel.send({ embed: constructEmbed(kicked, msg.author) });
             }).catch(console.error);
     }
 };

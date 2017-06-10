@@ -1,6 +1,3 @@
-const fs = require("fs-extra")
-, join = require("path").join;
-
 function readGuildConfig(guild)
 {
     return new Promise(function(resolve, reject)

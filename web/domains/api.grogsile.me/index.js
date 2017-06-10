@@ -1,6 +1,5 @@
 const express = require("express")
-, bodyparser = require("body-parser")
-, join = require("path").join;
+, bodyparser = require("body-parser");
 
 // create app for "api.grogsile.me"
 app = express();
