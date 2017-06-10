@@ -4,7 +4,7 @@
     "welcomeMessage": {
       "enabled": false,
       "maxMembers": 3,
-      "message": "Welcome {user} to **{guild}**!",
+      "message": "Welcome {member1}, {member2}, {member3} to **{guild}**!",
       "channel": "",
       "direct": {
         "enabled": false,
