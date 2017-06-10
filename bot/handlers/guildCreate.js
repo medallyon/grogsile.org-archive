@@ -1,12 +1,5 @@
-const fs = require("fs-extra")
-, join = require("path").join;
-
-const templates = {
-    guild: require(join(__data, "templates", "guild.json"))
-};
-
 dClient.on("guildCreate", (guild) => {
-    let guildConfig = templates.guild;
+    let guildConfig = _templates.guild;
     
     guildConfig.id = guild.id;
 
