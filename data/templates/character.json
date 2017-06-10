@@ -5,6 +5,8 @@
   "level": 3,
   "biography": "I am a character.",
   "alliance": "Aldmeri Dominion",
+  "class": "",
+  "race": "",
   "roles": [
     "dps",
     "healer",
