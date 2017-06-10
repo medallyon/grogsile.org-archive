@@ -55,11 +55,17 @@ dClient.on("message", function (msg) {
                         } catch (err) {
                             // catch an error in case the command module is faulty
                             console.error(err);
-                            msg.channel.sendMessage(`\`\`\`js\n${err}\`\`\``);
+                            msg.channel.send(`\`\`\`js\n${err}\`\`\``);
                         }
                     }
                 }
             }
         }
+    } else
+
+    if (/\[.+\]/g.test(msg.content))
+    {
+        let requestedItem = /\[(.+)\]/g.exec(msg.content)[1];
+        modules.esoItem(msg, requestedItem);
     }
 });
