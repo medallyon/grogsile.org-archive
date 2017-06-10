@@ -41,6 +41,9 @@
     },
     "wiki": {
       "enabled": true
+    },
+    "esoItem": {
+      "enabled": true
     }
   }
 }
