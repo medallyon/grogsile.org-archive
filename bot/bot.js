@@ -35,6 +35,13 @@ for (let file of fs.readdirSync(join(__dirname, "modules")))
     modules[file] = require(join(__dirname, "modules", file, "index.js"));
 }
 
+// import custom structures
+global.structs = {};
+for (let file of fs.readdirSync(join(__dirname, "structs")))
+{
+    structs[file.replace(".js", "")] = require(join(__dirname, "structs", file));
+}
+
 if (!dClient.config.reloading)
 {
     // import Discord event handlers

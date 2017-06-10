@@ -21,6 +21,12 @@ function reloadBot(msg)
         }
         global.modules = {};
 
+        for (let struct in structs)
+        {
+            decache(join(__botdir, "structs", `${struct}.js`));
+        }
+        global.structs = {};
+
         require(join(__botdir, "bot.js"));
         dClient.config.reloading = false;
 
