@@ -15,4 +15,6 @@ dClient.once("ready", () => {
     {
         modules.liveServerStatus();
     }, 1000 * 60 * 5 );
+
+    modules.setGameInterval(1000 * 60 * 15);
 });
