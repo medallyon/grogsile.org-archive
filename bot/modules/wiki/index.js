@@ -1,6 +1,7 @@
 const request = require("request")
 , cheerio = require("cheerio")
-, toMarkdown = require("to-markdown");
+, toMarkdown = require("to-markdown")
+, encodeURL = require("urlencode");
 
 const UESP_DOMAIN = "http://en.uesp.net"
 , UESP_API = "http://en.uesp.net/w/api.php"
@@ -13,7 +14,7 @@ function constructAPIString(options)
         apiString += `${parameter}=${(Array.isArray(options[parameter]) ? options[parameter].join("|") : options[parameter])}&`;
     }
     if (!options.hasOwnProperty("action")) apiString += "action=query&";
-    if (!options.hasOwnProperty("format")) apiString += "format=json";
+    if (!options.hasOwnProperty("format")) apiString += "format=json&";
     return apiString;
 }
 
@@ -150,7 +151,7 @@ function constructEmbed(data)
 {
     return new Promise(function(resolve, reject)
     {
-        let e = new Discord.RichEmbed(constants.discord.embed)
+        let e = new Discord.RichEmbed()
             .setColor("#FAEBD7")
             .setAuthor(data.title.split(":")[0], getCategoryIcon(data.title.split(":")[0]), `http://en.uesp.net/wiki/${data.title.split(":")[0]}:Main_Page`)
             .setTitle(data.title.split(":").slice(1).join(":"))
@@ -179,17 +180,17 @@ function searchQuery(string)
             list: "search",
             srnamespace: [102, 104, 116, 130, 134, 144, 150],
             srlimit: 500,
-            srsearch: string
+            srsearch: encodeURL(string)
         });
 
         request(apiString, (err, res, body) => {
             if (err) reject(err);
 
             let results = JSON.parse(body).query;
-            if (results.searchinfo.totalhits === 0) return reject("No results found");
+            if (results.searchinfo.totalhits === 0) reject("No results found.");
 
             let firstResult = results.search[0];
-            if (!firstResult) return reject("Unknown Error");
+            if (!firstResult) return reject();
             request(constructAPIString({ action: "parse", page: firstResult.title }), (err2, res2, wikipage) => {
                 if (err2) reject(err2);
 
@@ -203,12 +204,12 @@ function searchQuery(string)
 }
 
 function wiki(msg) {
-    if (!msg.args.length) return msg.channel.send("This command cannot be initiated without any query to search for. Try again with a search parameter.\nTry `/help wiki` if you're unsure.");
+    if (!msg.args.length) return msg.channel.sendMessage("This command cannot be initiated without any query to search for. Try again with a search parameter.\nTry `/help wiki` if you're unsure.");
 
     searchQuery(msg.args.join()).then(embed => {
-        msg.channel.send({ embed: embed }).catch(console.error);
+        msg.channel.sendEmbed(embed).catch(console.error);
     }).catch((err) => {
-        msg.channel.send("```js\n" + err + "```The specified page could not be found.");
+        msg.channel.sendMessage("```js\n" + err + "```\n**Try to be more concise with your queries.**");
     });
 }
 
