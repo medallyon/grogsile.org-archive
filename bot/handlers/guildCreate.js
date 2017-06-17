@@ -9,4 +9,5 @@ dClient.on("guildCreate", (guild) => {
 
     fs.outputJson(join(__data, "guilds", guild.id, "config.json"), guildConfig, (err) => { if (err) console.error(err) });
     fs.outputJson(join(__data, "guilds", guild.id, "welcomeMessage", "savedVariables.json"), { latestMembers: [] }, (err) => { if (err) console.error(err) });
+    fs.outputJson(join(__data, "guilds", guild.id, "RSS", "savedVariables.json"), { latest: 0 }, (err) => { if (err) console.error(err) });
 });

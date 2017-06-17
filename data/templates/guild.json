@@ -11,6 +11,13 @@
         "disableGuildWelcome": true,
         "message": "Welcome {user} to **{guild}**!"
       }
+    },
+    "RSS": {
+      "enabled": false,
+      "url": "",
+      "interval": 30000,
+      "channel": "",
+      "roles": []
     }
   },
   "eso": {
