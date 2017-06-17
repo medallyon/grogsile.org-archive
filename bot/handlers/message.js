@@ -63,7 +63,7 @@ dClient.on("message", function (msg) {
         }
     } else
 
-    if (/\[.+\]/g.test(msg.content))
+    if (/\[.+\]/g.test(msg.content) && !/`.*?\[.+\].*?`/g.test(msg.content))
     {
         let requestedItem = /\[(.+)\]/g.exec(msg.content)[1];
         modules.esoItem(msg, requestedItem);
