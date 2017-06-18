@@ -1,6 +1,3 @@
-const fs = require("fs-extra")
-, join = require("path").join;
-
 dClient.once("ready", () => {
     console.log(dClient.user.username + " is ready to serve.");
 
@@ -17,4 +14,16 @@ dClient.once("ready", () => {
     }, 1000 * 60 * 5 );
 
     modules.setGameInterval(1000 * 60 * 15);
+
+    for (let guild of dClient.guilds.values())
+    {
+        utils.readGuildConfig(guild)
+        .then(function(guildConfig)
+        {
+            if (guildConfig.guild.RSS.enabled)
+            {
+                guild["rss"] = new structs.RSS(guild, guildConfig.guild.RSS);
+            }
+        }).catch(console.error);
+    }
 });
