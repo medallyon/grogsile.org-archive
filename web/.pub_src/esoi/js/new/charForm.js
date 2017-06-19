@@ -28,6 +28,10 @@ $().ready(function()
                 .attr("max", 600)
                 .attr("value", initialChampionPoints)
                 .parent().append("<div class=\"input-group-addon\">CP</div>");
+            $("#championBox + label")
+                .tooltip("dispose")
+                .attr("title", "Champion")
+                .tooltip("show");
         }
 
         else
@@ -38,6 +42,11 @@ $().ready(function()
                 .attr("max", 50)
                 .attr("placeholder", "3-50")
                 .next().remove();
+            $("#championBox + label")
+                .tooltip("dispose")
+                .attr("title", "Non-Champion")
+                .tooltip("show");
+
             if (initialLevel.length) $("#championInput").attr("value", initialLevel);
             else $("#championInput").attr("value", "");
         }
