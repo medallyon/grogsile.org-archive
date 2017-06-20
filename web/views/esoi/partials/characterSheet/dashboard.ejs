@@ -2,15 +2,15 @@
 
   <% for (let char of characters) { %><div class="card">
 
-    <img class="card-img-top" src="<%- char.avatarURL %>" alt="<%- char.name %>">
+    <img class="card-img-top" src="<%- char.avatarURL %>" alt="<%- char.characterName %>">
 
     <div class="card-lvl">
-      <span class="inline-icon icon-<% if (char.champion) { %>champion<% } else { %>non-champion<% } %>"></span>
+      <span class="inline-icon icon-<% if (char.champion) { %>champion<% } else { %>non-champion<% } %>" data-toggle="tooltip" data-placement="top" title="<% if (char.champion) { %>Champion<% } else { %>Non-Champion<% } %>"></span>
       <span><% if (char.champion) { %><%- account.level %><% } else { %><%- char.level %><% } %></span>
     </div>
 
     <div class="card-block">
-      <h4 class="card-title"><%- char.name %></h4>
+      <h4 class="card-title"><%- char.characterName %></h4>
       <p class="card-text"><%- char.biography %></p>
     </div>
     <ul class="list-group list-group-flush">
@@ -25,7 +25,7 @@
         <% for (let i = 0; i < char.roles.length; i++) { %><span class="inline-icon icon-<%- char.roles[i].toLowerCase() %>" data-toggle="tooltip" data-placement="top" title="<%- char.roles[i][0].toUpperCase() + char.roles[i].slice(1) %>"></span><% } %>
       </li>
 
-      <% if (Object.keys(char.professions).length) { %><li class="list-group-item d-inline-block">
+      <% if (char.professions.length) { %><li class="list-group-item d-inline-block">
         <% for (let i = 0; i < char.professions.length; i++) { %><span class="inline-icon icon-<%- char.professions[i].toLowerCase() %>" data-toggle="tooltip" data-placement="top" title="<%- char.professions[i][0].toUpperCase() + char.professions[i].slice(1) %>"></span><% } %>
       </li><% } %>
 
@@ -35,12 +35,12 @@
 
       <form action="/api/users/@me/characters" method="POST" enctype="application/json" class="row justify-content-between">
         <div class="col-md-6 text-left">
-          <a href="/edit?type=character&id=<%- character %>" class="btn btn-link card-link"><span class="inline-icon icon-edit" data-toggle="tooltip" data-placement="top" title="Edit"></span></a>
+          <a href="/edit?type=character&id=<%- char.id %>" class="btn btn-link card-link"><span class="inline-icon icon-edit" data-toggle="tooltip" data-placement="top" title="Edit"></span></a>
         </div>
 
         <div class="col-md-6 text-right">
           <input type="hidden" name="_method" value="DELETE">
-          <input type="hidden" name="id" value="<%- character %>">
+          <input type="hidden" name="id" value="<%- char.id %>">
           <button type="submit" class="btn btn-link card-link"><span class="inline-icon icon-delete" data-toggle="tooltip" data-placement="top" title="Delete"></span></button>
         </div>
       </form>
