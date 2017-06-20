@@ -288,14 +288,15 @@ router.get("/u/:id", resetLocals, function(req, res)
 
 router.get("/api/users/:id", middleware.apiAuth, function(req, res)
 {
+    const userId = (req.params.id === "@me" ? req.user.id : req.params.id);
+
     fs.readdir(join(__data, "users"), (err, users) => {
         if (err) console.error(err);
 
-        console.log(req.params.id)
-        if (users.indexOf(req.params.id) === -1) res.status(404).send("User not found");
+        if (users.indexOf(userId) === -1) res.status(404).send("User not found");
         else
         {
-            fs.readJson(join(__data, "users", req.params.id, "account.json"), (err, account) => {
+            fs.readJson(join(__data, "users", userId, "account.json"), (err, account) => {
                 if (err) console.error(err);
 
                 res.json(account);
@@ -325,8 +326,19 @@ function validateFormElements(form)
     delete form._method;
     return new Promise(function(resolve, reject)
     {
+        // existence validation
+        if (!form.characterName) return reject([400, "Submitted no Character Name"]);
+        if (!form.level) form.level = 0;
+        if (!form.biography) form.biography = "";
+        if (!form.alliance) return reject([400, "Submitted no Alliance"]);
+        if (!form.class) return reject([400, "Submitted no Class"]);
+        if (!form.race) return reject([400, "Submitted no Race"]);
+        if (!form.roles) return reject([400, "Submitted no Role(s)"]);
+        if (!form.professions) form.professions = [];
+
+        // acceptance validation
         if (form.characterName.length < 3 || form.characterName.length > 25) return reject([400, "Character Name length is out of bounds"]);
-        if (/[^a-zA-Z-'öüäß ]/g.test(form.characterName)) return reject([400, "Character Name contains special characters"]);
+        // if (/[^a-zA-Z-'öüäß ]/g.test(form.characterName)) return reject([400, "Character Name contains illegal characters"]);
         if ("abcdefghijklmopqrstuvwxyzABCDEFGHIJKLMOPQRSTUVWXYZ-'öüäß ".split("").some(x => form.characterName.includes(x.repeat(3)))) return reject([400, "Character name contains a character three consecutive times"]);
 
         if (form.champion === "on") form.champion = true;
@@ -339,10 +351,8 @@ function validateFormElements(form)
 
         if (form.biography.length > 500) return reject([400, "Biography is too long (max. 500 characters)"]);
 
-        if (typeof form.roles === "string")
-        {
-            form.roles = [form.roles];
-        }
+        if (typeof form.roles === "string") form.roles = [form.roles];
+        if (typeof form.professions === "string") form.professions = [form.professions];
 
         resolve(form);
     });
@@ -352,8 +362,6 @@ function validateFormElements(form)
 let upload = multer();
 router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avatar"), function(req, res)
 {
-    console.log(req.body);
-
     if (!req.body) return res.status(400).send("No form data was sent with the request");
 
     const userId = (req.params.id === "@me" ? req.user.id : req.params.id);
@@ -368,14 +376,17 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
             fs.readJson(join(userDir, "characters.json"), (err, characters) => {
                 if (err) return res.status(500).send("Cannot read characters from user");
 
-                if (Object.keys(characters).length >= 12) return res.status(409).send("Characters are limited to 12 per user");
+                if (characters.length >= 12) return res.status(409).send("Characters are limited to 12 per user");
 
                 validateFormElements(req.body)
                 .then((charData) => {
-                    let character = charData;
-                    character.name = character.characterName;
-                    character.id = Object.keys(characters).length;
-                    delete character.characterName;
+                    const character = {};
+                    Object.assign(character, charData);
+
+                    character.id = null, usedIds = characters.map(x => x.id);
+                    for (let i = 0; i < characters.length + 1; i++) {
+                        if (!usedIds.includes(i)) character.id = i;
+                    }
 
                     const userAvatarDir = join(__webdir, ".pub_src", "esoi", "users", userId);
                     fs.ensureDir(userAvatarDir, (err) => {
@@ -386,12 +397,14 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
                         {
                             const avatarData = JSON.parse(req.body.avatarData);
                             image.crop(avatarData.x, avatarData.y, avatarData.width, avatarData.height);
+                            delete character.avatarData;
 
-                            image.write(join(userAvatarDir, `${Object.keys(characters).length}.png`), (err) => {
+                            image.write(join(userAvatarDir, `${character.id}.png`), (err) => {
                                 if (err) return res.status(500).send("Cannot write avatar to file");
 
-                                character.avatarURL = `https://i.grogsile.me/esoi/users/${userId}/${Object.keys(characters).length}.png`;
-                                characters[Object.keys(characters).length] = character;
+                                character.avatarURL = `https://i.grogsile.me/esoi/users/${userId}/${character.id}.png`;
+                                
+                                characters.push(character);
 
                                 fs.writeJson(join(userDir, "characters.json"), characters, (err) => {
                                     if (err) return res.status(500).send("Could not save character to file");
@@ -420,14 +433,15 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
 
                 validateFormElements(req.body)
                 .then((charData) => {
-                    let character = charData;
-                    character.name = character.characterName;
-                    delete character.characterName;
+                    const character = characters[charData.id];
+                    Object.assign(character, charData);
 
                     if (!req.file)
                     {
-                        character.avatarURL = characters[character.id].avatarURL;
-                        characters[character.id] = character;
+                        delete character.avatarData;
+
+                        let characterIndex = characters.map(x => parseInt(x.id)).indexOf(parseInt(character.id));
+                        characters.splice(characterIndex, 1, character);
 
                         fs.writeJson(join(userDir, "characters.json"), characters, (err) => {
                             if (err) return res.status(500).send("Could not save character to file");
@@ -444,18 +458,19 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
 
                             jimp.read(req.file.buffer).then(function(image)
                             {
-                                const avatarData = JSON.parse(req.body.avatarData);
+                                const avatarData = JSON.parse(charData.avatarData);
                                 image.crop(avatarData.x, avatarData.y, avatarData.width, avatarData.height);
-                                delete charData.avatarData;
+                                delete character.avatarData;
 
-                                fs.remove(join(userAvatarDir, `${req.body.id}.png`), (err) => {
-                                    if (err) return res.status(500).send("Could not overwrite avatar");
+                                fs.remove(join(userAvatarDir, `${character.id}.png`), (err) => {
+                                    if (err) return res.status(500).send("Could not remove avatar");
 
-                                    image.write(join(userAvatarDir, `${req.body.id}.png`), (err) => {
+                                    image.write(join(userAvatarDir, `${character.id}.png`), (err) => {
                                         if (err) return res.status(500).send("Could not write avatar to file");
 
                                         character.avatarURL = `https://i.grogsile.me/esoi/users/${userId}/${character.id}.png`;
-                                        characters[character.id] = character;
+                                        
+                                        characters.splice(characters.findIndex((x, i) => x.id === i), 1, character);
 
                                         fs.writeJson(join(userDir, "characters.json"), characters, (err) => {
                                             if (err) return res.status(500).send("Could not save character to file");
@@ -482,18 +497,13 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
             fs.readJson(join(userDir, "characters.json"), (err, characters) => {
                 if (err) console.error(err);
 
-                if (characters.hasOwnProperty(req.body.id))
+                if (characters.some(x => x.id === req.body.id))
                 {
                     // delete relative avatar
                     fs.remove(join(__src, "esoi", "users", userId, `${req.body.id}.png`), (err) => { if (err) console.error(err) });
 
-                    // shift every item in the object down by one index
-                    for (let i = req.body.id; i < Object.keys(characters).length; i++) {
-                        characters[i] = characters[parseInt(i) + 1];
-                    }
-
-                    // delete the last index
-                    delete characters[Object.keys(characters).length-1];
+                    // delete the specified character
+                    characters.splice(characters.findIndex(x => x.id === req.body.id), 1);
 
                     fs.outputJson(join(userDir, "characters.json"), characters, (err) => {
                         if (err) console.error(err);
