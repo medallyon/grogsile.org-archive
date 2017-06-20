@@ -6,7 +6,7 @@
     </div>
   </section>
 
-  <form id="form" action="/api/users/@me/characters" class="text-center" role="form" method="POST" enctype="multipart/form-data">
+  <form id="form" name="form" novalidate action="/api/users/@me/characters" class="text-center" role="form" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="_method" value="POST">
 
     <div class="form-group">
@@ -14,7 +14,7 @@
         <div class="col-md-6">
           <label for="characterName">Character Name</label>
           <input type="text" id="characterName" class="form-control text-center" name="characterName" placeholder="Bumperstump Bentobox" autocomplete="off" minlength="3" maxlength="25" required>
-          <small class="form-text text-muted">Your name must adhere to the standard Elder Scrolls rules of naming.</small>
+          <small class="form-text text-muted">Your name must adhere to the standard Elder Scrolls rules of naming</small>
         </div>
       </div>
     </div>
@@ -27,7 +27,7 @@
 
             <span class="input-group-addon">
               <input type="checkbox" id="championBox" name="champion" aria-label="Champion Input" <% if (account.champion) { %> checked<% } else { %> disabled<% } %>>
-              <label for="championBox"></label>
+              <label for="championBox" data-toggle="tooltip" data-placement="top" title="<% if (account.champion) { %> Champion<% } else { %> Non-Champion<% } %>"></label>
             </span>
 
             <input type="number" id="championInput" name="level" class="form-control text-center" <% if (account.champion) { %> min="1" max="600" placeholder="<%- account.level %>"<% } else { %> min="3" max="49" placeholder="3-50"<% } %> <% if (account.champion) { %> readonly <% } %> required>
@@ -75,26 +75,37 @@
       <div class="col-md-4 hidden-sm-down">
 
         <div class="form-group">
+
           <label>Class</label>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-check form-check-inline">
-                  
-                  <input type="radio" id="dragonknight" class="roster" name="class" value="dragonknight" required>
-                  <label for="dragonknight" data-toggle="tooltip" data-placement="top" title="Dragon Knight"></label>
-                  
-                  <input type="radio" id="nightblade" class="roster" name="class" value="nightblade">
-                  <label for="nightblade" data-toggle="tooltip" data-placement="top" title="Nightblade"></label>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-check form-check-inline">
                 
-                  <input type="radio" id="sorcerer" class="roster" name="class" value="sorcerer">
-                  <label for="sorcerer" data-toggle="tooltip" data-placement="top" title="Sorcerer"></label>
+                <input type="radio" id="dragonknight" class="roster" name="class" value="dragonknight" required>
+                <label for="dragonknight" data-toggle="tooltip" data-placement="top" title="Dragon Knight"></label>
                 
-                  <input type="radio" id="templar" class="roster" name="class" value="templar">
-                  <label for="templar" data-toggle="tooltip" data-placement="top" title="Templar"></label>
-                  
-                </div>
+                <input type="radio" id="nightblade" class="roster" name="class" value="nightblade">
+                <label for="nightblade" data-toggle="tooltip" data-placement="top" title="Nightblade"></label>
+              
+                <input type="radio" id="sorcerer" class="roster" name="class" value="sorcerer">
+                <label for="sorcerer" data-toggle="tooltip" data-placement="top" title="Sorcerer"></label>
+                
               </div>
             </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-check form-check-inline">
+              
+                <input type="radio" id="templar" class="roster" name="class" value="templar">
+                <label for="templar" data-toggle="tooltip" data-placement="top" title="Templar"></label>
+              
+                <input type="radio" id="warden" class="roster" name="class" value="warden">
+                <label for="warden" data-toggle="tooltip" data-placement="top" title="Warden"></label>
+                
+              </div>
+            </div>
+          </div>
 
         </div>
 
@@ -163,26 +174,35 @@
       <div class="col-md-4 hidden-md-up">
 
         <div class="form-group">
+
           <label>Class</label>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-check form-check-inline">
-                  
-                  <input type="radio" id="mobile-dragonknight" class="roster" name="class" value="dragonknight" required>
-                  <label for="mobile-dragonknight" data-toggle="tooltip" data-placement="top" title="Dragon Knight"></label>
-                  
-                  <input type="radio" id="mobile-nightblade" class="roster" name="class" value="nightblade">
-                  <label for="mobile-nightblade" data-toggle="tooltip" data-placement="top" title="Nightblade"></label>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-check form-check-inline">
                 
-                  <input type="radio" id="mobile-sorcerer" class="roster" name="class" value="sorcerer">
-                  <label for="mobile-sorcerer" data-toggle="tooltip" data-placement="top" title="Sorcerer"></label>
+                <input type="radio" id="mobile-dragonknight" class="roster" name="class" value="dragonknight" required>
+                <label for="mobile-dragonknight" data-toggle="tooltip" data-placement="top" title="Dragon Knight"></label>
                 
-                  <input type="radio" id="mobile-templar" class="roster" name="class" value="templar">
-                  <label for="mobile-templar" data-toggle="tooltip" data-placement="top" title="Templar"></label>
-                  
-                </div>
+                <input type="radio" id="mobile-nightblade" class="roster" name="class" value="nightblade">
+                <label for="mobile-nightblade" data-toggle="tooltip" data-placement="top" title="Nightblade"></label>
+              
+                <input type="radio" id="mobile-sorcerer" class="roster" name="class" value="sorcerer">
+                <label for="mobile-sorcerer" data-toggle="tooltip" data-placement="top" title="Sorcerer"></label>
+                
               </div>
             </div>
+            <div class="col-md-12">
+              <div class="form-check form-check-inline">
+              
+                <input type="radio" id="mobile-templar" class="roster" name="class" value="templar">
+                <label for="mobile-templar" data-toggle="tooltip" data-placement="top" title="Templar"></label>
+              
+                <input type="radio" id="mobile-warden" class="roster" name="class" value="warden">
+                <label for="mobile-warden" data-toggle="tooltip" data-placement="top" title="Warden"></label>
+                
+              </div>
+            </div>
+          </div>
 
         </div>
 
