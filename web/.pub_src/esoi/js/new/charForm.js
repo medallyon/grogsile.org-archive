@@ -120,10 +120,31 @@ function validateFormElements()
         validated = false;
     }
 
+    // alliance selection validation
+    if ($('input[name="alliance"]:checked').length === 0)
+    {
+        createWarningElement("alliance-warning", "You need to select an alliance for your character");
+        validated = false;
+    }
+
+    // class selection validation
+    if ($('input[name="class"]:checked').length === 0)
+    {
+        createWarningElement("class-warning", "You need to select a class for your character");
+        validated = false;
+    }
+
+    // race selection validation
+    if ($('input[name="race"]:checked').length === 0)
+    {
+        createWarningElement("race-warning", "You need to select a race for your character");
+        validated = false;
+    }
+
     // roles selection validation
     if ($('input[name="roles"]:checked').length === 0)
     {
-        createWarningElement("roles-warning", "You need to select at least one role for this character");
+        createWarningElement("roles-warning", "You need to select at least one role for your character");
         validated = false;
     }
 
