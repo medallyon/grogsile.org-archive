@@ -72,6 +72,9 @@ span.icon-sorcerer {
 span.icon-templar {
   background-image: url("https://i.grogsile.me/esoi/img/ui/icons/class/gamepad/gp_class_templar.png"), url("https://i.grogsile.me/esoi/img/ui/icons/class/gamepad/gp_class_templar.png");
 }
+span.icon-warden {
+  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/class/gamepad/gp_class_warden.png"), url("https://i.grogsile.me/esoi/img/ui/icons/class/gamepad/gp_class_warden.png");
+}
 
 /* ROLE */
 span.icon-dps {
