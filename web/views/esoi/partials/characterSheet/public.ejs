@@ -1,7 +1,14 @@
 <div class="card-group text-center justify-content-center">
 
   <% for (let char of characters) { %><div class="card">
+
     <img class="card-img-top" src="<%- char.avatarURL %>" alt="<%- char.name %>">
+
+    <div class="card-lvl">
+      <span class="inline-icon icon-<% if (char.champion) { %>champion<% } else { %>non-champion<% } %>"></span>
+      <span><% if (char.champion) { %><%- account.level %><% } else { %><%- char.level %><% } %></span>
+    </div>
+
     <div class="card-block">
       <h4 class="card-title"><%- char.name %></h4>
       <p class="card-text"><%- char.biography %></p>
@@ -9,7 +16,6 @@
     <ul class="list-group list-group-flush">
 
       <li class="list-group-item d-inline-block">
-        <span class="inline-icon icon-<% if (char.champion) { %>champion<% } else { %>non-champion<% } %>" data-toggle="tooltip" data-placement="top" title="<% if (char.champion) { %><%- account.level %><% } else { %><%- char.level %><% } %>"></span>
         <span class="inline-icon icon-<%- char.alliance.split(" ")[0].toLowerCase() %>" data-toggle="tooltip" data-placement="top" title="<%- char.alliance %>"></span>
         <span class="inline-icon icon-<%- char.race.toLowerCase() %>" data-toggle="tooltip" data-placement="top" title="<%- char.race[0].toUpperCase() + char.race.slice(1) %>"></span>
         <span class="inline-icon icon-<%- char.class.toLowerCase() %>" data-toggle="tooltip" data-placement="top" title="<%- char.class[0].toUpperCase() + char.class.slice(1) %>"></span>
