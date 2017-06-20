@@ -1,31 +1,13 @@
 {
   "id": 0,
-  "name": "Rinkydink Frumblesnatch",
+  "characterName": "Norgred Hardhelm",
   "champion": false,
   "level": 3,
   "biography": "I am a character.",
-  "alliance": "Aldmeri Dominion",
+  "alliance": "",
   "class": "",
   "race": "",
-  "roles": [
-    "dps",
-    "healer",
-    "tank"
-  ],
-  "professions": [
-    "blacksmithing",
-    "clothing",
-    "woodworking",
-    "alchemy",
-    "enchanting",
-    "provisioning",
-    "fishing",
-    "banker",
-    "thieving",
-    "pve",
-    "pvp",
-    "dueling",
-    "roleplay"
-  ],
-  "avatarURL": "https://i.grogsile.me/esoi/users/userId/characters/characterId.png"
+  "roles": [],
+  "professions": [],
+  "avatarURL": ""
 }
