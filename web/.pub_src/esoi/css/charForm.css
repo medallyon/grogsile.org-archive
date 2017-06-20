@@ -204,71 +204,55 @@
 }
 
 /* Class Icon Radios */
-.roster#dragonknight + label {
-  background-image: url("https://i.grogsile.me/esoi/img/classes/dragonknight.png");
-}
-.roster#dragonknight:checked + label {
-  background-image: url("https://i.grogsile.me/esoi/img/classes/dragonknight.png");
-  -webkit-filter: drop-shadow(2px 2px 2.5px #990D0D) drop-shadow(-2px -2px 2.5px #990D0D);
-  filter: drop-shadow(2px 2px 2.5px #990D0D) drop-shadow(-2px -2px 2.5px #990D0D);
-}
-.roster#nightblade + label {
-  background-image: url("https://i.grogsile.me/esoi/img/classes/nightblade.png");
-}
-.roster#nightblade:checked + label {
-  background-image: url("https://i.grogsile.me/esoi/img/classes/nightblade.png");
-  -webkit-filter: drop-shadow(2px 2px 2.5px #377C15) drop-shadow(-2px -2px 2.5px #377C15);
-  filter: drop-shadow(2px 2px 2.5px #377C15) drop-shadow(-2px -2px 2.5px #377C15);
-}
-.roster#sorcerer + label {
-  background-image: url("https://i.grogsile.me/esoi/img/classes/sorcerer.png");
-}
-.roster#sorcerer:checked + label {
-  background-image: url("https://i.grogsile.me/esoi/img/classes/sorcerer.png");
-  -webkit-filter: drop-shadow(2px 2px 2.5px #6A28A8) drop-shadow(-2px -2px 2.5px #6A28A8);
-  filter: drop-shadow(2px 2px 2.5px #6A28A8) drop-shadow(-2px -2px 2.5px #6A28A8);
-}
-.roster#templar + label {
-  background-image: url("https://i.grogsile.me/esoi/img/classes/templar.png");
-}
-.roster#templar:checked + label {
-  background-image: url("https://i.grogsile.me/esoi/img/classes/templar.png");
-  -webkit-filter: drop-shadow(2px 2px 2.5px #B7A51D) drop-shadow(-2px -2px 2.5px #B7A51D);
-  filter: drop-shadow(2px 2px 2.5px #B7A51D) drop-shadow(-2px -2px 2.5px #B7A51D);
-}
-
-/* Mobile Class Icon Radios */
+.roster#dragonknight + label,
 .roster#mobile-dragonknight + label {
   background-image: url("https://i.grogsile.me/esoi/img/classes/dragonknight.png");
 }
+.roster#dragonknight:checked + label,
 .roster#mobile-dragonknight:checked + label {
   background-image: url("https://i.grogsile.me/esoi/img/classes/dragonknight.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #990D0D) drop-shadow(-2px -2px 2.5px #990D0D);
   filter: drop-shadow(2px 2px 2.5px #990D0D) drop-shadow(-2px -2px 2.5px #990D0D);
 }
+.roster#nightblade + label,
 .roster#mobile-nightblade + label {
   background-image: url("https://i.grogsile.me/esoi/img/classes/nightblade.png");
 }
+.roster#nightblade:checked + label,
 .roster#mobile-nightblade:checked + label {
   background-image: url("https://i.grogsile.me/esoi/img/classes/nightblade.png");
-  -webkit-filter: drop-shadow(2px 2px 2.5px #377C15) drop-shadow(-2px -2px 2.5px #377C15);
-  filter: drop-shadow(2px 2px 2.5px #377C15) drop-shadow(-2px -2px 2.5px #377C15);
+  -webkit-filter: drop-shadow(2px 2px 2.5px #ED9223) drop-shadow(-2px -2px 2.5px #ED9223);
+  filter: drop-shadow(2px 2px 2.5px #ED9223) drop-shadow(-2px -2px 2.5px #ED9223);
 }
+.roster#sorcerer + label,
 .roster#mobile-sorcerer + label {
   background-image: url("https://i.grogsile.me/esoi/img/classes/sorcerer.png");
 }
+.roster#sorcerer:checked + label,
 .roster#mobile-sorcerer:checked + label {
   background-image: url("https://i.grogsile.me/esoi/img/classes/sorcerer.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #6A28A8) drop-shadow(-2px -2px 2.5px #6A28A8);
   filter: drop-shadow(2px 2px 2.5px #6A28A8) drop-shadow(-2px -2px 2.5px #6A28A8);
 }
+.roster#templar + label,
 .roster#mobile-templar + label {
   background-image: url("https://i.grogsile.me/esoi/img/classes/templar.png");
 }
+.roster#templar:checked + label,
 .roster#mobile-templar:checked + label {
   background-image: url("https://i.grogsile.me/esoi/img/classes/templar.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #B7A51D) drop-shadow(-2px -2px 2.5px #B7A51D);
   filter: drop-shadow(2px 2px 2.5px #B7A51D) drop-shadow(-2px -2px 2.5px #B7A51D);
+}
+.roster#warden + label,
+.roster#mobile-warden + label {
+  background-image: url("https://i.grogsile.me/esoi/img/classes/warden.png");
+}
+.roster#warden:checked + label,
+.roster#mobile-warden:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/classes/warden.png");
+  -webkit-filter: drop-shadow(2px 2px 2.5px #1F8914) drop-shadow(-2px -2px 2.5px #1F8914);
+  filter: drop-shadow(2px 2px 2.5px #1F8914) drop-shadow(-2px -2px 2.5px #1F8914);
 }
 
 /* Role Icon Checkboxes */
