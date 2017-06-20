@@ -8,19 +8,19 @@
 <div class="container text-muted">
 
   <div class="text-center">
-    <% if (!Object.keys(characters).length) { %><h2>This is where your characters would go. If you had any.</h2>
+    <% if (!characters.length) { %><h2>This is where your characters would go. If you had any.</h2>
     <p class="pt-4">
       <a class="btn btn-lg btn-info" href="/new?type=character">Why not create one?</a>
     </p><% } else { %><h2>Your Characters</h2><% } %>
   </div>
 
-  <% if (Object.keys(characters).length) { %>
+  <% if (characters.length) { %>
 
     <%- include("../characterSheet/dashboard") %>
 
   <% } %>
 
-  <% if (Object.keys(characters).length && Object.keys(characters).length <= 12) { %><div class="text-center">
+  <% if (characters.length && characters.length <= 12) { %><div class="text-center">
     <p class="pt-4">
       <a class="btn btn-lg btn-info" href="/new?type=character">Add another character</a>
     </p>
