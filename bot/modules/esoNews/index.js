@@ -66,6 +66,7 @@ function checkUpdate(url)
 }
 
 // spam-compare content of image.txt with latest.image
+// this is needed because there is no definite callback for the previous process
 function spamCompare()
 {
     setTimeout(function()
