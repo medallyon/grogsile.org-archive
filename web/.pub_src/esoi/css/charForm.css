@@ -25,10 +25,40 @@
   z-index: -1;
 }
 
+.primary {
+  display: none;
+}
+.primary + label {
+  background-image: url("https://i.grogsile.me/esoi/img/star-empty.png");
+  background-repeat: no-repeat;
+  background-size: 1.2rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  display: inline-block;
+  margin: 0;
+}
+.primary + label:hover {
+  background-image: url("https://i.grogsile.me/esoi/img/star-filled.png");
+  background-repeat: no-repeat;
+  background-size: 1.2rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  display: inline-block;
+  margin: 0;
+}
+.primary:checked + label {
+  background-image: url("https://i.grogsile.me/esoi/img/star-filled.png");
+  background-repeat: no-repeat;
+  background-size: 1.2rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  display: inline-block;
+  margin: 0;
+}
+
 #championBox {
   display: none;
 }
-
 #championBox + label
 {
   background: url("https://i.grogsile.me/esoi/img/ui/gameui/lfg/gamepad/lfg_menuicon_normaldungeon.png") no-repeat;
@@ -40,7 +70,6 @@
   -webkit-transition: background .15s;
   transition: background .15s;
 }
-
 #championBox:checked + label
 {
   background: url("https://i.grogsile.me/esoi/img/ui/gameui/champion/champion_icon.png") no-repeat;
@@ -58,7 +87,6 @@
 .roster {
   display: none;
 }
-
 .roster + label
 {
   background-repeat: no-repeat;

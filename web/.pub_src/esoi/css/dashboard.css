@@ -38,6 +38,24 @@
   -webkit-transition: background-color .25s ease-in-out;
 }
 
+.card-primary {
+  position: absolute;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 20px;
+  line-height: 1;
+  background-color: rgba(0,0,0,0);
+}
+.card-primary .inline-icon {
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+  margin-right: 5px;
+  background-size: 1.5rem !important;
+}
+
 .card-lvl {
   position: absolute;
   right: 0;
@@ -53,7 +71,6 @@
   line-height: 1;
   background-color: rgba(0, 0, 0, 0.6);
 }
-
 .card-lvl .inline-icon {
   width: 1.5rem !important;
   height: 1.5rem !important;

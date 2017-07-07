@@ -1,5 +1,6 @@
 {
   "id": 0,
+  "primary": false,
   "characterName": "Norgred Hardhelm",
   "champion": false,
   "level": 3,

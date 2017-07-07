@@ -16,6 +16,11 @@ span.icon-champion {
   background-image: url("https://i.grogsile.me/esoi/img/ui/gameui/champion/champion_icon.png");
 }
 
+/* PRIMARY CHARACTER */
+span.icon-primary {
+  background-image: url("https://i.grogsile.me/esoi/img/star-filled.png");
+}
+
 /* ALLIANCE */
 span.icon-aldmeri {
   background-image: url("https://i.grogsile.me/esoi/img/ui/gameui/stats/alliancebadge_aldmeri.png");

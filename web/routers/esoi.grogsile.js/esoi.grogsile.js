@@ -327,6 +327,7 @@ function validateFormElements(form)
     return new Promise(function(resolve, reject)
     {
         // existence validation
+        if (!form.primary) form.primary = false;
         if (!form.characterName) return reject([400, "Submitted no Character Name"]);
         if (!form.level) form.level = 0;
         if (!form.biography) form.biography = "";
@@ -340,6 +341,9 @@ function validateFormElements(form)
         if (form.characterName.length < 3 || form.characterName.length > 25) return reject([400, "Character Name length is out of bounds"]);
         // if (/[^a-zA-Z-'öüäß ]/g.test(form.characterName)) return reject([400, "Character Name contains illegal characters"]);
         if ("abcdefghijklmopqrstuvwxyzABCDEFGHIJKLMOPQRSTUVWXYZ-'öüäß ".split("").some(x => form.characterName.includes(x.repeat(3)))) return reject([400, "Character name contains a character three consecutive times"]);
+
+        if (form.primary === "on") form.primary = true;
+        else form.primary = false;
 
         if (form.champion === "on") form.champion = true;
         else form.champion = false;
@@ -388,6 +392,8 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
                         if (!usedIds.includes(i)) character.id = i;
                     }
 
+                    if (!characters.length && !character.primary) character.primary;
+
                     const userAvatarDir = join(__webdir, ".pub_src", "esoi", "users", userId);
                     fs.ensureDir(userAvatarDir, (err) => {
                         if (err) return res.status(500).send("Could not establish user avatar directory");
@@ -435,6 +441,14 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
                 .then((charData) => {
                     const character = characters[charData.id];
                     Object.assign(character, charData);
+
+                    if (character.primary)
+                    {
+                        for (let char of characters.filter(x => x.id !== character.id))
+                        {
+                            char.primary = false;
+                        }
+                    }
 
                     if (!req.file)
                     {
@@ -495,7 +509,7 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
         if (req.body.id)
         {
             fs.readJson(join(userDir, "characters.json"), (err, characters) => {
-                if (err) console.error(err);
+                if (err) return res.json(err);
 
                 if (characters.some(x => x.id === req.body.id))
                 {
