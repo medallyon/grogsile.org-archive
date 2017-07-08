@@ -300,10 +300,10 @@
   -webkit-filter: drop-shadow(2px 2px 2.5px #990D0D) drop-shadow(-2px -2px 2.5px #990D0D);
   filter: drop-shadow(2px 2px 2.5px #990D0D) drop-shadow(-2px -2px 2.5px #990D0D);
 }
-.roster#heal + label {
+.roster#healer + label {
   background-image: url("https://i.grogsile.me/esoi/img/ui/gameui/lfg/lfg_healer_up_64.png");
 }
-.roster#heal:checked + label {
+.roster#healer:checked + label {
   background-image: url("https://i.grogsile.me/esoi/img/ui/gameui/lfg/lfg_healer_up_64.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #B7A51D) drop-shadow(-2px -2px 2.5px #B7A51D);
   filter: drop-shadow(2px 2px 2.5px #B7A51D) drop-shadow(-2px -2px 2.5px #B7A51D);
@@ -365,10 +365,10 @@
   -webkit-filter: drop-shadow(2px 2px 2.5px #3498DB) drop-shadow(-2px -2px 2.5px #3498DB);
   filter: drop-shadow(2px 2px 2.5px #3498DB) drop-shadow(-2px -2px 2.5px #3498DB);
 }
-.roster#banker + label {
+.roster#banking + label {
   background-image: url("https://i.grogsile.me/esoi/img/ui/icons/servicemappins/servicepin_bank.png");
 }
-.roster#banker:checked + label {
+.roster#banking:checked + label {
   background-image: url("https://i.grogsile.me/esoi/img/ui/icons/servicemappins/servicepin_bank.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #B7950B) drop-shadow(-2px -2px 2.5px #B7950B);
   filter: drop-shadow(2px 2px 2.5px #B7950B) drop-shadow(-2px -2px 2.5px #B7950B);

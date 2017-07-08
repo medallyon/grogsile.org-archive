@@ -1,3 +1,7 @@
+.btn-link {
+  cursor: pointer !important;
+}
+
 .navbar {
   margin-bottom: 0;
 }

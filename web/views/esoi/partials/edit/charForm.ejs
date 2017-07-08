@@ -61,13 +61,13 @@
             <div class="col-md-12">
               <div class="form-check form-check-inline">
                 
-                <input type="radio" id="dc" class="roster" name="alliance" value="Daggerfall Covenant" <% if (character.alliance === "Daggerfall Covenant") { %> checked<% } %> required>
+                <input type="radio" id="dc" class="roster" name="alliance" value="Daggerfall Covenant" <% if (character.alliance.toLowerCase() === "daggerfall covenant") { %> checked<% } %> required>
                 <label for="dc" data-toggle="tooltip" data-placement="top" title="Daggerfall Covenant"></label>
                 
-                <input type="radio" id="ad" class="roster" name="alliance" value="Aldmeri Dominion" <% if (character.alliance === "Aldmeri Dominion") { %> checked<% } %>>
+                <input type="radio" id="ad" class="roster" name="alliance" value="Aldmeri Dominion" <% if (character.alliance.toLowerCase() === "aldmeri dominion") { %> checked<% } %>>
                 <label for="ad" data-toggle="tooltip" data-placement="top" title="Aldmeri Dominion"></label>
                 
-                <input type="radio" id="ep" class="roster" name="alliance" value="Ebonheart Pact" <% if (character.alliance === "Ebonheart Pact") { %> checked<% } %>>
+                <input type="radio" id="ep" class="roster" name="alliance" value="Ebonheart Pact" <% if (character.alliance.toLowerCase() === "ebonheart pact") { %> checked<% } %>>
                 <label for="ep" data-toggle="tooltip" data-placement="top" title="Ebonheart Pact"></label>
                 
               </div>
@@ -89,13 +89,13 @@
             <div class="col-md-12">
               <div class="form-check form-check-inline">
                 
-                <input type="radio" id="dragonknight" class="roster" name="class" value="dragonknight" <% if (character.class === "dragonknight") { %> checked<% } %> required>
+                <input type="radio" id="dragonknight" class="roster" name="class" value="Dragon Knight" <% if (character.class.toLowerCase() === "dragon knight") { %> checked<% } %> required>
                 <label for="dragonknight" data-toggle="tooltip" data-placement="top" title="Dragon Knight"></label>
                 
-                <input type="radio" id="nightblade" class="roster" name="class" value="nightblade" <% if (character.class === "nightblade") { %> checked<% } %>>
+                <input type="radio" id="nightblade" class="roster" name="class" value="Nightblade" <% if (character.class.toLowerCase() === "nightblade") { %> checked<% } %>>
                 <label for="nightblade" data-toggle="tooltip" data-placement="top" title="Nightblade"></label>
               
-                <input type="radio" id="sorcerer" class="roster" name="class" value="sorcerer" <% if (character.class === "sorcerer") { %> checked<% } %>>
+                <input type="radio" id="sorcerer" class="roster" name="class" value="Sorcerer" <% if (character.class.toLowerCase() === "sorcerer") { %> checked<% } %>>
                 <label for="sorcerer" data-toggle="tooltip" data-placement="top" title="Sorcerer"></label>
                 
               </div>
@@ -103,10 +103,10 @@
             <div class="col-md-12">
               <div class="form-check form-check-inline">
               
-                <input type="radio" id="templar" class="roster" name="class" value="templar" <% if (character.class === "templar") { %> checked<% } %>>
+                <input type="radio" id="templar" class="roster" name="class" value="Templar" <% if (character.class.toLowerCase() === "templar") { %> checked<% } %>>
                 <label for="templar" data-toggle="tooltip" data-placement="top" title="Templar"></label>
               
-                <input type="radio" id="warden" class="roster" name="class" value="warden" <% if (character.class === "warden") { %> checked<% } %>>
+                <input type="radio" id="warden" class="roster" name="class" value="Warden" <% if (character.class.toLowerCase() === "warden") { %> checked<% } %>>
                 <label for="warden" data-toggle="tooltip" data-placement="top" title="Warden"></label>
                 
               </div>
@@ -125,13 +125,13 @@
             <div class="col-md-12">
               <div class="form-check form-check-inline">
                 
-                <input type="radio" id="breton" class="roster" name="race" value="breton" <% if (character.race === "breton") { %> checked<% } %> required>
+                <input type="radio" id="breton" class="roster" name="race" value="Breton" <% if (character.race.toLowerCase() === "breton") { %> checked<% } %> required>
                 <label for="breton" data-toggle="tooltip" data-placement="left" title="Breton"></label>
                 
-                <input type="radio" id="altmer" class="roster" name="race" value="altmer" <% if (character.race === "altmer") { %> checked<% } %>>
+                <input type="radio" id="altmer" class="roster" name="race" value="Altmer" <% if (character.race.toLowerCase() === "altmer") { %> checked<% } %>>
                 <label for="altmer" data-toggle="tooltip" data-placement="top" title="Altmer/High Elf"></label>
                 
-                <input type="radio" id="argonian" class="roster" name="race" value="argonian" <% if (character.race === "argonian") { %> checked<% } %>>
+                <input type="radio" id="argonian" class="roster" name="race" value="Argonian" <% if (character.race.toLowerCase() === "argonian") { %> checked<% } %>>
                 <label for="argonian" data-toggle="tooltip" data-placement="right" title="Argonian"></label>
                 
               </div>
@@ -140,13 +140,13 @@
             <div class="col-md-12">
               <div class="form-check form-check-inline">
 
-                <input type="radio" id="orsimer" class="roster" name="race" value="orsimer" <% if (character.race === "orsimer") { %> checked<% } %>>
+                <input type="radio" id="orsimer" class="roster" name="race" value="Orsimer" <% if (character.race.toLowerCase() === "orsimer") { %> checked<% } %>>
                 <label for="orsimer" data-toggle="tooltip" data-placement="left" title="Orsimer/Orc"></label>
                 
-                <input type="radio" id="bosmer" class="roster" name="race" value="bosmer" <% if (character.race === "bosmer") { %> checked<% } %>>
+                <input type="radio" id="bosmer" class="roster" name="race" value="Bosmer" <% if (character.race.toLowerCase() === "bosmer") { %> checked<% } %>>
                 <label for="bosmer" data-toggle="tooltip" data-placement="top" title="Bosmer/Wood Elf"></label>
                 
-                <input type="radio" id="dunmer" class="roster" name="race" value="dunmer" <% if (character.race === "dunmer") { %> checked<% } %>>
+                <input type="radio" id="dunmer" class="roster" name="race" value="Dunmer" <% if (character.race.toLowerCase() === "dunmer") { %> checked<% } %>>
                 <label for="dunmer" data-toggle="tooltip" data-placement="right" title="Dunmer/Dark Elf"></label>
                 
               </div>
@@ -154,13 +154,13 @@
             <div class="col-md-12">
               <div class="form-check form-check-inline">
 
-                <input type="radio" id="redguard" class="roster" name="race" value="redguard" <% if (character.race === "redguard") { %> checked<% } %>>
+                <input type="radio" id="redguard" class="roster" name="race" value="Redguard" <% if (character.race.toLowerCase() === "redguard") { %> checked<% } %>>
                 <label for="redguard" data-toggle="tooltip" data-placement="left" title="Redguard"></label>
                 
-                <input type="radio" id="khajiit" class="roster" name="race" value="khajiit" <% if (character.race === "khajiit") { %> checked<% } %>>
+                <input type="radio" id="khajiit" class="roster" name="race" value="Khajiit" <% if (character.race.toLowerCase() === "khajiit") { %> checked<% } %>>
                 <label for="khajiit" data-toggle="tooltip" data-placement="top" title="Khajiit"></label>
                 
-                <input type="radio" id="nord" class="roster" name="race" value="nord" <% if (character.race === "nord") { %> checked<% } %>>
+                <input type="radio" id="nord" class="roster" name="race" value="Nord" <% if (character.race.toLowerCase() === "nord") { %> checked<% } %>>
                 <label for="nord" data-toggle="tooltip" data-placement="right" title="Nord"></label>
                 
               </div>
@@ -168,7 +168,7 @@
             <div class="col-md-12">
               <div class="form-check form-check-inline">
                 
-                <input type="radio" id="imperial" class="roster" name="race" value="imperial" <% if (character.race === "imperial") { %> checked<% } %>>
+                <input type="radio" id="imperial" class="roster" name="race" value="Imperial" <% if (character.race === "imperial") { %> checked<% } %>>
                 <label for="imperial" data-toggle="tooltip" data-placement="top" title="Imperial"></label>
                 
               </div>
@@ -186,13 +186,13 @@
             <div class="col-md-12">
               <div class="form-check form-check-inline">
                 
-                <input type="radio" id="mobile-dragonknight" class="roster" name="class" value="dragonknight" <% if (character.class === "dragonknight") { %> checked<% } %> required>
+                <input type="radio" id="mobile-dragonknight" class="roster" name="class" value="Dragon Knight" required>
                 <label for="mobile-dragonknight" data-toggle="tooltip" data-placement="top" title="Dragon Knight"></label>
                 
-                <input type="radio" id="mobile-nightblade" class="roster" name="class" value="nightblade" <% if (character.class === "nightblade") { %> checked<% } %>>
+                <input type="radio" id="mobile-nightblade" class="roster" name="class" value="Nightblade">
                 <label for="mobile-nightblade" data-toggle="tooltip" data-placement="top" title="Nightblade"></label>
               
-                <input type="radio" id="mobile-sorcerer" class="roster" name="class" value="sorcerer" <% if (character.class === "sorcerer") { %> checked<% } %>>
+                <input type="radio" id="mobile-sorcerer" class="roster" name="class" value="Sorcerer">
                 <label for="mobile-sorcerer" data-toggle="tooltip" data-placement="top" title="Sorcerer"></label>
                 
               </div>
@@ -200,10 +200,10 @@
             <div class="col-md-12">
               <div class="form-check form-check-inline">
               
-                <input type="radio" id="mobile-templar" class="roster" name="class" value="templar" <% if (character.class === "templar") { %> checked<% } %>>
+                <input type="radio" id="mobile-templar" class="roster" name="class" value="Templar">
                 <label for="mobile-templar" data-toggle="tooltip" data-placement="top" title="Templar"></label>
               
-                <input type="radio" id="mobile-warden" class="roster" name="class" value="warden" <% if (character.class === "warden") { %> checked<% } %>>
+                <input type="radio" id="mobile-warden" class="roster" name="class" value="Warden">
                 <label for="mobile-warden" data-toggle="tooltip" data-placement="top" title="Warden"></label>
                 
               </div>
@@ -222,14 +222,14 @@
             <div class="col-md-12">
               <div class="form-check form-check-inline">
                 
-                <input type="checkbox" id="dps" class="roster" name="roles" value="dps" <% if (character.roles.indexOf("dps") > -1) { %> checked<% } %>>
+                <input type="checkbox" id="dps" class="roster" name="roles" value="DPS" <% if (character.roles.map(r => r.toLowerCase()).indexOf("dps") > -1) { %> checked<% } %>>
                 <label for="dps" data-toggle="tooltip" data-placement="top" title="DPS"></label>
                 
-                <input type="checkbox" id="tank" class="roster" name="roles" value="tank" <% if (character.roles.indexOf("tank") > -1) { %> checked<% } %>>
+                <input type="checkbox" id="tank" class="roster" name="roles" value="Tank" <% if (character.roles.map(r => r.toLowerCase()).indexOf("tank") > -1) { %> checked<% } %>>
                 <label for="tank" data-toggle="tooltip" data-placement="top" title="Tank"></label>
                 
-                <input type="checkbox" id="heal" class="roster" name="roles" value="heal" <% if (character.roles.indexOf("heal") > -1) { %> checked<% } %>>
-                <label for="heal" data-toggle="tooltip" data-placement="top" title="Heal"></label>
+                <input type="checkbox" id="healer" class="roster" name="roles" value="Healer" <% if (character.roles.map(r => r.toLowerCase()).indexOf("healer") > -1) { %> checked<% } %>>
+                <label for="healer" data-toggle="tooltip" data-placement="top" title="Healer"></label>
                 
               </div>
             </div>
@@ -247,43 +247,43 @@
         <div class="col-md-12">
           <div class="form-check form-check-inline">
               
-            <input type="checkbox" id="blacksmithing" class="roster" name="professions" value="blacksmithing" <% if (character.professions.indexOf("blacksmithing") > -1) { %> checked<% } %>>
+            <input type="checkbox" id="blacksmithing" class="roster" name="professions" value="Blacksmithing" <% if (character.professions.map(p => p.toLowerCase()).indexOf("blacksmithing") > -1) { %> checked<% } %>>
             <label for="blacksmithing" data-toggle="tooltip" data-placement="top" title="Blacksmithing"></label>
             
-            <input type="checkbox" id="clothing" class="roster" name="professions" value="clothing" <% if (character.professions.indexOf("clothing") > -1) { %> checked<% } %>>
+            <input type="checkbox" id="clothing" class="roster" name="professions" value="Clothing" <% if (character.professions.map(p => p.toLowerCase()).indexOf("clothing") > -1) { %> checked<% } %>>
             <label for="clothing" data-toggle="tooltip" data-placement="top" title="Clothing"></label>
             
-            <input type="checkbox" id="woodworking" class="roster" name="professions" value="woodworking" <% if (character.professions.indexOf("woodworking") > -1) { %> checked<% } %>>
+            <input type="checkbox" id="woodworking" class="roster" name="professions" value="Woodworking" <% if (character.professions.map(p => p.toLowerCase()).indexOf("woodworking") > -1) { %> checked<% } %>>
             <label for="woodworking" data-toggle="tooltip" data-placement="top" title="Woodworking"></label>
             
-            <input type="checkbox" id="alchemy" class="roster" name="professions" value="alchemy" <% if (character.professions.indexOf("alchemy") > -1) { %> checked<% } %>>
+            <input type="checkbox" id="alchemy" class="roster" name="professions" value="Alchemy" <% if (character.professions.map(p => p.toLowerCase()).indexOf("alchemy") > -1) { %> checked<% } %>>
             <label for="alchemy" data-toggle="tooltip" data-placement="top" title="Alchemy"></label>
             
-            <input type="checkbox" id="enchanting" class="roster" name="professions" value="enchanting" <% if (character.professions.indexOf("enchanting") > -1) { %> checked<% } %>>
+            <input type="checkbox" id="enchanting" class="roster" name="professions" value="Enchanting" <% if (character.professions.map(p => p.toLowerCase()).indexOf("enchanting") > -1) { %> checked<% } %>>
             <label for="enchanting" data-toggle="tooltip" data-placement="top" title="Enchanting"></label>
             
-            <input type="checkbox" id="provisioning" class="roster" name="professions" value="provisioning" <% if (character.professions.indexOf("provisioning") > -1) { %> checked<% } %>>
+            <input type="checkbox" id="provisioning" class="roster" name="professions" value="Provisioning" <% if (character.professions.map(p => p.toLowerCase()).indexOf("provisioning") > -1) { %> checked<% } %>>
             <label for="provisioning" data-toggle="tooltip" data-placement="top" title="Provisioning"></label>
             
-            <input type="checkbox" id="fishing" class="roster" name="professions" value="fishing" <% if (character.professions.indexOf("fishing") > -1) { %> checked<% } %>>
+            <input type="checkbox" id="fishing" class="roster" name="professions" value="Fishing" <% if (character.professions.map(p => p.toLowerCase()).indexOf("fishing") > -1) { %> checked<% } %>>
             <label for="fishing" data-toggle="tooltip" data-placement="top" title="Fishing"></label>
             
-            <input type="checkbox" id="banker" class="roster" name="professions" value="banker" <% if (character.professions.indexOf("banker") > -1) { %> checked<% } %>>
-            <label for="banker" data-toggle="tooltip" data-placement="top" title="Banker"></label>
+            <input type="checkbox" id="banking" class="roster" name="professions" value="Banking" <% if (character.professions.map(p => p.toLowerCase()).indexOf("banking") > -1) { %> checked<% } %>>
+            <label for="banking" data-toggle="tooltip" data-placement="top" title="Banking"></label>
             
-            <input type="checkbox" id="thieving" class="roster" name="professions" value="thieving" <% if (character.professions.indexOf("thieving") > -1) { %> checked<% } %>>
-            <label for="thieving" data-toggle="tooltip" data-placement="top" title="Thief"></label>
+            <input type="checkbox" id="thieving" class="roster" name="professions" value="Thieving" <% if (character.professions.map(p => p.toLowerCase()).indexOf("thieving") > -1) { %> checked<% } %>>
+            <label for="thieving" data-toggle="tooltip" data-placement="top" title="Thieving"></label>
             
-            <input type="checkbox" id="pve" class="roster" name="professions" value="pve" <% if (character.professions.indexOf("pve") > -1) { %> checked<% } %>>
+            <input type="checkbox" id="pve" class="roster" name="professions" value="PvE" <% if (character.professions.map(p => p.toLowerCase()).indexOf("pve") > -1) { %> checked<% } %>>
             <label for="pve" data-toggle="tooltip" data-placement="top" title="PvE"></label>
             
-            <input type="checkbox" id="pvp" class="roster" name="professions" value="pvp" <% if (character.professions.indexOf("pvp") > -1) { %> checked<% } %>>
+            <input type="checkbox" id="pvp" class="roster" name="professions" value="PvP" <% if (character.professions.map(p => p.toLowerCase()).indexOf("pvp") > -1) { %> checked<% } %>>
             <label for="pvp" data-toggle="tooltip" data-placement="top" title="PvP"></label>
             
-            <input type="checkbox" id="dueling" class="roster" name="professions" value="dueling" <% if (character.professions.indexOf("dueling") > -1) { %> checked<% } %>>
+            <input type="checkbox" id="dueling" class="roster" name="professions" value="Dueling" <% if (character.professions.map(p => p.toLowerCase()).indexOf("dueling") > -1) { %> checked<% } %>>
             <label for="dueling" data-toggle="tooltip" data-placement="top" title="Dueling"></label>
             
-            <input type="checkbox" id="roleplay" class="roster" name="professions" value="roleplay" <% if (character.professions.indexOf("roleplay") > -1) { %> checked<% } %>>
+            <input type="checkbox" id="roleplay" class="roster" name="professions" value="Roleplay" <% if (character.professions.map(p => p.toLowerCase()).indexOf("roleplay") > -1) { %> checked<% } %>>
             <label for="roleplay" data-toggle="tooltip" data-placement="top" title="Roleplay"></label>
 
           </div>

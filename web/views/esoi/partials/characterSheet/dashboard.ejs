@@ -23,7 +23,7 @@
       <li class="list-group-item d-inline-block">
         <span class="inline-icon icon-<%- char.alliance.split(" ")[0].toLowerCase() %>" data-toggle="tooltip" data-placement="top" title="<%- char.alliance %>"></span>
         <span class="inline-icon icon-<%- char.race.toLowerCase() %>" data-toggle="tooltip" data-placement="top" title="<%- char.race[0].toUpperCase() + char.race.slice(1) %>"></span>
-        <span class="inline-icon icon-<%- char.class.toLowerCase() %>" data-toggle="tooltip" data-placement="top" title="<%- char.class[0].toUpperCase() + char.class.slice(1) %>"></span>
+        <span class="inline-icon icon-<%- char.class.toLowerCase().split(" ").join("") %>" data-toggle="tooltip" data-placement="top" title="<%- char.class[0].toUpperCase() + char.class.slice(1) %>"></span>
       </li>
 
       <li class="list-group-item d-inline-block">
@@ -31,7 +31,7 @@
       </li>
 
       <% if (char.professions.length) { %><li class="list-group-item d-inline-block">
-        <% for (let i = 0; i < char.professions.length; i++) { %><span class="inline-icon icon-<%- char.professions[i].toLowerCase() %>" data-toggle="tooltip" data-placement="top" title="<%- char.professions[i][0].toUpperCase() + char.professions[i].slice(1) %>"></span><% } %>
+        <% for (let i = 0; i < char.professions.length; i++) { %><span class="inline-icon icon-<%- char.professions[i].toLowerCase() %>" data-toggle="tooltip" data-placement="top" title="<%- char.professions[i] %>"></span><% } %>
       </li><% } %>
 
     </ul>

@@ -392,7 +392,7 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
                         if (!usedIds.includes(i)) character.id = i;
                     }
 
-                    if (!characters.length && !character.primary) character.primary;
+                    if (!characters.length && !character.primary) character.primary = true;
 
                     const userAvatarDir = join(__webdir, ".pub_src", "esoi", "users", userId);
                     fs.ensureDir(userAvatarDir, (err) => {
@@ -444,10 +444,11 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
 
                     if (character.primary)
                     {
-                        for (let char of characters.filter(x => x.id !== character.id))
+                        for (let char of characters)
                         {
                             char.primary = false;
                         }
+                        character.primary = true;
                     }
 
                     if (!req.file)
