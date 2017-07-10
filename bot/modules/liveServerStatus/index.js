@@ -97,7 +97,6 @@ function liveServerStatus()
                     }
                 }
             }
-            console.log(changedServers);
             savedVars.status = status;
 
             if (!statusMessageId || statusMessageId === "0" || !statusChannel.messages.has(statusMessageId))
