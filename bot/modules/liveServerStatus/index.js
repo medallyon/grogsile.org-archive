@@ -3,7 +3,7 @@ const LIVE_CHANNEL = "319641305388941315"
 
 function structureEmbed(status)
 {
-    let e = new Discord.RichEmbed(constants.discord.embed)
+    let e = new Discord.RichEmbed()
         .setAuthor("ESO Server Status", dClient.user.displayAvatarURL, STATUS_DOMAIN)
         .setDescription("This live panel is updated every 5 minutes to check for all ESO Server Statuses.")
         .setFooter(`Brought to you by Grogsile, Inc. | ${utils.fancyESODate(new Date())} ${new Date().getUTCHours()}:${new Date().getUTCMinutes()} UTC`);
@@ -29,6 +29,51 @@ function structureEmbed(status)
     return e;
 }
 
+function prepareAnnouncement(servers)
+{
+    let e = new Discord.RichEmbed()
+        .setAuthor("ESO Server Status", dClient.user.displayAvatarURL, STATUS_DOMAIN)
+        .setDescription("The following servers have been updated:")
+        .setFooter(`Brought to you by Grogsile, Inc. | ${utils.fancyESODate(new Date())} ${new Date().getUTCHours()}:${new Date().getUTCMinutes()} UTC`)
+    , strings = [];
+
+    if (servers.findIndex(x => x.platform === "PC") > -1)
+    {
+        for (let server of servers.filter(s => s.platform === "PC"))
+        {
+            strings.push(`The **${(server.server === "NA") ? "North American [NA]" : ((server.server === "EU") ? "European [EU]" : "Public Test [PTS]")}** MegaServer is now ${(server.status) ? "💚 **Online**" : "💔 **Offline**"}`);
+        }
+        e.addField("PC", strings.join("\n"), false);
+    }
+    strings = [];
+
+    if (servers.findIndex(x => x.platform === "PS4") > -1)
+    {
+        for (let server of servers.filter(s => s.platform === "PS4"))
+        {
+            strings.push(`The **${(server.server === "NA") ? "North American [NA]" : "European [EU]"}** MegaServer is now ${(server.status) ? "💚 **Online**" : "💔 **Offline**"}`);
+        }
+        e.addField("PlayStation 4", strings.join("\n"), false);
+    }
+    strings = [];
+
+    if (servers.findIndex(x => x.platform === "XBONE") > -1)
+    {
+        for (let server of servers.filter(s => s.platform === "XBONE"))
+        {
+            strings.push(`The **${(server.server === "NA") ? "North American [NA]" : "European [EU]"}** MegaServer is now ${(server.status) ? "💚 **Online**" : "💔 **Offline**"}`);
+        }
+        e.addField("XBox One", strings.join("\n"), false);
+    }
+
+    return e;
+}
+
+function toggleRole(role)
+{
+    return role.setMentionable(!role.mentionable);
+}
+
 function liveServerStatus()
 {
     let statusChannel = dClient.guilds.get(constants.discord.esoi.id).channels.get(LIVE_CHANNEL);
@@ -41,7 +86,21 @@ function liveServerStatus()
 
         utils.fetchServerStatus().then(function(status)
         {
-            if (!statusMessageId || statusMessageId === "0")
+            let changedServers = [];
+            for (let platform in status)
+            {
+                for (let server in status[platform])
+                {
+                    if (savedVars.status[platform][server] !== status[platform][server])
+                    {
+                        changedServers.push({ platform: platform, server: server, status: status[platform][server] });
+                    }
+                }
+            }
+            console.log(changedServers);
+            savedVars.status = status;
+
+            if (!statusMessageId || statusMessageId === "0" || !statusChannel.messages.has(statusMessageId))
             {
                 statusChannel.send({ embed: structureEmbed(status) }).then(message => {
                     savedVars.message = message.id;
@@ -55,7 +114,33 @@ function liveServerStatus()
                 statusChannel.fetchMessage(statusMessageId).then(function(msg)
                 {
                     msg.edit({ embed: structureEmbed(status) });
+
+                    fs.outputJson(join(__dirname, "savedVars.json"), savedVars);
                 }).catch(console.error);
+            }
+
+            if (changedServers.length)
+            {
+                let liveRole = statusChannel.guild.roles.get(constants.discord.esoi.roles.ServerUpdates);
+
+                if (!liveRole.mentionable)
+                {
+                    toggleRole(liveRole)
+                    .then(role => {
+                        statusChannel.guild.channels.find("name", "announcements").send(liveRole.toString(), { embed: prepareAnnouncement(changedServers) }).catch(console.error)
+                        .then(msg => {
+                            toggleRole(role).catch(console.error);
+                        });
+                    }).catch(console.error);
+                }
+
+                else
+                {
+                    statusChannel.guild.channels.find("name", "announcements").send(liveRole.toString(), { embed: prepareAnnouncement(changedServers) }).catch(console.error)
+                    .then(msg => {
+                        toggleRole(liveRole).catch(console.error);
+                    });
+                }
             }
         }).catch(console.error);
     });
