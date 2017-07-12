@@ -74,16 +74,6 @@ function toggleRole(role)
     return role.setMentionable(!role.mentionable);
 }
 
-function statusMessageExists(channel, id)
-{
-    return new Promise(function(resolve, reject)
-    {
-        channel.fetchMessage(id)
-        .then(resolve)
-        .catch(reject);
-    });
-}
-
 function liveServerStatus()
 {
     let statusChannel = dClient.guilds.get(constants.discord.esoi.id).channels.get(LIVE_CHANNEL);
@@ -110,7 +100,7 @@ function liveServerStatus()
             savedVars.status = status;
 
             const finalEmbed = structureEmbed(status);
-            statusMessageExists(statusChannel, statusMessageId)
+            statusChannel.fetchMessage(statusMessageId)
             .then(liveMessage => {
                 statusChannel.fetchMessage(statusMessageId).then(function(msg)
                 {
