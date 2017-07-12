@@ -125,7 +125,7 @@ function liveServerStatus()
                 {
                     toggleRole(roleToMention)
                     .then(role => {
-                        statusChannel/*.guild.channels.find("name", "announcements")*/.send(roleToMention.toString(), { embed: prepareAnnouncement(changedServers) }).catch(console.error)
+                        statusChannel.guild.channels.find("name", "announcements").send(roleToMention.toString(), { embed: prepareAnnouncement(changedServers) }).catch(console.error)
                         .then(msg => {
                             toggleRole(role).catch(console.error);
                         });
@@ -134,7 +134,7 @@ function liveServerStatus()
 
                 else
                 {
-                    statusChannel/*.guild.channels.find("name", "announcements")*/.send(roleToMention.toString(), { embed: prepareAnnouncement(changedServers) }).catch(console.error)
+                    statusChannel.guild.channels.find("name", "announcements").send(roleToMention.toString(), { embed: prepareAnnouncement(changedServers) }).catch(console.error)
                     .then(msg => {
                         toggleRole(roleToMention).catch(console.error);
                     });
