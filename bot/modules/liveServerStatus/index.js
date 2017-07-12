@@ -74,6 +74,16 @@ function toggleRole(role)
     return role.setMentionable(!role.mentionable);
 }
 
+function statusMessageExists(channel, id)
+{
+    return new Promise(function(resolve, reject)
+    {
+        channel.fetchMessage(id)
+        .then(resolve)
+        .catch(reject);
+    });
+}
+
 function liveServerStatus()
 {
     let statusChannel = dClient.guilds.get(constants.discord.esoi.id).channels.get(LIVE_CHANNEL);
@@ -99,34 +109,33 @@ function liveServerStatus()
             }
             savedVars.status = status;
 
-            if (!statusMessageId || statusMessageId === "0" || !statusChannel.messages.has(statusMessageId))
-            {
-                statusChannel.send({ embed: structureEmbed(status) }).then(message => {
+            const finalEmbed = structureEmbed(status);
+            statusMessageExists(statusChannel, statusMessageId)
+            .then(liveMessage => {
+                statusChannel.fetchMessage(statusMessageId).then(function(msg)
+                {
+                    msg.edit({ embed: finalEmbed });
+
+                    fs.outputJson(join(__dirname, "savedVars.json"), savedVars);
+                }).catch(console.error);
+            })
+            .catch(err => {
+                statusChannel.send({ embed: finalEmbed }).then(message => {
                     savedVars.message = message.id;
 
                     fs.outputJson(join(__dirname, "savedVars.json"), savedVars);
                 });
-            }
-
-            else
-            {
-                statusChannel.fetchMessage(statusMessageId).then(function(msg)
-                {
-                    msg.edit({ embed: structureEmbed(status) });
-
-                    fs.outputJson(join(__dirname, "savedVars.json"), savedVars);
-                }).catch(console.error);
-            }
+            });
 
             if (changedServers.length)
             {
-                let liveRole = statusChannel.guild.roles.get(constants.discord.esoi.roles.ServerUpdates);
+                let roleToMention = statusChannel.guild.roles.get(constants.discord.esoi.roles.ServerUpdates);
 
-                if (!liveRole.mentionable)
+                if (!roleToMention.mentionable)
                 {
-                    toggleRole(liveRole)
+                    toggleRole(roleToMention)
                     .then(role => {
-                        statusChannel.guild.channels.find("name", "announcements").send(liveRole.toString(), { embed: prepareAnnouncement(changedServers) }).catch(console.error)
+                        statusChannel/*.guild.channels.find("name", "announcements")*/.send(roleToMention.toString(), { embed: prepareAnnouncement(changedServers) }).catch(console.error)
                         .then(msg => {
                             toggleRole(role).catch(console.error);
                         });
@@ -135,9 +144,9 @@ function liveServerStatus()
 
                 else
                 {
-                    statusChannel.guild.channels.find("name", "announcements").send(liveRole.toString(), { embed: prepareAnnouncement(changedServers) }).catch(console.error)
+                    statusChannel/*.guild.channels.find("name", "announcements")*/.send(roleToMention.toString(), { embed: prepareAnnouncement(changedServers) }).catch(console.error)
                     .then(msg => {
-                        toggleRole(liveRole).catch(console.error);
+                        toggleRole(roleToMention).catch(console.error);
                     });
                 }
             }
