@@ -12,6 +12,13 @@
         "message": "Welcome {user} to **{guild}**!"
       }
     },
+    "liveServerStatus": {
+      "enabled": false,
+      "channel": "",
+      "roles": [],
+      "toggleRoles": true,
+      "deletePrevious": false
+    },
     "RSS": {
       "enabled": false,
       "url": "",

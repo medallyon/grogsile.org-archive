@@ -1,3 +1,18 @@
 {
-  "message": "0"
+  "message": "0",
+  "status": {
+    "PC": {
+      "EU": true,
+      "NA": true,
+      "PTS": true
+    },
+    "PS4": {
+      "EU": true,
+      "NA": true
+    },
+    "XBONE": {
+      "EU": true,
+      "NA": true
+    }
+  }
 }
