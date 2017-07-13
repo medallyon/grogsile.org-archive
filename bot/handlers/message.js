@@ -3,23 +3,21 @@ dClient.on("message", function (msg) {
     // this variable holds the time it was received
     msg["performance"] = Date.now();
 
-    /**
-     * today = {Object} Date
-     * consoleOutput = {String} "[Formatted Timestamp] + [Author]: [Message Content] + [Message Location]"
-     * msg.command = {String} "[Command]"
-     * msg.args = {Array} [Command Arguments]
-    **/
-    let guild = msg.guild
-        , today = new Date()
-        , consoleOutput = `\n${utils.getFullMonth(today.getUTCMonth()).slice(0, 3)} ${utils.getFullDay(today.getUTCDate())} ${today.getUTCFullYear()} ${String(today.getUTCHours()).length === 1 ? ("0" + today.getUTCHours()) : today.getUTCHours()}:${String(today.getUTCMinutes()).length === 1 ? ("0" + today.getUTCMinutes()) : today.getUTCMinutes()}:${String(today.getUTCSeconds()).length === 1 ? ("0" + today.getUTCSeconds()) : today.getUTCSeconds()} UTC\n${(msg.author.id === dClient.user.id ? "[YOU] " : "")}@${msg.author.username}: "${(msg.content.length > 0) ? msg.content : ((msg.attachments.size > 0) ? "[Attachment]" : "[Embed]")}"\n${msg.guild ? ("#" + msg.channel.name + " - [" + msg.guild.name + "]") : (`[@${msg.channel.recipient.username}]`)}`
-        , splitMsg = msg.content.split(" ");
+    let now = new Date();
+    const timeOut = `${utils.getFullMonth(now.getUTCMonth()).slice(0, 3)} ${utils.getFullDay(now.getUTCDate())} ${now.getUTCFullYear()} ${String(now.getUTCHours()).length === 1 ? ("0" + now.getUTCHours()) : now.getUTCHours()}:${String(now.getUTCMinutes()).length === 1 ? ("0" + now.getUTCMinutes()) : now.getUTCMinutes()}:${String(now.getUTCSeconds()).length === 1 ? ("0" + now.getUTCSeconds()) : now.getUTCSeconds()} UTC`
+    , messageOut = `${(msg.author.id === dClient.user.id ? "[YOU] " : "")}@${msg.author.username}: "${(msg.content.length > 0) ? msg.content : ((msg.attachments.size > 0) ? "[Attachment]" : "[Embed]")}"`
+    , targetOut = `${msg.guild ? ("#" + msg.channel.name + " - [" + msg.guild.name + "]") : (`[@${msg.channel.recipient.username}]`)}`;
 
     // log the formatted message
-    console.log(consoleOutput);
+    console.log("\n" + timeOut + "\n" + messageOut + "\n" + targetOut);
 
     // return on bot message - we don't want to interfere with other bots
     if (msg.author.bot) return;
 
+    // do not support direct messages yet
+    if (!msg.guild) return;
+
+    let splitMsg = msg.content.split(" ");
     // check whether user is using command prefix or mention to execute a command, and assign them to 'msg' accordingly
     if (msg.mentions.users.has(dClient.user.id) && splitMsg[0].includes(dClient.user.id) && splitMsg.length > 1) {
         msg.command = splitMsg[1].toLowerCase();
