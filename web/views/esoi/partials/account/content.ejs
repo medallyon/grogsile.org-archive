@@ -139,9 +139,7 @@
 
     <div class="row">
 
-      <div class="col-md-3"></div>
-
-      <div class="col-md-6">
+      <div class="col-md-4">
         
         <div class="form-group">
           <label>Profile Visibility</label>
@@ -153,7 +151,17 @@
 
       </div>
 
-      <div class="col-md-3"></div>
+      <div class="col-md-8">
+        
+        <div class="form-group">
+          <label>Server Updates</label>
+          <div class="abc-checkbox">
+            <input type="checkbox" id="updates" name="updates" <% if (content.account.updates) { %> checked <% } %>>
+            <label for="updates">Get notified on the <a href="https://esoi.grogsile.me/discord">ESOI Discord Server</a> whenever an ESO Server goes off- or online</label>
+          </div>
+        </div>
+
+      </div>
 
     </div>
 

@@ -158,7 +158,8 @@ router.post("/account", middleware.isLoggedIn, resetLocals, function(req, res)
             server: req.body.server,
             platform: req.body.platform,
             alliance: req.body.alliance,
-            private: ((req.body.private === "on") ? true : false)
+            private: ((req.body.private === "on") ? true : false),
+            updates: ((req.body.updates === "on") ? true : false)
         }, (err) => {
             if (err) {
                 console.error(err);
@@ -171,6 +172,21 @@ router.post("/account", middleware.isLoggedIn, resetLocals, function(req, res)
                 res.render("pages/account.ejs", locals);
 
                 modules.addToEsoRank(req.user.id, req.body.server, req.body.platform, req.body.alliance);
+
+                let esoiServer = dClient.guilds.get(constants.discord.esoi.id);
+                if (!esoiServer.members.has(req.user.id)) return;
+                let member = esoiServer.members.get(req.user.id)
+                , serverUpdatesRole = esoiServer.roles.get(constants.discord.esoi.roles.ServerUpdates);
+
+                if (req.body.updates === "on")
+                {
+                    if (!member.roles.has(constants.discord.esoi.roles.ServerUpdates)) member.addRole(serverUpdatesRole).catch(console.error);
+                }
+
+                else
+                {
+                    if (member.roles.has(constants.discord.esoi.roles.ServerUpdates)) member.removeRole(serverUpdatesRole).catch(console.error);
+                }
             }
         });
     }
