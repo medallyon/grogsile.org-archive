@@ -13,11 +13,17 @@
       }
     },
     "liveServerStatus": {
-      "enabled": false,
-      "channel": "",
-      "roles": [],
-      "toggleRoles": true,
-      "deletePrevious": false
+      "panel": {
+        "enabled": false,
+        "channel": ""
+      },
+      "update": {
+        "enabled": false,
+        "channel": "",
+        "roles": [],
+        "toggleRoles": true,
+        "deletePrevious": false
+      }
     },
     "RSS": {
       "enabled": false,
