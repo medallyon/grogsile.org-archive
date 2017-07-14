@@ -54,7 +54,7 @@ router.get("/callback", passport.authenticate("discord", { failureRedirect: "/" 
             fs.outputJson(join(userDir, "user.json"), req.user, (err) => {
                 if (err) console.error(err);
 
-                if (files.indexOf("characters.json") === -1) fs.outputJson(join(userDir, "characters.json"), {}, (err) => { if (err) console.error(err) });
+                if (files.indexOf("characters.json") === -1) fs.outputJson(join(userDir, "characters.json"), [], (err) => { if (err) console.error(err) });
                 if (files.indexOf("account.json") === -1)
                 {
                     fs.outputJson(join(userDir, "account.json"), _templates.account, (err) => {
@@ -428,7 +428,7 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
                                 
                                 characters.push(character);
 
-                                fs.writeJson(join(userDir, "characters.json"), characters, (err) => {
+                                fs.outputJson(join(userDir, "characters.json"), characters, (err) => {
                                     if (err) return res.status(500).send("Could not save character to file");
 
                                     res.redirect("/dashboard");
@@ -474,7 +474,7 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
                         let characterIndex = characters.map(x => parseInt(x.id)).indexOf(parseInt(character.id));
                         characters.splice(characterIndex, 1, character);
 
-                        fs.writeJson(join(userDir, "characters.json"), characters, (err) => {
+                        fs.outputJson(join(userDir, "characters.json"), characters, (err) => {
                             if (err) return res.status(500).send("Could not save character to file");
 
                             res.redirect("/dashboard");
@@ -503,7 +503,7 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
                                         
                                         characters.splice(characters.findIndex((x, i) => x.id === i), 1, character);
 
-                                        fs.writeJson(join(userDir, "characters.json"), characters, (err) => {
+                                        fs.outputJson(join(userDir, "characters.json"), characters, (err) => {
                                             if (err) return res.status(500).send("Could not save character to file");
 
                                             res.redirect("/dashboard");
@@ -528,13 +528,13 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
             fs.readJson(join(userDir, "characters.json"), (err, characters) => {
                 if (err) return res.json(err);
 
-                if (characters.some(x => x.id === req.body.id))
+                if (characters.some(x => parseInt(x.id) === parseInt(req.body.id)))
                 {
                     // delete relative avatar
                     fs.remove(join(__src, "esoi", "users", userId, `${req.body.id}.png`), (err) => { if (err) console.error(err) });
 
                     // delete the specified character
-                    characters.splice(characters.findIndex(x => x.id === req.body.id), 1);
+                    characters.splice(characters.findIndex(x => parseInt(x.id) === parseInt(req.body.id)), 1);
 
                     fs.outputJson(join(userDir, "characters.json"), characters, (err) => {
                         if (err) console.error(err);
