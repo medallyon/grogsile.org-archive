@@ -12,18 +12,18 @@ function deduceItemSummary([item, number])
 function findItem(itemCollection, item)
 {
     // check if requested item is itemID
-    if (itemCollection.has(item)) return itemCollection.get(item);
+    if (itemCollection.has(item)) return [itemCollection.get(item), 0];
 
     // check if requested item is item.name
-    if (itemCollection.exists("name", item)) return itemCollection.find("name", item);
+    if (itemCollection.exists("name", item)) return [itemCollection.find("name", item), 0];
 
     // filter out items containing requested item's words
     let matchingItems = itemCollection.filter(x => x.name.toLowerCase().includes(item.toLowerCase()));
     console.log(matchingItems.size);
 
-    if (matchingItems.size === 1) return matchingItems.first();
+    if (matchingItems.size === 1) return [matchingItems.first(), 0];
 
-    if (matchingItems.size === 0) return null;
+    if (matchingItems.size === 0) return [null, 0];
 
     if (matchingItems.size > 1)
     {
@@ -40,7 +40,7 @@ function searchUESPItem(item)
 
             let foundItem = findItem(new Discord.Collection(items), item);
 
-            if (foundItem) resolve(deduceItemSummary(foundItem));
+            if (foundItem[0]) resolve(deduceItemSummary(foundItem));
             else reject(`Item '${item}' not found`);
         });
     });
@@ -50,7 +50,7 @@ function esoItem(msg, item)
 {
     searchUESPItem(item)
     .then(([itemObj, otherItems]) => {
-        msg.channel.send((otherItems > 1) ? `There are **${otherItems}** other items like this one` : "", { files: [{ "name": `${itemObj.name}.png`, "attachment": itemObj.url }] }).catch(console.error);
+        msg.channel.send((otherItems > 1) ? `There are **${otherItems}** other items like this one` : "This item is quite unique, some say.", { files: [{ "name": `${itemObj.name}.png`, "attachment": itemObj.url }] }).catch(console.error);
     }).catch(console.log);
 }
 
