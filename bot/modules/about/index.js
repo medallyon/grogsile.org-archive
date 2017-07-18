@@ -1,6 +1,6 @@
 function about(msg)
 {
-    msg.channel.send({ embed: new Discord.RichEmbed(constants.discord.embed)
+    msg.channel.send({ embed: new Discord.RichEmbed(utils.createEmptyRichEmbedObject())
         .setAuthor(dClient.user.username, dClient.user.avatarURL, "https://esoi.grogsile.me/")
         .setDescription("I'm just a horse. Don't mind me.")
         .addField("About", `The Tamriel Messenger is a Discord Bot catered to fans of the Elder Scrolls series, especially TES: Online. With this bot, you will be able to easily integrate your whole ESO experience within Discord. See \`${dClient.config.discord.prefix}help\` for further assistance.`, true)

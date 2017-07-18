@@ -151,7 +151,7 @@ function constructEmbed(data)
 {
     return new Promise(function(resolve, reject)
     {
-        let e = new Discord.RichEmbed()
+        let e = new Discord.RichEmbed(utils.createEmptyRichEmbedObject())
             .setColor("#FAEBD7")
             .setAuthor(data.title.split(":")[0], getCategoryIcon(data.title.split(":")[0]), `http://en.uesp.net/wiki/${data.title.split(":")[0]}:Main_Page`)
             .setTitle(data.title.split(":").slice(1).join(":"))
