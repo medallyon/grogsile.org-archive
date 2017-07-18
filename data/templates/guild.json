@@ -31,6 +31,10 @@
       "interval": 30000,
       "channel": "",
       "roles": []
+    },
+    "esoPatchNotes": {
+      "enabled": false,
+      "channel": ""
     }
   },
   "eso": {
