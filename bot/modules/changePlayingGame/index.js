@@ -8,7 +8,7 @@ function applyGame(recentGames, gameArray)
     return dClient.user.setGame(game);
 }
 
-function setGameInterval(gameArray = null)
+function changePlayingGame(gameArray = null)
 {
     let recentGames = [];
     if (!gameArray)
@@ -27,4 +27,4 @@ function setGameInterval(gameArray = null)
     }
 }
 
-module.exports = setGameInterval;
+module.exports = changePlayingGame;
