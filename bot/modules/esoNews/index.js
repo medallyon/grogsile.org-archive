@@ -1,104 +1,87 @@
-const exec = require("child_process").exec
-, request = require("request")
-, FeedParser = require("feedparser");
+const cheerio = require("cheerio");
 
-// config
-const config = require(join(__dirname, "config.json"));
-let latest = fs.readJsonSync(join(__dirname, "savedVars.json"))
-, imgIsDifferent = false
-, spamCount = 0;
+const newsPage = "http://www.elderscrollsonline.com/en-us/news";
 
-setTimeout(function()
-{
-    fetchNewestImage();
-    spamCompare();
-}, 60000);
-setInterval(function()
-{
-    fetchNewestImage();
-    spamCompare();
-}, config.interval * 60 * 1000);
-
-// checks the newest image on /en-us/news
-function fetchNewestImage()
-{
-    exec(`phantomjs ${join(__dirname, "fetchLatestPost.js")}`, { cwd: __dirname }, (error, stdout, stderr) => {
-        if (error) {
-            console.error(`exec error: ${error}`);
-            return;
-        }
-    });
-}
-
-// checks for any changes on feed url
-function checkUpdate(url)
+function scrapeSite(request)
 {
     return new Promise(function(resolve, reject)
     {
-        let first = true;
-        request(url)
-            .pipe(new FeedParser())
-            .on("error", function(error) {
-                reject(error);
-            })
-            .on("readable", function() {
-                let stream = this, item;
-                while (item = stream.read()) {
-                    if (first) {
-                        first = false;
-                        const tempItem = item;
+        let newsData = {};
+        request(newsPage, (err, res, body) => {
+            if (err) return reject(err);
 
-                        fs.readJson(join(__dirname, "savedVars.json"), (err, savedVars) => {
-                            if (err) reject(err);
+            let $ = cheerio.load(body);
 
-                            latest.title = tempItem.title
-                            , latest.pubDate = Date.parse(tempItem.pubDate)
-                            , latest.description = tempItem.description
-                            , latest.summary = tempItem.description
-                            , latest.link = tempItem.link;
+            fs.readJson(join(__dirname, "savedVars.json"), (err, savedVars) => {
+                if (err) return reject(err);
 
-                            resolve();
-                        });
-                    }
-                }
+                newsData.text = $(" article ").first().text();
+                if (newsData.text === savedVars.text) return reject("No new articles present");
+
+                newsData.link = $(" article > a ").prop("href");
+
+                request(newsData.link, (err, res, newsPage) => {
+                    if (err) return reject(err);
+
+                    $ = cheerio.load(newsPage);
+
+                    newsData.title = $(" h2.mega ").text();
+                    newsData.pubDate = new Date($(" time ").text());
+                    newsData.description = $(" article#post ").find("i").first().text();
+                    newsData.image = $(" article#post ").find("img").first().prop("src");
+
+                    resolve(newsData);
+                });
             });
         });
+    });
 }
 
-// spam-compare content of image.txt with latest.image
-// this is needed because there is no definite callback for the previous process
-function spamCompare()
+function checkUpdate()
 {
-    setTimeout(function()
+    return new Promise(function(resolve, reject)
     {
-        fs.readFile(join(__dirname, "image.txt"), "utf8", (err, image) => {
-            if (err) console.error(err);
+        let myESOSession = new utils.ESOWebsiteSession();
 
-            spamCount++;
-            imgIsDifferent = (image !== latest.image);
-            if (imgIsDifferent)
+        myESOSession.init()
+        .then(request => {
+            scrapeSite(request).then(resolve).catch(reject);
+        }).catch(reject);
+    });
+}
+
+function createEmbed(data)
+{
+    return new Discord.RichEmbed(utils.createEmptyRichEmbedObject())
+        .setAuthor("ESO News", dClient.user.displayAvatarURL, newsPage)
+        .setTitle(data.title)
+        .setDescription(data.description)
+        .setImage(data.image || "")
+        .setFooter(`Brought to you by © Grogsile Inc. | ${utils.fancyESODate(new Date(data.pubDate))}`, "https://i.grogsile.me/favicon.png")
+        .setURL(data.link);
+}
+
+function distribute(embed)
+{
+    for (let guild of dClient.guilds)
+    {
+        utils.readGuildConfig(guild)
+        .then(config => {
+            if (config.eso.news.active)
             {
-                latest.image = image;
-                checkUpdate(config.feed).then(() => {
-                    postNews(Object.assign({ key: config.apikey }, latest));
-                }).catch(console.error);
-                spamCount = 0;
-            } else {
-                if (spamCount !== 12) return spamCompare();
-                spamCount = 0;
+                guild.channels.get(config.eso.news.channel).send({ embed: embed }).catch(console.error);
             }
         });
-    }, 2000);
+    }
 }
 
-// posts news to ESOI API endpoint
-function postNews(item)
+function esoNews()
 {
-    fs.outputJson(join(__dirname, "savedVars.json"), latest, (err) => { if (err) console.error(err) });
-    request({
-        url: "https://api.grogsile.me/eso/news",
-        method: "post",
-        json: item
-    });
-    imgIsDifferent = false;
+    checkUpdate()
+    .then(update => {
+        fs.outputJson(join(__dirname, "savedVars.json"), { text: update.text }, (err) => { if (err) console.error(err); });
+        distribute(createEmbed(update));
+    }).catch(console.error);
 }
+
+module.exports = esoNews;
