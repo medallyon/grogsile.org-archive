@@ -10,13 +10,13 @@ function addToEsoRank(memberId, server, platform, alliance)
         , rolesToAdd = [];
 
         // mega-server rank assignment
-        if (!member.roles.exists("name", server)) rolesToAdd.push(esoiGuild.roles.find("name", server));
+        if (!member.roles.exists("name", server)) rolesToAdd.push(esoiGuild.roles.get(constants.discord.esoi.roles[server]));
 
         if (member.roles.has(constants.discord.esoi.roles.EU) && server === "NA") rolesToRemove.push(member.roles.get(constants.discord.esoi.roles.EU));
         else if (member.roles.has(constants.discord.esoi.roles.NA) && server === "EU") rolesToRemove.push(member.roles.get(constants.discord.esoi.roles.NA));
 
         // platform rank assignment
-        if (!member.roles.exists("name", platform)) rolesToAdd.push(esoiGuild.roles.find("name", platform));
+        if (!member.roles.exists("name", platform) && platform !== "PC") rolesToAdd.push(esoiGuild.roles.get(constants.discord.esoi.roles[platform]));
 
         if (platform === "PC")
         {
@@ -35,7 +35,7 @@ function addToEsoRank(memberId, server, platform, alliance)
         }
 
         // alliance rank assignment
-        if (!member.roles.exists("name", alliance)) rolesToAdd.push(esoiGuild.roles.find("name", alliance));
+        if (!member.roles.exists("name", alliance)) rolesToAdd.push(esoiGuild.roles.get(constants.discord.esoi.roles[alliance]));
 
         if (alliance === "Aldmeri Dominion")
         {

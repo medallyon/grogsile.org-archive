@@ -176,16 +176,16 @@ router.post("/account", middleware.isLoggedIn, resetLocals, function(req, res)
                 let esoiServer = dClient.guilds.get(constants.discord.esoi.id);
                 if (!esoiServer.members.has(req.user.id)) return;
                 let member = esoiServer.members.get(req.user.id)
-                , serverUpdatesRole = esoiServer.roles.get(constants.discord.esoi.roles.ServerUpdates);
+                , serverUpdatesRole = esoiServer.roles.get(constants.discord.esoi.roles["Server Updates"]);
 
                 if (req.body.updates === "on")
                 {
-                    if (!member.roles.has(constants.discord.esoi.roles.ServerUpdates)) member.addRole(serverUpdatesRole).catch(console.error);
+                    if (!member.roles.has(serverUpdatesRole.id)) member.addRole(serverUpdatesRole).catch(console.error);
                 }
 
                 else
                 {
-                    if (member.roles.has(constants.discord.esoi.roles.ServerUpdates)) member.removeRole(serverUpdatesRole).catch(console.error);
+                    if (member.roles.has(serverUpdatesRole.id)) member.removeRole(serverUpdatesRole).catch(console.error);
                 }
             }
         });
