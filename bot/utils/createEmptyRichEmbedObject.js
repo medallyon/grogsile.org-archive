@@ -11,7 +11,7 @@ function createEmptyRichEmbedObject()
         },
         "image": "",
         "thumbnail": "",
-        "timestamp": new Date().toISOString(),
+        "timestamp": "",
         "title": "",
         "url": ""
     }
