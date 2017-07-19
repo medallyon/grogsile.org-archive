@@ -63,7 +63,7 @@ function createEmbed(data)
 
 function distribute(embed)
 {
-    for (let guild of dClient.guilds)
+    for (let guild of dClient.guilds.values())
     {
         utils.readGuildConfig(guild)
         .then(config => {
