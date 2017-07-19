@@ -1,16 +1,18 @@
-function applyGame(recentGames, gameArray)
-{
-    let game = gameArray.filter(g => recentGames.some(x => x !== g))[Math.floor(Math.random() * gameArray.length)];
-    recentGames.push(game);
+let recentGames = [];
 
-    if (recentGames.length > 2) recentGames.shift();
+function applyGame(recentGames, games)
+{
+    const validGames = games.filter(g => !recentGames.includes(g));
+    const game = validGames[Math.floor(Math.random() * games.length)];
+    
+    recentGames.push(game);
+    if (recentGames.length > 3) recentGames.shift();
 
     return dClient.user.setGame(game);
 }
 
 function changePlayingGame(gameArray = null)
 {
-    let recentGames = [];
     if (!gameArray)
     {
         fs.readJson(join(__dirname, "games.json"), function(err, games)
@@ -21,10 +23,7 @@ function changePlayingGame(gameArray = null)
         });
     }
 
-    else
-    {
-        applyGame(recentGames, gameArray).catch(console.error);
-    }
+    else applyGame(recentGames, gameArray).catch(console.error);
 }
 
 module.exports = changePlayingGame;
