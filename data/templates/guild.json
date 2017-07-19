@@ -51,22 +51,34 @@
     "about": {
       "enabled": true
     },
+    "ban": {
+      "enabled": true
+    },
+    "esoItem": {
+      "enabled": true
+    },
+    "evaluate": {
+      "enabled": true
+    },
     "help": {
       "enabled": true
     },
     "kick": {
       "enabled": true
     },
-    "ban": {
-      "enabled": true
-    },
     "ping": {
       "enabled": true
     },
-    "wiki": {
+    "profile": {
       "enabled": true
     },
-    "esoItem": {
+    "reload": {
+      "enabled": true
+    },
+    "restart": {
+      "enabled": true
+    },
+    "wiki": {
       "enabled": true
     }
   }
