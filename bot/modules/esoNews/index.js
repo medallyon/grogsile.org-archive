@@ -16,7 +16,7 @@ function scrapeSite(request)
                 if (err) return reject(err);
 
                 newsData.text = $(" article ").first().text();
-                if (newsData.text === savedVars.text) return reject("No new articles present");
+                if (newsData.text === savedVars.text) return reject("modules.esoNews: No new articles present");
 
                 newsData.link = $(" article > a ").prop("href");
 
