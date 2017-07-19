@@ -1,6 +1,6 @@
 function constructHelpFor(perm)
 {
-    let h = new Discord.RichEmbed(utils.createEmptyRichEmbedObject())
+    let h = new Discord.MessageEmbed(utils.createEmptyRichEmbedObject())
         .setAuthor("Commands", dClient.user.avatarURL)
         .setDescription("Here is a list of commands that **You** have access to. To see what more commands there are, visit the [Grogsile Hub](This is still a work in progress.) You can inspect each command by passing their name to the `help` command (see example below).")
         .setTimestamp(new Date());
@@ -31,7 +31,7 @@ function help(msg)
     // help embed for individual commands
     else
     {
-        e = new Discord.RichEmbed(constants.discord.embed)
+        e = new Discord.MessageEmbed(constants.discord.embed)
             .setAuthor("Commands", dClient.user.avatarURL)
             .setTimestamp(new Date());
 

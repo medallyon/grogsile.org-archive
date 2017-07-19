@@ -151,7 +151,7 @@ function constructEmbed(data)
 {
     return new Promise(function(resolve, reject)
     {
-        let e = new Discord.RichEmbed(utils.createEmptyRichEmbedObject())
+        let e = new Discord.MessageEmbed(utils.createEmptyRichEmbedObject())
             .setColor("#FAEBD7")
             .setAuthor(data.title.split(":")[0], getCategoryIcon(data.title.split(":")[0]), `http://en.uesp.net/wiki/${data.title.split(":")[0]}:Main_Page`)
             .setTitle(data.title.split(":").slice(1).join(":"))
@@ -204,12 +204,12 @@ function searchQuery(string)
 }
 
 function wiki(msg) {
-    if (!msg.args.length) return msg.channel.sendMessage("This command cannot be initiated without any query to search for. Try again with a search parameter.\nTry `/help wiki` if you're unsure.");
+    if (!msg.args.length) return msg.channel.send("This command cannot be initiated without any query to search for. Try again with a search parameter.\nTry `/help wiki` if you're unsure.").catch(console.error);
 
     searchQuery(msg.args.join()).then(embed => {
-        msg.channel.sendEmbed(embed).catch(console.error);
+        msg.channel.send({ embed: embed }).catch(console.error);
     }).catch((err) => {
-        msg.channel.sendMessage("```js\n" + err + "```\n**Try to be more concise with your queries.**");
+        msg.channel.send("```js\n" + err + "```\n**Try to be more concise with your queries.**").catch(console.error);
     });
 }
 

@@ -37,7 +37,7 @@ function compareUpdates(update)
 
 function createRichEmbed(data)
 {
-    return new Discord.RichEmbed(utils.createEmptyRichEmbedObject())
+    return new Discord.MessageEmbed(utils.createEmptyRichEmbedObject())
         .setAuthor(data.meta.description, dClient.user.displayAvatarURL, data.link)
         .setTitle(data.title)
         .setURL(data.link)

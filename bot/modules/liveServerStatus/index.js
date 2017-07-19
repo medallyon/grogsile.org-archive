@@ -3,7 +3,7 @@ const LIVE_CHANNEL = "319641305388941315"
 
 function structureEmbed(status)
 {
-    let e = new Discord.RichEmbed(utils.createEmptyRichEmbedObject())
+    let e = new Discord.MessageEmbed(utils.createEmptyRichEmbedObject())
         .setAuthor("ESO Server Status", "", STATUS_DOMAIN)
         .setDescription("This live panel is updated every 5 minutes to check for all ESO Server Statuses.")
         .setFooter(`Brought to you by Grogsile, Inc. | ${utils.fancyESODate(new Date())} ${new Date().getUTCHours()}:${new Date().getUTCMinutes()} UTC`, dClient.user.displayAvatarURL);
@@ -31,7 +31,7 @@ function structureEmbed(status)
 
 function prepareAnnouncement(servers)
 {
-    let e = new Discord.RichEmbed()
+    let e = new Discord.MessageEmbed()
         .setAuthor("ESO Server Status", "", STATUS_DOMAIN)
         .setDescription("The following servers have been updated:")
         .setFooter(`Brought to you by Grogsile, Inc. | ${utils.fancyESODate(new Date())} ${new Date().getUTCHours()}:${new Date().getUTCMinutes()} UTC`, dClient.user.displayAvatarURL)

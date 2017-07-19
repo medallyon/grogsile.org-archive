@@ -1,6 +1,6 @@
 function distributeESONews(item)
 {
-    let newsEmbed = new Discord.RichEmbed(utils.createEmptyRichEmbedObject())
+    let newsEmbed = new Discord.MessageEmbed(utils.createEmptyRichEmbedObject())
         .setAuthor(dClient.config.eso.news.author.name, dClient.config.eso.news.author.avatar, dClient.config.eso.news.author.url)
         .setTitle(item.title)
         .setURL(item.link)

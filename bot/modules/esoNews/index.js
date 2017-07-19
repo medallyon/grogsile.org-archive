@@ -52,7 +52,7 @@ function checkUpdate()
 
 function createEmbed(data)
 {
-    return new Discord.RichEmbed(utils.createEmptyRichEmbedObject())
+    return new Discord.MessageEmbed(utils.createEmptyRichEmbedObject())
         .setAuthor("ESO News", dClient.user.displayAvatarURL, newsPage)
         .setTitle(data.title)
         .setDescription(data.description)
