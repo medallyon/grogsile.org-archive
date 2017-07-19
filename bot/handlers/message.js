@@ -44,18 +44,26 @@ dClient.on("message", function (msg) {
                 // check if some alias matches the filtered command string
                 if (msg.command === alias)
                 {
-                    // check if the member actually has permission to execute the command
-                    if (utils.hasPermission(dClient.commands[cmd], msg.member))
+                    // read the guild's config
+                    utils.readGuildConfig(msg.guild).then(function(config)
                     {
-                        try {
-                            // execute the command module
-                            return modules[cmd](msg);
-                        } catch (err) {
-                            // catch an error in case the command module is faulty
-                            console.error(err);
-                            msg.channel.send(err, { code: "js" });
+                        // check if command is enabled for this guild
+                        if (config.commands[cmd].enabled)
+                        {
+                            // check if the member actually has permission to execute the command
+                            if (utils.hasPermission(dClient.commands[cmd], msg.member))
+                            {
+                                try {
+                                    // execute the command module
+                                    return modules[cmd](msg);
+                                } catch (err) {
+                                    // catch an error in case the command module is faulty
+                                    console.error(err);
+                                    msg.channel.send(err, { code: "js" });
+                                }
+                            }
                         }
-                    }
+                    });
                 }
             }
         }
