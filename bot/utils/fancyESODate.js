@@ -1,4 +1,4 @@
-function fancyESODate(date) {
+function fancyESODate(date = new Date()) {
     let year = date.getUTCFullYear()
     , month, day = String(date.getUTCDate())
     , hours = date.getUTCHours()
