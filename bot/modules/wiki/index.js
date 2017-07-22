@@ -1,216 +1,361 @@
 const request = require("request")
 , cheerio = require("cheerio")
-, toMarkdown = require("to-markdown")
-, encodeURL = require("urlencode");
+, toMarkdown = require("to-markdown");
 
-const UESP_DOMAIN = "http://en.uesp.net"
-, UESP_API = "http://en.uesp.net/w/api.php"
-, userAgent = "uespQuery/1.0.0 (http://github.com/medallyon; traendchen@outlook.com) Node.js/6.9";
+const uesp = {
+    domain: "http://uesp.net",
+    baseSearchURL: "http://en.uesp.net/w/index.php?title=Special%3ASearch&search=",
+    iconURL: "http://en.uesp.net/w/extensions/UespCustomCode/files/UespLogo.jpg",
+    namespaces: new Discord.Collection(require(join(__dirname, "namespaces.json"))),
+    types: [
+        "People",
+        "Books",
+        "Quests:",
+        "Places:"
+    ]
+}
+, numberEmoji = [
+    "1⃣",
+    "2⃣",
+    "3⃣",
+    "4⃣",
+    "5⃣",
+    "6⃣",
+    "7⃣",
+    "8⃣",
+    "9⃣",
+    "🔟"
+];
 
-function constructAPIString(options)
+function createAmbiguityEmbed(results, arg)
 {
-    let apiString = `${UESP_API}?`;
-    for (let parameter in options) {
-        apiString += `${parameter}=${(Array.isArray(options[parameter]) ? options[parameter].join("|") : options[parameter])}&`;
+    console.log(uesp.baseSearchURL + arg)
+    let e = new Discord.MessageEmbed(utils.createEmptyRichEmbedObject())
+        .setAuthor("Search Results", uesp.iconURL, encodeURI(uesp.baseSearchURL + arg))
+        .setDescription(`You searched for **${arg}**. This is what came up:`)
+        .setFooter(`${constants.discord.embed.footer.text} | ${utils.fancyESODate()} ${dateFormat("HH:MM")} UTC`, constants.discord.embed.footer.icon_url);
+
+    for (let i = 0; i < results.length; i++)
+    {
+        let $r = results[i];
+        let $title = $r.children().first();
+        e.addField(`${i+1}. ${$title.children(" a ").prop("title")}`, `[${$title.children(" a ").prop("href")}](${uesp.domain}${$title.children(" a ").prop("href")})`, true);
     }
-    if (!options.hasOwnProperty("action")) apiString += "action=query&";
-    if (!options.hasOwnProperty("format")) apiString += "format=json&";
-    return apiString;
+    e.addField("\u200b", "**Please select one of the following emoji to show the appropriate article.**", false);
+
+    return e;
 }
 
-function getNamespaceId(title)
-{
-    let namespace = title.split(":")[0].toLowerCase();
-    switch (namespace) {
-        case "arena":
-            return 102;
-        case "daggerfall":
-            return 104;
-        case "oblivion":
-            return 116;
-        case "lore":
-            return 130;
-        case "skyrim":
-            return 134;
-        case "online":
-            return 144;
-        case "legends":
-            return 150;
-        default:
-            return 0;
-    }
-}
+addReactions = {
+    stopped: false,
 
-function fetchWikiHTML(url)
-{
-    return new Promise(function(resolve, reject)
+    init: function(message, from, to)
     {
-        request(url, (err, req, body) => {
-            if (err) reject(err);
-            resolve(body);
-        });
-    });
-}
-
-function normalizeWikiHTML(jqueryObj)
-{
-    let $ = jqueryObj;
-    $("sup").remove();
-    return $;
-}
-
-function parseWikiDescription(html)
-{
-    let $ = normalizeWikiHTML(cheerio.load(html));
-    let raw = "";
-
-    $("#mw-content-text > p").each((i, x) => {
-        raw += $(x).html() + "\n";
-    });
-
-    if (raw.length === 0)
-    {
-        $("#mw-content-text > div > div > i").each((i, x) => {
-            raw += "*" + $(x).html() + "*\n";
-        });
-    }
-
-    if (raw.length === 0)
-    {
-        $("#mw-content-text > div > div > i").each((i, x) => {
-            raw += "*" + $(x).html() + "*\n";
-        });
-    }
-
-    raw = raw.split("\n")[0];
-
-    let text = toMarkdown(raw);
-
-    text = text.replace(/\/wiki/g, `${UESP_DOMAIN}\/wiki`);
-    text = text.replace(/\<.*?\>/g, "");
-    text = text.replace(/\[\!\[.*?\.png\]\(.*?\.png\)\]\(.*?\.png\)|\[\!\[.*?\.jpg\]\(.*?\.jpg\)\]\(.*?\.jpg\)/g, "");
-
-    return text;
-}
-
-function fetchWikiImage(file)
-{
-    return new Promise(function(resolve, reject)
-    {
-        if (file === undefined) reject();
-        request(`http://en.uesp.net/wiki/File:${file}`, (err, res, body) => {
-            if (err) reject(err);
-
-            let $image = cheerio.load(body);
-            resolve(UESP_DOMAIN + $image("#file > a").attr("href"));
-        });
-    });
-}
-
-function filterWikiImages(images)
-{
-    return images.filter(a => {
-        return (a !== "Padlock-silver.png" &&
-            a !== "Padlock18-silver.png" &&
-            a !== "Padlock-red.png" &&
-            a !== "Padlock-olive.png" &&
-            a !== "Padlock-skyblue.png" &&
-            a !== "Padlock-blue.png" &&
-            a !== "ON-icon-Orsinium.png" &&
-            a !== "ON-misc-Crown.png" &&
-            a !== "Split-arrows.gif"
-        );
-    });
-}
-
-function getCategoryIcon(cat)
-{
-    switch (cat.toLowerCase()) {
-        case "arena":
-            return "http://i.imgur.com/oGVeVLr.png";
-        case "daggerfall":
-            return "http://i.imgur.com/VHQWBQn.png";
-        case "morrowind":
-            return "http://i.imgur.com/fa6L2kM.png";
-        case "oblivion":
-            return "http://i.imgur.com/EFkneWZ.png";
-        case "skyrim":
-            return "http://i.imgur.com/QPppr1t.png";
-        case "online":
-            return "http://i.imgur.com/ThuQei5.png";
-        case "legends":
-            return "http://i.imgur.com/obR4zcO.jpg";
-        case "lore":
-            return "http://i.imgur.com/pAShPCj.png";
-        default:
-            return "";
-    }
-}
-
-function constructEmbed(data)
-{
-    return new Promise(function(resolve, reject)
-    {
-        let e = new Discord.MessageEmbed(utils.createEmptyRichEmbedObject())
-            .setColor("#FAEBD7")
-            .setAuthor(data.title.split(":")[0], getCategoryIcon(data.title.split(":")[0]), `http://en.uesp.net/wiki/${data.title.split(":")[0]}:Main_Page`)
-            .setTitle(data.title.split(":").slice(1).join(":"))
-            .setURL(`http://en.uesp.net/wiki/${data.title.split(" ").join("%20")}`)
-            .setDescription(parseWikiDescription(data.text["*"]))
-            .setFooter(`(UESP) Brought to you by Grogsile Inc. | ${utils.fancyESODate(new Date())}`, "https://i.grogsile.me/favicon.png");
-
-        fetchWikiHTML(`http://en.uesp.net/wiki/${data.title}`)
-            .then(html => {
-                e.setDescription(parseWikiDescription(html));
-                fetchWikiImage(filterWikiImages(data.images)[0])
-                    .then(image => {
-                        resolve(e.setThumbnail(image));
-                    }).catch(err => {
-                        resolve(e);
-                    });
-            }).catch(console.error);
-    });
-}
-
-function searchQuery(string)
-{
-    return new Promise(function(resolve, reject)
-    {
-        let apiString = constructAPIString({
-            list: "search",
-            srnamespace: [102, 104, 116, 130, 134, 144, 150],
-            srlimit: 500,
-            srsearch: encodeURL(string)
-        });
-
-        request(apiString, (err, res, body) => {
-            if (err) reject(err);
-
-            let results = JSON.parse(body).query;
-            if (results.searchinfo.totalhits === 0) reject("No results found.");
-
-            let firstResult = results.search[0];
-            if (!firstResult) return reject();
-            request(constructAPIString({ action: "parse", page: firstResult.title }), (err2, res2, wikipage) => {
-                if (err2) reject(err2);
-
-                constructEmbed(JSON.parse(wikipage).parse)
-                    .then(embed => {
-                        resolve(embed);
-                    }).catch(console.error);
+        if (!this.stopped)
+        {
+            message.react(numberEmoji[from])
+            .then(reaction => {
+                if (from < to) addReactions.init(message, from + 1, to);
+            }).catch(err => {
+                console.error(err);
+                if (from < to) addReactions.init(message, from + 1, to);
             });
-        });
-    })
+        }
+    },
+
+    stop: function()
+    {
+        this.stopped = true;
+    }
 }
 
-function wiki(msg) {
-    if (!msg.args.length) return msg.channel.send("This command cannot be initiated without any query to search for. Try again with a search parameter.\nTry `/help wiki` if you're unsure.").catch(console.error);
+function awaitUserReactionFor(results, msg)
+{
+    addReactions.stopped = false;
+    return new Promise(function(resolve, reject)
+    {
+        msg.channel.send({ embed: createAmbiguityEmbed(results, msg.args.join(" ")) })
+        .then(function(message)
+        {
+            addReactions.init(message, 0, results.length - 1);
 
-    searchQuery(msg.args.join()).then(embed => {
-        msg.channel.send({ embed: embed }).catch(console.error);
-    }).catch((err) => {
-        msg.channel.send("```js\n" + err + "```\n**Try to be more concise with your queries.**").catch(console.error);
+            const reactionFilter = (r, u) => (u.id === msg.author.id && numberEmoji.includes(r.emoji.name));
+            message.awaitReactions(reactionFilter, { max: 1, time: 1000 * 45, errors: ["time"] })
+            .then(function(reactions)
+            {
+                addReactions.stop();
+                resolve([reactions.first(), message]);
+            }).catch((collected, reason) => {
+                reject([reason, message]);
+            });
+        }).catch(reject);
     });
 }
+
+function searchWiki(arg)
+{
+    let resolved = false;
+    return new Promise(function(resolve, reject)
+    {
+        if (Array.from(uesp.namespaces.keys()).some(k => k.toLowerCase() === arg.split(":")[0].toLowerCase() && arg.split(":").length === 1)) arg = arg + ":Main_Page";
+        let [namespace, title] = arg.split(":");
+        if (!title) title = namespace;
+
+        request((uesp.baseSearchURL + arg), function(err, res, body)
+        {
+            if (err) return reject(err);
+            if (!body) reject(new Error("body is corrupt"));
+
+            let $ = cheerio.load(body);
+
+            // search page was found
+            if ($(` h1#firstHeading > span[dir="auto"] `).text() === "Search results")
+            {
+                let results = [];
+
+                // no result was found
+                if ($(` p.mw-search-nonefound `).length) return reject(new Error("ENOENT"));
+
+                // only a single search result was found
+                if ($(` ul.mw-search-results > li `).length === 1)
+                {
+                    request((uesp.domain + $(` ul.mw-search-results > li `).find(" a ").prop("href")), function(err, res2, articleBody)
+                    {
+                        if (err) return;
+                        if (!resolved) resolve(cheerio.load(articleBody));
+                        resolved = true;
+                    });
+                }
+
+                // for if there is only 1 namespace with an exactly matching title
+                let matchingResults = [];
+
+                // collect first 10 results and resolve
+                $(` ul.mw-search-results > li `).each(function(i)
+                {
+                    results.push($(this));
+
+                    let resultTitle = $(this).find("a").prop("title").split(":")[1] || "";
+                    if (resultTitle.toLowerCase() === title.toLowerCase()) matchingResults.push($(this));
+
+                    if (i >= 9 && matchingResults.length === 1)
+                    {
+                        request((uesp.domain + matchingResults[0].children(` .mw-search-result-heading `).find(" a ").prop("href")), function(err, res2, articleBody)
+                        {
+                            if (err) return;
+                            if (!resolved) resolve(cheerio.load(articleBody));
+                            resolved = true;
+                        });
+                        return false;
+                    } else
+
+                    if (i >= 9)
+                    {
+                        if (!resolved) resolve(results);
+                        return false;
+                    }
+                });
+            }
+
+            // a specific page has been found and returned
+            else
+            {
+                resolve($);
+            }
+        });
+    });
+}
+
+function removeUnnessecaryHTML(html)
+{
+    return html.replace(/<\/?span.*?>/g, "").replace(/<\/?sup.*?>/g, "");
+}
+
+function filterOutAllHTML(html)
+{
+    return html.replace(/<\/?.+?>/g, "");
+}
+
+function filterOutImagesFromHTML(html)
+{
+    return html.replace(/<\/?img.+?>/g, "");
+}
+
+function filterOutImagesFromMD(markdown)
+{
+    return markdown.replace(/!\[.+?\]\(.+?\)/g, "");
+}
+
+const restrictedImages = [
+    "//images.uesp.net//thumb/b/b4/ON-icon-ActiveFrame.png/48px-ON-icon-ActiveFrame.png",
+    "//images.uesp.net//thumb/3/39/ON-icon-achievement-Blank.png/48px-ON-icon-achievement-Blank.png",
+    "//images.uesp.net//thumb/5/51/ON-icon-Thieves_Guild.png/32px-ON-icon-Thieves_Guild.png"
+];
+function imageIsRestricted(img)
+{
+    return restrictedImages.includes(img);
+}
+
+class WikiEmbed extends Discord.MessageEmbed
+{
+    constructor($, data = [])
+    {
+        super(data);
+
+        this.$ = $;
+
+        this.type;
+        $(" .subpages ").text().split(" ").some(x => {
+            if (!uesp.types.includes(x)) return false;
+            this.type = x;
+            return true;
+        });
+
+        // these values will always be embedded
+        super.setColor(utils.randColor());
+        super.setFooter(`${constants.discord.embed.footer.text} | ${utils.fancyESODate()} ${dateFormat("HH:MM")} UTC`, constants.discord.embed.footer.icon_url);
+
+        // these are the default values for the embed content
+        this.namespace = $(" #firstHeading ").text().split(":")[0];
+        this.title = $(" #firstHeading ").text().split(":")[1];
+        this.url = `${uesp.domain}/wiki/${encodeURI(this.namespace + ":" + this.title)}`;
+        this.description = filterOutImagesFromMD(toMarkdown(removeUnnessecaryHTML($(" #mw-content-text > p ").first().html()))) || "";
+        this.image = $(" .thumb ").find(" img ").prop("src") || $(" .image ").find(" img ").prop("src") || "";
+
+        for (let i = 0; i < $(" img ").length; i++)
+        {
+            if (!imageIsRestricted(this.image)) break;
+            this.image = $(" img ").eq(i).prop("src");
+        }
+
+        if (this.image.startsWith("//images.uesp.net")) this.image = this.image.replace("//images.uesp.net/", "http://images.uesp.net");
+        if (this.image.includes("/thumb/")) this.image = this.image.replace("thumb\/", "");
+
+        super.setAuthor(this.namespace, uesp.namespaces.has(this.namespace) ? uesp.namespaces.get(this.namespace).icon : "", uesp.namespaces.has(this.namespace) ? encodeURI(uesp.namespaces.get(this.namespace).link) : "");
+        super.setTitle(this.title);
+        super.setURL(this.url);
+        super.setDescription(this.description);
+        super.setImage(this.image);
+
+        if ($(` table.infobox `).length)
+        {
+            let fields = [];
+            $(` table.infobox > tr `).each(function(i)
+            {
+                if ($(this).children().length >= 2)
+                {
+                    let intermediateData;
+                    $(this).children().each(function(j)
+                    {
+                        if (j % 2 === 1) fields.push({ name: intermediateData, value: toMarkdown(removeUnnessecaryHTML($(this).html())), inline: true });
+                        intermediateData = $(this).text();
+                    });
+                }
+
+                if (i >= 7) return false;
+            });
+            this.fields = fields;
+        }
+
+        if (!this.fields || !this.fields.length) this.fields = [];
+        let fields = [];
+        switch(this.type)
+        {
+            case "Books":
+                super.setDescription(toMarkdown($(" .book > p ").first().text()));
+                break;
+
+            case "Quests:":
+                $(` ol > li `).each(function(i)
+                {
+                    fields.push({ name: `Step ${i + 1}`, value: toMarkdown(removeUnnessecaryHTML($(this).html())), inline: true });
+                });
+                this.fields = this.fields.concat(fields);
+                break;
+
+            default:
+                break;
+        }
+    }
+}
+
+function processWikiPage($result)
+{
+    return new Promise(function(resolve, reject)
+    {
+        request((uesp.domain + $result.find(" a ").prop("href")), function(err, res, body)
+        {
+            if (err) return reject(err);
+            if (!body) return reject(new Error("body is corrupt"));
+
+            let $ = cheerio.load(body);
+
+            let embed;
+            try {
+                embed = new WikiEmbed($);
+            }
+            catch(err) {
+                return reject(new Error("body is corrupt"));
+            }
+
+            resolve(embed);
+        });
+    });
+}
+
+function sendError(err, channel)
+{
+    console.error(err);
+    channel.send(":x: That didn't work. :/").catch(console.error);
+}
+
+function wiki(msg)
+{
+    searchWiki(msg.args.join(" ")).then(function(result)
+    {
+        if (Array.isArray(result))
+        {
+            awaitUserReactionFor(result, msg)
+            .then(function([reaction, sentMessage])
+            {
+                processWikiPage(result[numberEmoji.indexOf(reaction.emoji.name)])
+                .then(embed => {
+                    sentMessage.clearReactions().catch(console.error);
+                    sentMessage.edit({ embed: embed }).catch(console.error);
+                }).catch(err => {
+                    console.error(err);
+                    sentMessage.clearReactions().catch(console.error);
+                    sentMessage.edit(":x: That didn't work. :/").catch(console.error);
+                });
+            })
+            .catch(function([err, sentMessage])
+            {
+                console.error(err);
+                addReactions.stop();
+                sentMessage.clearReactions().catch(console.error);
+                sentMessage.send(":x: That didn't work. :/").catch(console.error);
+            });
+        }
+
+        else
+        {
+            let embed;
+            try {
+                embed = new WikiEmbed(result);
+                msg.channel.send({ embed: embed }).catch(console.error);
+            }
+            catch(err) {
+                msg.channel.send(":x: That didn't work. :/").catch(console.error);
+            }
+        }
+    }).catch(err => {
+        if (err.message === "ENOENT") msg.channel.send(`Could not find anything for **${msg.args.join(" ")}**.`);
+        else sendError(err, msg.channel);
+    });
+}
+
+// where it sends "That didn't work. :/" is where `request`ed `body` objects are corrupt/cannot be read
+// I have a hunch that this might be part of requesting articles from the `Tes3Mod:Tamriel Rebuilt` Namespace
+// where this module only handles single-worded Namespaces.
 
 module.exports = wiki;

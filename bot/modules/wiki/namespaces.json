@@ -1,0 +1,130 @@
+[
+    ["Arena", {
+        "icon": "http://i.imgur.com/78TDCUq.png",
+        "link": "http://uesp.net/wiki/Arena:Main_Page"
+    }],
+    ["Daggerfall", {
+        "icon": "http://i.imgur.com/hoeBIkq.png",
+        "link": "http://uesp.net/wiki/Daggerfall:Main_Page"
+    }],
+    ["Morrowind", {
+        "icon": "http://i.imgur.com/2hJOHaI.png",
+        "link": "http://uesp.net/wiki/Morrowind:Main_Page"
+    }],
+    ["Oblivion", {
+        "icon": "http://i.imgur.com/TqS1pXQ.png",
+        "link": "http://uesp.net/wiki/Oblivion:Main_Page"
+    }],
+    ["Skyrim", {
+        "icon": "http://i.imgur.com/0yPyaOz.png",
+        "link": "http://uesp.net/wiki/Skyrim:Main_Page"
+    }],
+    ["Online", {
+        "icon": "http://i.imgur.com/qqvt2UX.png",
+        "link": "http://uesp.net/wiki/Online:Main_Page"
+    }],
+    ["Lore", {
+        "icon": "http://i.imgur.com/SZkJW17.png",
+        "link": "http://uesp.net/wiki/Lore:Main_Page"
+    }],
+    ["Shivering", {
+        "icon": "http://i.imgur.com/TqS1pXQ.png",
+        "link": "http://uesp.net/wiki/Shivering:Main_Page"
+    }],
+    ["Tribunal", {
+        "icon": "http://i.imgur.com/2hJOHaI.png",
+        "link": "http://uesp.net/wiki/Tribunal:Main_Page"
+    }],
+    ["Bloodmoon", {
+        "icon": "http://i.imgur.com/2hJOHaI.png",
+        "link": "http://uesp.net/wiki/Bloodmoon:Main_Page"
+    }],
+    ["Redguard", {
+        "icon": "https://i.imgur.com/FiHS5DK.png",
+        "link": "http://uesp.net/wiki/Redguard:Main_Page"
+    }],
+    ["Battlespire", {
+        "icon": "http://i.imgur.com/zq8RFe0.jpg",
+        "link": "http://uesp.net/wiki/Battlespire:Main_Page"
+    }],
+    ["Legends", {
+        "icon": "http://i.imgur.com/0jIPjhn.jpg",
+        "link": "http://uesp.net/wiki/Legends:Main_Page"
+    }],
+    ["Dawnstar", {
+        "icon": "http://i.imgur.com/whS0ZPU.jpg",
+        "link": "http://uesp.net/wiki/Dawnstar:Main_Page"
+    }],
+    ["Shadowkey", {
+        "icon": "http://i.imgur.com/95Hm5pe.jpg",
+        "link": "http://uesp.net/wiki/Shadowkey:Main_Page"
+    }],
+    ["OBMobile", {
+        "icon": "http://i.imgur.com/TqS1pXQ.png",
+        "link": "http://uesp.net/wiki/OBMobile:Main_Page"
+    }],
+    ["Stormhold", {
+        "icon": "http://i.imgur.com/J9JBz95.jpg",
+        "link": "http://uesp.net/wiki/Stormhold:Main_Page"
+    }],
+    ["Books", {
+        "icon": "http://i.imgur.com/SZkJW17.png",
+        "link": "http://uesp.net/wiki/Books:Main_Page"
+    }],
+    ["Tes3Mod", {
+        "icon": "http://i.imgur.com/2hJOHaI.png",
+        "link": "http://uesp.net/wiki/Tes3Mod:Main_Page"
+    }],
+    ["Tes4Mod", {
+        "icon": "http://i.imgur.com/TqS1pXQ.png",
+        "link": "http://uesp.net/wiki/Tes4Mod:Main_Page"
+    }],
+    ["Tes5Mod", {
+        "icon": "http://i.imgur.com/0yPyaOz.png",
+        "link": "http://uesp.net/wiki/Tes5Mod:Main_Page"
+    }],
+    ["ESOMod", {
+        "icon": "http://i.imgur.com/qqvt2UX.png",
+        "link": "http://uesp.net/wiki/ESOMod:Main_Page"
+    }],
+    ["General", {
+        "icon": "http://i.imgur.com/ZHgmT7J.jpg",
+        "link": "http://uesp.net/wiki/General:Main_Page"
+    }],
+    ["File", {
+        "icon": "http://i.imgur.com/SZkJW17.png",
+        "link": "http://uesp.net/wiki/File:Main_Page"
+    }],
+    ["Template", {
+        "icon": "http://i.imgur.com/SZkJW17.png",
+        "link": "http://uesp.net/wiki/Template:Main_Page"
+    }],
+    ["User", {
+        "icon": "http://i.imgur.com/uQzfl2h.png",
+        "link": "http://uesp.net/wiki/User:Main_Page"
+    }],
+    ["UESPWiki", {
+        "icon": "http://i.imgur.com/ZHgmT7J.jpg",
+        "link": "http://uesp.net/wiki/UESPWiki:Main_Page"
+    }],
+    ["Help", {
+        "icon": "http://i.imgur.com/ZHgmT7J.jpg",
+        "link": "http://uesp.net/wiki/Help:Main_Page"
+    }],
+    ["MediaWiki", {
+        "icon": "",
+        "link": "http://uesp.net/wiki/MediaWiki:Main_Page"
+    }],
+    ["Category", {
+        "icon": "http://i.imgur.com/ZHgmT7J.jpg",
+        "link": "http://uesp.net/wiki/Category:Main_Page"
+    }],
+    ["Special", {
+        "icon": "http://i.imgur.com/PjQiNDp.png",
+        "link": "http://uesp.net/wiki/Special:Main_Page"
+    }],
+    ["TES Travels", {
+        "icon": "http://i.imgur.com/95Hm5pe.jpg",
+        "link": "http://uesp.net/wiki/Special:Main_Page"
+    }]
+]
