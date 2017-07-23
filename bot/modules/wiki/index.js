@@ -3,7 +3,7 @@ const request = require("request")
 , toMarkdown = require("to-markdown");
 
 const uesp = {
-    domain: "http://uesp.net",
+    domain: "http://en.uesp.net",
     baseSearchURL: "http://en.uesp.net/w/index.php?title=Special%3ASearch&search=",
     iconURL: "http://en.uesp.net/w/extensions/UespCustomCode/files/UespLogo.jpg",
     namespaces: new Discord.Collection(require(join(__dirname, "namespaces.json"))),
@@ -29,7 +29,6 @@ const uesp = {
 
 function createAmbiguityEmbed(results, arg)
 {
-    console.log(uesp.baseSearchURL + arg)
     let e = new Discord.MessageEmbed(utils.createEmptyRichEmbedObject())
         .setAuthor("Search Results", uesp.iconURL, encodeURI(uesp.baseSearchURL + arg))
         .setDescription(`You searched for **${arg}**. This is what came up:`)
@@ -196,6 +195,22 @@ function imageIsRestricted(img)
     return restrictedImages.includes(img);
 }
 
+function replaceInvalidMDLinks(markdown, baseURL = "")
+{
+    let linkRegExp = /\[.*?\]\((.+?) .*?\)/g;
+    let matches;
+    while ((matches = linkRegExp.exec(markdown)) !== null) {
+        markdown = markdown.replace(matches[1], uesp.domain + matches[1]);
+    }
+
+    let jumpRegExp = /\[.*?\]\((#.+?)\)/g;
+    while ((matches = jumpRegExp.exec(markdown)) !== null) {
+        markdown = markdown.replace(matches[1], baseURL + matches[1]);
+    }
+
+    return markdown;
+}
+
 class WikiEmbed extends Discord.MessageEmbed
 {
     constructor($, data = [])
@@ -219,8 +234,10 @@ class WikiEmbed extends Discord.MessageEmbed
         this.namespace = $(" #firstHeading ").text().split(":")[0];
         this.title = $(" #firstHeading ").text().split(":")[1];
         this.url = `${uesp.domain}/wiki/${encodeURI(this.namespace + ":" + this.title)}`;
-        this.description = filterOutImagesFromMD(toMarkdown(removeUnnessecaryHTML($(" #mw-content-text > p ").first().html()))) || "";
+        this.description = (!$(" #mw-content-text > p ").first().html()) ? $(" #mw-content-text > p ").first().text() || "" : removeUnnessecaryHTML(replaceInvalidMDLinks(filterOutImagesFromMD(toMarkdown($(" #mw-content-text > p ").first().html()))), this.url) || "";
         this.image = $(" .thumb ").find(" img ").prop("src") || $(" .image ").find(" img ").prop("src") || "";
+
+        console.log(this.url);
 
         for (let i = 0; i < $(" img ").length; i++)
         {
@@ -244,11 +261,11 @@ class WikiEmbed extends Discord.MessageEmbed
             {
                 if ($(this).children().length >= 2)
                 {
-                    let intermediateData;
+                    let intermediateName;
                     $(this).children().each(function(j)
                     {
-                        if (j % 2 === 1) fields.push({ name: intermediateData, value: toMarkdown(removeUnnessecaryHTML($(this).html())), inline: true });
-                        intermediateData = $(this).text();
+                        if (j % 2 === 1) fields.push({ name: intermediateName, value: removeUnnessecaryHTML(replaceInvalidMDLinks(toMarkdown($(this).html())), this.url), inline: true });
+                        intermediateName = (!$(this).text().length || !$(this).text()) ? "\u200b" : $(this).text();
                     });
                 }
 
@@ -268,7 +285,7 @@ class WikiEmbed extends Discord.MessageEmbed
             case "Quests:":
                 $(` ol > li `).each(function(i)
                 {
-                    fields.push({ name: `Step ${i + 1}`, value: toMarkdown(removeUnnessecaryHTML($(this).html())), inline: true });
+                    fields.push({ name: `Step ${i + 1}`, value: removeUnnessecaryHTML(replaceInvalidMDLinks(toMarkdown($(this).html()), this.url)), inline: true });
                 });
                 this.fields = this.fields.concat(fields);
                 break;
@@ -345,6 +362,7 @@ function wiki(msg)
                 msg.channel.send({ embed: embed }).catch(console.error);
             }
             catch(err) {
+                console.error(err);
                 msg.channel.send(":x: That didn't work. :/").catch(console.error);
             }
         }
