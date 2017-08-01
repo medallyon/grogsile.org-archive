@@ -42,7 +42,8 @@ function createRichEmbed(data)
         .setTitle(data.title)
         .setURL(data.link)
         .setDescription(data.description)
-        .setImage(data.image);
+        .setImage(data.image)
+        .setTimestamp(new Date(data.pubDate));
 }
 
 function distribute(embed)
