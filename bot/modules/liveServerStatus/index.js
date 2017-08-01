@@ -8,19 +8,19 @@ function structureEmbed(status)
         .setDescription("This live panel is updated every 5 minutes to check for all ESO Server Statuses.")
         .setFooter(`${constants.discord.embed.footer.text} | ${utils.fancyESODate()} ${dateFormat("HH:MM")} UTC`, dClient.user.displayAvatarURL);
 
-    e.addField("\u200b", "**[PC]**");
+    e.addField("\u200b", "**PC**");
     for (let server in status["PC"])
     {
         e.addField(server, status["PC"][server] ? "💚 Online" : "💔 Offline", true);
     }
 
-    e.addField("\u200b", "**[PS4]**");
+    e.addField("\u200b", "**PlayStation 4**");
     for (let server in status["PS4"])
     {
         e.addField(server, status["PS4"][server] ? "💚 Online" : "💔 Offline", true);
     }
 
-    e.addField("\u200b", "**[XBONE]**");
+    e.addField("\u200b", "**XBox One**");
     for (let server in status["XBONE"])
     {
         e.addField(server, status["XBONE"][server] ? "💚 Online" : "💔 Offline", true);
@@ -34,7 +34,7 @@ function prepareAnnouncement(servers)
     let e = new Discord.MessageEmbed()
         .setAuthor("ESO Server Status", "", STATUS_DOMAIN)
         .setDescription("The following servers have been updated:")
-        .setFooter(`Brought to you by Grogsile, Inc. | ${utils.fancyESODate(new Date())} ${new Date().getUTCHours()}:${new Date().getUTCMinutes()} UTC`, dClient.user.displayAvatarURL)
+        .setFooter(`Brought to you by Grogsile, Inc. | ${utils.fancyESODate(new Date())} ${dateFormat("HH:MM")} UTC`, dClient.user.displayAvatarURL)
     , strings = [];
 
     if (servers.findIndex(x => x.platform === "PC") > -1)
