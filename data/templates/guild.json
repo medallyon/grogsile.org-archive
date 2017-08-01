@@ -55,7 +55,11 @@
       "enabled": true
     },
     "esoItem": {
-      "enabled": true
+      "enabled": true,
+      "usage": {
+        "command": true,
+        "inline": false
+      }
     },
     "evaluate": {
       "enabled": true

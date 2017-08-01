@@ -138,6 +138,22 @@
     "example": "Norgred Hardhelm"
   },
 
+  "esoItem": {
+    "description": "Searches for a given item from Elder Scrolls Online.",
+    "alias": [
+      "esoItem",
+      "item"
+    ],
+    "arguments": {
+      "input": {
+        "description": "The item to search for.",
+        "optional": false
+      }
+    },
+    "userPermissions": 100,
+    "example": "Valkyn Skoria's Hat"
+  },
+
   "profile": {
     "description": "Displays your ESOI profile.",
     "alias": [

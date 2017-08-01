@@ -71,8 +71,13 @@ dClient.on("message", function (msg) {
 
     if (/\[.+\]/g.test(msg.content) && !/`.*?\[.+\].*?`/g.test(msg.content))
     {
-        let requestedItem = /\[(.+)\]/g.exec(msg.content)[1];
-        if (requestedItem.length < 2) return;
-        modules.esoItem(msg, requestedItem);
+        utils.readGuildConfig(msg.guild).then(config => {
+            if (!config.commands.esoItem.enabled || !config.commands.esoItem.usage.inline) return;
+
+            let requestedItem = /\[(.+)\]/g.exec(msg.content)[1];
+            if (requestedItem.length < 2) return;
+            
+            modules.esoItem(msg, requestedItem);
+        });
     }
 });

@@ -19,16 +19,12 @@ function findItem(itemCollection, item)
 
     // filter out items containing requested item's words
     let matchingItems = itemCollection.filter(x => x.name.toLowerCase().includes(item.toLowerCase()));
-    console.log(matchingItems.size);
 
     if (matchingItems.size === 1) return [matchingItems.first(), 0];
 
     if (matchingItems.size === 0) return [null, 0];
 
-    if (matchingItems.size > 1)
-    {
-        return [matchingItems.array()[Math.floor(Math.random() * matchingItems.size)], matchingItems.size];
-    }
+    if (matchingItems.size > 1) return [matchingItems.array()[Math.floor(Math.random() * matchingItems.size)], matchingItems.size];
 }
 
 function searchUESPItem(item)
@@ -46,12 +42,19 @@ function searchUESPItem(item)
     });
 }
 
-function esoItem(msg, item)
+function esoItem(msg, item = null)
 {
-    searchUESPItem(item)
-    .then(([itemObj, otherItems]) => {
-        msg.channel.send((otherItems > 1) ? `There are **${otherItems}** other items like this one` : "This item is quite unique, some say.", { files: [{ "name": `${itemObj.name}.png`, "attachment": itemObj.url }] }).catch(console.error);
-    }).catch(console.log);
+    utils.readGuildConfig(msg.guild).then(config => {
+        if (msg.command && !config.commands.esoItem.usage.command) return;
+
+        if (msg.command) item = msg.args.join(" ");
+        if (!item || !item.length) return;
+
+        searchUESPItem(item)
+        .then(([itemObj, otherItems]) => {
+            msg.channel.send((otherItems > 1) ? `There are **${otherItems}** other items like this one` : "This item is quite unique, some say.", { files: [{ "name": `${itemObj.name}.png`, "attachment": itemObj.url }] }).catch(console.error);
+        }).catch(console.log);
+    }).catch(console.error);
 }
 
 module.exports = esoItem;
