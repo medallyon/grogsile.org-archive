@@ -1,13 +1,14 @@
 const cheerio = require("cheerio");
 
-const newsPage = "http://www.elderscrollsonline.com/en-us/news";
+const ESO_DOMAIN = "http://www.elderscrollsonline.com/"
+, NEWS_PAGE = "http://www.elderscrollsonline.com/en-us/news/";
 
 function scrapeSite(request)
 {
     return new Promise(function(resolve, reject)
     {
         let newsData = {};
-        request(newsPage, (err, res, body) => {
+        request(NEWS_PAGE, (err, res, body) => {
             if (err) return reject(err);
 
             let $ = cheerio.load(body);
@@ -15,20 +16,19 @@ function scrapeSite(request)
             fs.readJson(join(__dirname, "savedVars.json"), (err, savedVars) => {
                 if (err) return reject(err);
 
-                newsData.text = $(" article ").first().text();
+                newsData.text = $(" hgroup ").find(" h2.text-info ").text();
                 if (newsData.text === savedVars.text) return reject("modules.esoNews: No new articles present");
 
-                newsData.link = $(" article > a ").prop("href");
-
+                newsData.link = ESO_DOMAIN + $(" .hilight-image > a ").prop("href");
                 request(newsData.link, (err, res, newsPage) => {
                     if (err) return reject(err);
 
                     $ = cheerio.load(newsPage);
 
-                    newsData.title = $(" h2.mega ").text();
-                    newsData.pubDate = new Date($(" time ").text());
-                    newsData.description = $(" article#post ").find("i").first().text();
-                    newsData.image = $(" article#post ").find("img").first().prop("src");
+                    newsData.title = $(" div.post-title ").find(" h1 ").text();
+                    newsData.pubDate = new Date($(" div.post-title ").find(" span.date ").text());
+                    newsData.description = $(" #post-body > div > p > i ").first().text();
+                    newsData.image = $(" #post-body > div > p > img ").prop("src");
 
                     resolve(newsData);
                 });
@@ -53,11 +53,11 @@ function checkUpdate()
 function createEmbed(data)
 {
     return new Discord.MessageEmbed(utils.createEmptyRichEmbedObject())
-        .setAuthor("ESO News", dClient.user.displayAvatarURL, newsPage)
+        .setAuthor("ESO News", constants.icons.eso, NEWS_PAGE)
         .setTitle(data.title)
         .setDescription(data.description)
         .setImage(data.image || "")
-        .setFooter(`Brought to you by © Grogsile Inc. | ${utils.fancyESODate(new Date(data.pubDate))}`, "https://i.grogsile.me/favicon.png")
+        .setFooter(`Brought to you by © Grogsile Inc. | ${utils.fancyESODate(data.pubDate)}`, constants.icons.grogsile)
         .setURL(data.link);
 }
 
