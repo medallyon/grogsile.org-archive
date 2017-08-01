@@ -1,5 +1,8 @@
 dClient.on("guildMemberAdd", function(member)
 {
+    // return if the new member is a bot
+    if (member.user.bot) return;
+
     // process welcome message
     utils.readGuildConfig(member.guild).then(function(config)
     {
