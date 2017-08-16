@@ -235,7 +235,7 @@ class WikiEmbed extends Discord.MessageEmbed
         this.title = $(" #firstHeading ").text().split(":")[1];
         this.url = `${uesp.domain}/wiki/${encodeURI(this.namespace + ":" + this.title)}`;
         this.description = (!$(" #mw-content-text > p ").first().html()) ? $(" #mw-content-text > p ").first().text() || "" : removeUnnessecaryHTML(replaceInvalidMDLinks(filterOutImagesFromMD(toMarkdown($(" #mw-content-text > p ").first().html()))), this.url) || "";
-        this.image = $(" .thumb ").find(" img ").prop("src") || $(" .image ").find(" img ").prop("src") || "";
+        this.image = $(" .fullImageLink ").find(" img ").prop("src") || $(" .thumb ").find(" img ").prop("src") || $(" .image ").find(" img ").prop("src") || "";
 
         console.log(this.url);
 
