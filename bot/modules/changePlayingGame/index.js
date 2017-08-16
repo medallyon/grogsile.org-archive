@@ -3,7 +3,7 @@ let recentGames = [];
 function applyGame(recentGames, games)
 {
     const validGames = games.filter(g => !recentGames.includes(g));
-    const game = validGames[Math.floor(Math.random() * games.length)];
+    const game = validGames[Math.floor(Math.random() * validGames.length)];
     
     recentGames.push(game);
     if (recentGames.length > 3) recentGames.shift();
