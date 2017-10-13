@@ -43,3 +43,4 @@ sftp-config.json
 /web/.pub_src/esoi/img/ui
 /web/.pub_src/esoi/users
 bot/modules/esoItem/items.json
+/.vs
