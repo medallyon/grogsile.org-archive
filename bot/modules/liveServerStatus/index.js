@@ -135,45 +135,48 @@ function liveServerStatus()
             const finalPanelEmbed = structureEmbed(status)
             , finalUpdateEmbed = prepareAnnouncement(changedServers);
             
-            for (let guild of dClient.guilds.values())
+            if (changedServers.length)
             {
-                if (!guild.available) continue;
+                if (changedServers.some(x => x.platform === "PC" && !x.status) && changedServers.some(x => x.server === "EU") && changedServers.some(x => x.server === "NA")) dClient.maintenance = true;
+                else dClient.maintenance = false;
 
-                utils.readGuildConfig(guild).then(function(config)
+                for (let guild of dClient.guilds.values())
                 {
-                    if (err) return console.error(err);
-                    const baseGuildPath = join(__data, "guilds", guild.id);
+                    if (!guild.available) continue;
 
-                    if (!config.guild.liveServerStatus.panel.enabled || !config.guild.liveServerStatus.update.enabled) return;
-                    
-                    else
+                    utils.readGuildConfig(guild).then(function(config)
                     {
-                        fs.readJson(join(baseGuildPath, "liveServerUpdate", "savedVariables.json"), function(err, liveVars)
+                        if (err) return console.error(err);
+                        const baseGuildPath = join(__data, "guilds", guild.id);
+
+                        if (!config.guild.liveServerStatus.panel.enabled || !config.guild.liveServerStatus.update.enabled) return;
+                        
+                        else
                         {
-                            if (err) return console.error(err);
-
-                            // live panel
-                            if (config.guild.liveServerStatus.panel.enabled)
+                            fs.readJson(join(baseGuildPath, "liveServerUpdate", "savedVariables.json"), function(err, liveVars)
                             {
-                                let liveChannel = guild.channels.get(config.guild.liveServerStatus.panel.channel);
+                                if (err) return console.error(err);
 
-                                liveChannel.fetchMessage(liveVars.panelId)
-                                .then(panelMessage => {
-                                    panelMessage.edit({ embed: finalPanelEmbed }).catch(console.error);
-                                }).catch(err => {
-                                    liveChannel.send({ embed: finalPanelEmbed })
-                                    .then(function(sentMessage)
-                                    {
-                                        liveVars.panelId = sentMessage.id;
-                                        fs.outputJson(join(baseGuildPath, "liveServerUpdate", "savedVariables.json"), liveVars, err => { if (err) console.error(err) });
-                                    }).catch(console.error);
-                                });
-                            }
+                                // live panel
+                                if (config.guild.liveServerStatus.panel.enabled)
+                                {
+                                    let liveChannel = guild.channels.get(config.guild.liveServerStatus.panel.channel);
 
-                            // global announcements
-                            if (config.guild.liveServerStatus.update.enabled)
-                            {
-                                if (changedServers.length)
+                                    liveChannel.fetchMessage(liveVars.panelId)
+                                    .then(panelMessage => {
+                                        panelMessage.edit({ embed: finalPanelEmbed }).catch(console.error);
+                                    }).catch(err => {
+                                        liveChannel.send({ embed: finalPanelEmbed })
+                                        .then(function(sentMessage)
+                                        {
+                                            liveVars.panelId = sentMessage.id;
+                                            fs.outputJson(join(baseGuildPath, "liveServerUpdate", "savedVariables.json"), liveVars, err => { if (err) console.error(err) });
+                                        }).catch(console.error);
+                                    });
+                                }
+
+                                // global announcements
+                                if (config.guild.liveServerStatus.update.enabled)
                                 {
                                     let updateChannel = guild.channels.get(config.guild.liveServerStatus.update.channel)
                                     , roles = config.guild.liveServerStatus.update.roles.map(x => guild.roles.get(x));
@@ -193,10 +196,10 @@ function liveServerStatus()
                                         });
                                     }).catch(console.error);
                                 }
-                            }
-                        });
-                    }
-                }).catch(console.error);
+                            });
+                        }
+                    }).catch(console.error);
+                }
             }
         });
     }).catch(console.error);
