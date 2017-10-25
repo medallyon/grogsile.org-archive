@@ -2,8 +2,7 @@ const express = require("express")
 , multer = require("multer")
 , jimp = require("jimp")
 , passport = require("passport")
-, Strategy = require("passport-discord").Strategy
-, session = require("express-session")
+, session = require("express-session");
 
 let router = express.Router()
 , locals = {};
@@ -17,16 +16,18 @@ passport.deserializeUser(function(obj, done) {
     done(null, obj);
 });
 
-passport.use(new Strategy({
+let esoiStrategy = new middleware.DiscordStrategy({
     clientID: dClient.config.discord.auth.id,
     clientSecret: dClient.config.discord.auth.secret,
-    callbackURL: "https://esoi.grogsile.me/callback",
-    scope: ["identify"]
+    callbackURL: "https://esoi.grogsile.org/callback",
+    scope: ["identify", "guilds"]
 }, function(accessToken, refreshToken, profile, done) {
     process.nextTick(function() {
         return done(null, profile);
     });
-}));
+});
+passport.use(esoiStrategy);
+
 router.use(session({
     secret: utils.genSecret(),
     resave: false,
@@ -40,9 +41,9 @@ router.get("/login", middleware.isLoggedIn, function(req, res)
     res.redirect("/dashboard");
 });
 
-router.get("/actuallylogin", passport.authenticate("discord", { scope: ["identify"] }), (req, res) => {});
+router.get("/actuallylogin", passport.authenticate("discord", { scope: ["identify", "guilds"], callbackURL: "https://esoi.grogsile.org/callback" }), (req, res) => {});
 
-router.get("/callback", passport.authenticate("discord", { failureRedirect: "/" }), function(req, res)
+router.get("/callback", passport.authenticate("discord", { failureRedirect: "/", callbackURL: "https://esoi.grogsile.org/callback" }), function(req, res)
 {
     let userDir = join(__data, "users", req.user.id);
     fs.ensureDir(userDir, (err) => {
@@ -163,7 +164,7 @@ router.post("/account", middleware.isLoggedIn, resetLocals, function(req, res)
         }, (err) => {
             if (err) {
                 console.error(err);
-                res.send("Something went wrong :/\nDo tell a developer over at <a href='https://esoi.grogsile.me/discord'>Discord</a>!");
+                res.send("Something went wrong :/\nDo tell a developer over at <a href='https://esoi.grogsile.org/discord'>Discord</a>!");
             }
 
             else {
@@ -171,7 +172,7 @@ router.post("/account", middleware.isLoggedIn, resetLocals, function(req, res)
                 locals.content.success = true;
                 res.render("pages/account.ejs", locals);
 
-                modules.addToEsoRank(req.user.id, req.body.server, req.body.platform, req.body.alliance);
+                dClient.modules.addToEsoRank(req.user.id, req.body.server, req.body.platform, req.body.alliance);
 
                 let esoiServer = dClient.guilds.get(constants.discord.esoi.id);
                 if (!esoiServer.members.has(req.user.id)) return;
@@ -424,7 +425,7 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
                             image.write(join(userAvatarDir, `${character.id}.png`), (err) => {
                                 if (err) return res.status(500).send("Cannot write avatar to file");
 
-                                character.avatarURL = `https://i.grogsile.me/esoi/users/${userId}/${character.id}.png`;
+                                character.avatarURL = `https://i.grogsile.org/esoi/users/${userId}/${character.id}.png`;
                                 
                                 characters.push(character);
 
@@ -499,7 +500,7 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
                                     image.write(join(userAvatarDir, `${character.id}.png`), (err) => {
                                         if (err) return res.status(500).send("Could not write avatar to file");
 
-                                        character.avatarURL = `https://i.grogsile.me/esoi/users/${userId}/${character.id}.png`;
+                                        character.avatarURL = `https://i.grogsile.org/esoi/users/${userId}/${character.id}.png`;
                                         
                                         characters.splice(characters.findIndex((x, i) => x.id === i), 1, character);
 
