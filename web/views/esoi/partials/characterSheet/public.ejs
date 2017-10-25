@@ -10,7 +10,7 @@
 
     <div class="card-lvl">
       <span class="inline-icon icon-<% if (char.champion) { %>champion<% } else { %>non-champion<% } %>" data-toggle="tooltip" data-placement="top" title="<% if (char.champion) { %>Champion<% } else { %>Non-Champion<% } %>"></span>
-      <span><% if (char.champion) { %><%- account.level %><% } else { %><%- char.level %><% } %></span>
+      <span><% if (char.champion) { %><%- targetAccount.level %><% } else { %><%- char.level %><% } %></span>
     </div>
 
     <div class="card-block">
