@@ -1,7 +1,7 @@
 const express = require("express")
 , bodyparser = require("body-parser");
 
-// create app for "esoi.grogsile.me"
+// create app for "esoi.grogsile.org"
 app = express();
 // 
 app.set("views", join(__webdir, "views", "esoi"));

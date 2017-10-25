@@ -39,7 +39,7 @@ body {
   height: 100%; /* For at least Firefox */
   min-height: 100%;
   background-repeat: no-repeat;
-  background-image: url("https://i.grogsile.me/esoi/img/cover/lowQuality.jpg");
+  background-image: url("https://i.grogsile.org/esoi/img/cover/lowQuality.jpg");
   background-position: center;
 }
 
@@ -52,7 +52,7 @@ body {
   -webkit-box-shadow: inset 0 0 5rem rgba(0,0,0,.5);
           box-shadow: inset 0 0 5rem rgba(0,0,0,.5);
   background-repeat: no-repeat;
-  background-image: linear-gradient(to right, rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url("https://i.grogsile.me/esoi/img/cover/background.png");
+  background-image: linear-gradient(to right, rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url("https://i.grogsile.org/esoi/img/cover/background.png");
   background-blend-mode: overlay;
   background-position: center;
 }
@@ -130,7 +130,7 @@ body {
 .cover-img {
   height: 15em;
   margin-bottom: 2.5em;
-  background-image: url(https://i.grogsile.me/esoi/img/cover/brand.png);
+  background-image: url(https://i.grogsile.org/esoi/img/cover/brand.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;

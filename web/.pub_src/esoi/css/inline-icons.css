@@ -10,201 +10,201 @@ span.inline-icon {
 
 /* LEVEL */
 span.icon-non-champion {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/gameui/lfg/gamepad/gp_lfg_menuicon_normaldungeon.png"), url("https://i.grogsile.me/esoi/img/ui/gameui/lfg/gamepad/gp_lfg_menuicon_normaldungeon.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/gameui/lfg/gamepad/gp_lfg_menuicon_normaldungeon.png"), url("https://i.grogsile.org/esoi/img/ui/gameui/lfg/gamepad/gp_lfg_menuicon_normaldungeon.png");
 }
 span.icon-champion {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/gameui/champion/champion_icon.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/gameui/champion/champion_icon.png");
 }
 
 /* PRIMARY CHARACTER */
 span.icon-primary {
-  background-image: url("https://i.grogsile.me/esoi/img/star-filled.png");
+  background-image: url("https://i.grogsile.org/esoi/img/star-filled.png");
 }
 
 /* ALLIANCE */
 span.icon-aldmeri {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/gameui/stats/alliancebadge_aldmeri.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/gameui/stats/alliancebadge_aldmeri.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #E0AA36) drop-shadow(-2px -2px 2.5px #E0AA36);
   filter: drop-shadow(2px 2px 2.5px #E0AA36) drop-shadow(-2px -2px 2.5px #E0AA36);
 }
 span.icon-daggerfall {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/gameui/stats/alliancebadge_daggerfall.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/gameui/stats/alliancebadge_daggerfall.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #3E72E0) drop-shadow(-2px -2px 2.5px #3E72E0);
   filter: drop-shadow(2px 2px 2.5px #3E72E0) drop-shadow(-2px -2px 2.5px #3E72E0);
 }
 span.icon-ebonheart {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/gameui/stats/alliancebadge_ebonheart.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/gameui/stats/alliancebadge_ebonheart.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #B14040) drop-shadow(-2px -2px 2.5px #B14040);
   filter: drop-shadow(2px 2px 2.5px #B14040) drop-shadow(-2px -2px 2.5px #B14040);
 }
 
 /* RACE */
 span.icon-breton {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/race/race_breton_01.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/icons/race/race_breton_01.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #3E72E0) drop-shadow(-2px -2px 2.5px #3E72E0);
   filter: drop-shadow(2px 2px 2.5px #3E72E0) drop-shadow(-2px -2px 2.5px #3E72E0);
 }
 span.icon-orsimer {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/race/race_orc_01.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/icons/race/race_orc_01.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #3E72E0) drop-shadow(-2px -2px 2.5px #3E72E0);
   filter: drop-shadow(2px 2px 2.5px #3E72E0) drop-shadow(-2px -2px 2.5px #3E72E0);
 }
 span.icon-redguard {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/race/race_redguard_01.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/icons/race/race_redguard_01.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #3E72E0) drop-shadow(-2px -2px 2.5px #3E72E0);
   filter: drop-shadow(2px 2px 2.5px #3E72E0) drop-shadow(-2px -2px 2.5px #3E72E0);
 }
 span.icon-altmer {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/race/race_altmer_01.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/icons/race/race_altmer_01.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #E0AA36) drop-shadow(-2px -2px 2.5px #E0AA36);
   filter: drop-shadow(2px 2px 2.5px #E0AA36) drop-shadow(-2px -2px 2.5px #E0AA36);
 }
 span.icon-bosmer {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/race/race_bosmer_01.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/icons/race/race_bosmer_01.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #E0AA36) drop-shadow(-2px -2px 2.5px #E0AA36);
   filter: drop-shadow(2px 2px 2.5px #E0AA36) drop-shadow(-2px -2px 2.5px #E0AA36);
 }
 span.icon-khajiit {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/race/race_khajiit_01.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/icons/race/race_khajiit_01.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #E0AA36) drop-shadow(-2px -2px 2.5px #E0AA36);
   filter: drop-shadow(2px 2px 2.5px #E0AA36) drop-shadow(-2px -2px 2.5px #E0AA36);
 }
 span.icon-argonian {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/race/race_argonian_01.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/icons/race/race_argonian_01.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #B14040) drop-shadow(-2px -2px 2.5px #B14040);
   filter: drop-shadow(2px 2px 2.5px #B14040) drop-shadow(-2px -2px 2.5px #B14040);
 }
 span.icon-dunmer {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/race/race_dunmer_01.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/icons/race/race_dunmer_01.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #B14040) drop-shadow(-2px -2px 2.5px #B14040);
   filter: drop-shadow(2px 2px 2.5px #B14040) drop-shadow(-2px -2px 2.5px #B14040);
 }
 span.icon-nord {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/race/race_nord_01.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/icons/race/race_nord_01.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #B14040) drop-shadow(-2px -2px 2.5px #B14040);
   filter: drop-shadow(2px 2px 2.5px #B14040) drop-shadow(-2px -2px 2.5px #B14040);
 }
 span.icon-imperial {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/race/race_imperial_01.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/icons/race/race_imperial_01.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #2C2F33) drop-shadow(-2px -2px 2.5px #2C2F33);
   filter: drop-shadow(2px 2px 2.5px #2C2F33) drop-shadow(-2px -2px 2.5px #2C2F33);
 }
 
 /* CLASS */
 span.icon-dragonknight {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/class/gamepad/gp_class_dragonknight.png"), url("https://i.grogsile.me/esoi/img/ui/icons/class/gamepad/gp_class_dragonknight.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/icons/class/gamepad/gp_class_dragonknight.png"), url("https://i.grogsile.org/esoi/img/ui/icons/class/gamepad/gp_class_dragonknight.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #990D0D) drop-shadow(-2px -2px 2.5px #990D0D);
   filter: drop-shadow(2px 2px 2.5px #990D0D) drop-shadow(-2px -2px 2.5px #990D0D);
 }
 span.icon-nightblade {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/class/gamepad/gp_class_nightblade.png"), url("https://i.grogsile.me/esoi/img/ui/icons/class/gamepad/gp_class_nightblade.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/icons/class/gamepad/gp_class_nightblade.png"), url("https://i.grogsile.org/esoi/img/ui/icons/class/gamepad/gp_class_nightblade.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #ED9223) drop-shadow(-2px -2px 2.5px #ED9223);
   filter: drop-shadow(2px 2px 2.5px #ED9223) drop-shadow(-2px -2px 2.5px #ED9223);
 }
 span.icon-sorcerer {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/class/gamepad/gp_class_sorcerer.png"), url("https://i.grogsile.me/esoi/img/ui/icons/class/gamepad/gp_class_sorcerer.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/icons/class/gamepad/gp_class_sorcerer.png"), url("https://i.grogsile.org/esoi/img/ui/icons/class/gamepad/gp_class_sorcerer.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #6A28A8) drop-shadow(-2px -2px 2.5px #6A28A8);
   filter: drop-shadow(2px 2px 2.5px #6A28A8) drop-shadow(-2px -2px 2.5px #6A28A8);
 }
 span.icon-templar {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/class/gamepad/gp_class_templar.png"), url("https://i.grogsile.me/esoi/img/ui/icons/class/gamepad/gp_class_templar.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/icons/class/gamepad/gp_class_templar.png"), url("https://i.grogsile.org/esoi/img/ui/icons/class/gamepad/gp_class_templar.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #B7A51D) drop-shadow(-2px -2px 2.5px #B7A51D);
   filter: drop-shadow(2px 2px 2.5px #B7A51D) drop-shadow(-2px -2px 2.5px #B7A51D);
 }
 span.icon-warden {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/class/gamepad/gp_class_warden.png"), url("https://i.grogsile.me/esoi/img/ui/icons/class/gamepad/gp_class_warden.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/icons/class/gamepad/gp_class_warden.png"), url("https://i.grogsile.org/esoi/img/ui/icons/class/gamepad/gp_class_warden.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #1F8914) drop-shadow(-2px -2px 2.5px #1F8914);
   filter: drop-shadow(2px 2px 2.5px #1F8914) drop-shadow(-2px -2px 2.5px #1F8914);
 }
 
 /* ROLE */
 span.icon-dps {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/gameui/lfg/gamepad/lfg_roleicon_dps.png"), url("https://i.grogsile.me/esoi/img/ui/gameui/lfg/gamepad/lfg_roleicon_dps.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/gameui/lfg/gamepad/lfg_roleicon_dps.png"), url("https://i.grogsile.org/esoi/img/ui/gameui/lfg/gamepad/lfg_roleicon_dps.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #1361A5) drop-shadow(-2px -2px 2.5px #008000);
   filter: drop-shadow(2px 2px 2.5px #1361A5) drop-shadow(-2px -2px 2.5px #008000);
 }
 span.icon-tank {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/gameui/lfg/gamepad/lfg_roleicon_tank.png"), url("https://i.grogsile.me/esoi/img/ui/gameui/lfg/gamepad/lfg_roleicon_tank.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/gameui/lfg/gamepad/lfg_roleicon_tank.png"), url("https://i.grogsile.org/esoi/img/ui/gameui/lfg/gamepad/lfg_roleicon_tank.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #990D0D) drop-shadow(-2px -2px 2.5px #990D0D);
   filter: drop-shadow(2px 2px 2.5px #990D0D) drop-shadow(-2px -2px 2.5px #990D0D);
 }
 span.icon-healer {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/gameui/lfg/gamepad/lfg_roleicon_healer.png"), url("https://i.grogsile.me/esoi/img/ui/gameui/lfg/gamepad/lfg_roleicon_healer.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/gameui/lfg/gamepad/lfg_roleicon_healer.png"), url("https://i.grogsile.org/esoi/img/ui/gameui/lfg/gamepad/lfg_roleicon_healer.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #B7A51D) drop-shadow(-2px -2px 2.5px #B7A51D);
   filter: drop-shadow(2px 2px 2.5px #B7A51D) drop-shadow(-2px -2px 2.5px #B7A51D);
 }
 
 /* PROFESSION */
 span.icon-blacksmithing {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/servicemappins/servicepin_smithy.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/icons/servicemappins/servicepin_smithy.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #626567) drop-shadow(-2px -2px 2.5px #626567);
   filter: drop-shadow(2px 2px 2.5px #626567) drop-shadow(-2px -2px 2.5px #626567);
 }
 span.icon-clothing {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/servicemappins/servicepin_clothier.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/icons/servicemappins/servicepin_clothier.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #641E16) drop-shadow(-2px -2px 2.5px #641E16);
   filter: drop-shadow(2px 2px 2.5px #641E16) drop-shadow(-2px -2px 2.5px #641E16);
 }
 span.icon-woodworking {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/servicemappins/servicepin_woodworking.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/icons/servicemappins/servicepin_woodworking.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #C0392B) drop-shadow(-2px -2px 2.5px #C0392B);
   filter: drop-shadow(2px 2px 2.5px #C0392B) drop-shadow(-2px -2px 2.5px #C0392B);
 }
 span.icon-alchemy {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/servicemappins/servicepin_alchemy.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/icons/servicemappins/servicepin_alchemy.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #17A589) drop-shadow(-2px -2px 2.5px #17A589);
   filter: drop-shadow(2px 2px 2.5px #17A589) drop-shadow(-2px -2px 2.5px #17A589);
 }
 span.icon-enchanting {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/servicemappins/servicepin_enchanting.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/icons/servicemappins/servicepin_enchanting.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #9B59B6) drop-shadow(-2px -2px 2.5px #9B59B6);
   filter: drop-shadow(2px 2px 2.5px #9B59B6) drop-shadow(-2px -2px 2.5px #9B59B6);
 }
 span.icon-provisioning {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/servicemappins/servicepin_inn.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/icons/servicemappins/servicepin_inn.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #BB9613) drop-shadow(-2px -2px 2.5px #BB9613);
   filter: drop-shadow(2px 2px 2.5px #BB9613) drop-shadow(-2px -2px 2.5px #BB9613);
 }
 span.icon-fishing {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/gameui/inventory/gamepad/gp_inventory_icon_craftbag_fishing.png"), url("https://i.grogsile.me/esoi/img/ui/gameui/inventory/gamepad/gp_inventory_icon_craftbag_fishing.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/gameui/inventory/gamepad/gp_inventory_icon_craftbag_fishing.png"), url("https://i.grogsile.org/esoi/img/ui/gameui/inventory/gamepad/gp_inventory_icon_craftbag_fishing.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #3498DB) drop-shadow(-2px -2px 2.5px #3498DB);
   filter: drop-shadow(2px 2px 2.5px #3498DB) drop-shadow(-2px -2px 2.5px #3498DB);
 }
 span.icon-banking {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/servicemappins/servicepin_bank.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/icons/servicemappins/servicepin_bank.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #B7950B) drop-shadow(-2px -2px 2.5px #B7950B);
   filter: drop-shadow(2px 2px 2.5px #B7950B) drop-shadow(-2px -2px 2.5px #B7950B);
 }
 span.icon-thieving {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/servicemappins/servicepin_thievesguild.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/icons/servicemappins/servicepin_thievesguild.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #566573) drop-shadow(-2px -2px 2.5px #566573);
   filter: drop-shadow(2px 2px 2.5px #566573) drop-shadow(-2px -2px 2.5px #566573);
 }
 span.icon-pve {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/mapkey/mapkey_groupinstance.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/icons/mapkey/mapkey_groupinstance.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #27AE60) drop-shadow(-2px -2px 2.5px #27AE60);
   filter: drop-shadow(2px 2px 2.5px #27AE60) drop-shadow(-2px -2px 2.5px #27AE60);
 }
 span.icon-pvp {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/mapkey/mapkey_keep.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/icons/mapkey/mapkey_keep.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #C0392B) drop-shadow(-2px -2px 2.5px #C0392B);
   filter: drop-shadow(2px 2px 2.5px #C0392B) drop-shadow(-2px -2px 2.5px #C0392B);
 }
 span.icon-dueling {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/gameui/notifications/gamepad/gp_notificationicon_duel.png"), url("https://i.grogsile.me/esoi/img/ui/gameui/notifications/gamepad/gp_notificationicon_duel.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/gameui/notifications/gamepad/gp_notificationicon_duel.png"), url("https://i.grogsile.org/esoi/img/ui/gameui/notifications/gamepad/gp_notificationicon_duel.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #4A235A) drop-shadow(-2px -2px 2.5px #4A235A);
   filter: drop-shadow(2px 2px 2.5px #4A235A) drop-shadow(-2px -2px 2.5px #4A235A);
 }
 span.icon-roleplay {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/icons/store/esoplus_01_white.png"), url("https://i.grogsile.me/esoi/img/ui/icons/store/esoplus_01_white.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/icons/store/esoplus_01_white.png"), url("https://i.grogsile.org/esoi/img/ui/icons/store/esoplus_01_white.png");
   -webkit-filter: drop-shadow(2px 2px 2.5px #CC00CC) drop-shadow(-2px -2px 2.5px #CC00CC);
   filter: drop-shadow(2px 2px 2.5px #CC00CC) drop-shadow(-2px -2px 2.5px #CC00CC);
 }
 
 /* CHAR MISC */
 span.icon-edit {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/gameui/guild/gamepad/gp_guild_menuicon_changemessage.png"), url("https://i.grogsile.me/esoi/img/ui/gameui/guild/gamepad/gp_guild_menuicon_changemessage.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/gameui/guild/gamepad/gp_guild_menuicon_changemessage.png"), url("https://i.grogsile.org/esoi/img/ui/gameui/guild/gamepad/gp_guild_menuicon_changemessage.png");
 }
 span.icon-delete {
-  background-image: url("https://i.grogsile.me/esoi/img/ui/gameui/guild/gamepad/gp_guild_options_delete.png"),url("https://i.grogsile.me/esoi/img/ui/gameui/guild/gamepad/gp_guild_options_delete.png");
+  background-image: url("https://i.grogsile.org/esoi/img/ui/gameui/guild/gamepad/gp_guild_options_delete.png"),url("https://i.grogsile.org/esoi/img/ui/gameui/guild/gamepad/gp_guild_options_delete.png");
 }
