@@ -1,7 +1,25 @@
 {
   "discord": {
-    "esoi":{
+    "inviteURL": "https://discordapp.com/oauth2/authorize?scope=bot&client_id=231606856663957505&permissions=339012678",
+    "embed": {
+      "color": "",
+      "author": {
+        "name": "",
+        "icon_url": ""
+      },
+      "title": "",
+      "url": "",
+      "description": "",
+      "fields": [],
+      "timestamp": "",
+      "footer": {
+        "icon_url": "https://i.grogsile.me/favicon.png",
+        "text": "Brought to you by Grogsile, Inc."
+      }
+    },
+    "esoi": {
       "id": "130716876937494528",
+      "inviteURL": "https://discordapp.com/invite/0jGipOeWW06jNmlL",
       "roles": {
         "EU": "130790997855567872",
         "NA": "130791016545517569",
@@ -281,22 +299,10 @@
           }
         }
       }
-    },
-    "embed": {
-      "color": "",
-      "author": {
-        "name": "",
-        "icon_url": ""
-      },
-      "title": "",
-      "url": "",
-      "description": "",
-      "fields": [],
-      "timestamp": "",
-      "footer": {
-        "icon_url": "https://i.grogsile.me/favicon.png",
-        "text": "Brought to you by Grogsile, Inc."
-      }
     }
+  },
+  "icons": {
+    "eso": "https://cdn.discordapp.com/icons/130716876937494528/5e66980df808cf1cdbaf73efaf36e6ee.png",
+    "grogsile": "https://i.grogsile.me/favicon.png"
   }
 }

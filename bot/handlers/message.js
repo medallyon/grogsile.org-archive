@@ -55,7 +55,7 @@ dClient.on("message", function (msg) {
                             {
                                 try {
                                     // execute the command module
-                                    return modules[cmd](msg);
+                                    return dClient.modules[cmd](msg);
                                 } catch (err) {
                                     // catch an error in case the command module is faulty
                                     console.error(err);
@@ -77,7 +77,7 @@ dClient.on("message", function (msg) {
             let requestedItem = /\[(.+)\]/g.exec(msg.content)[1];
             if (requestedItem.length < 2) return;
             
-            modules.esoItem(msg, requestedItem);
+            dClient.modules.esoItem(msg, requestedItem);
         });
     }
 });

@@ -49,7 +49,7 @@ dClient.on("guildMemberAdd", function(member)
         fs.readJson(join(__data, "users", member.id, "account.json"), (err, account) => {
             if (err) console.error(err);
 
-            modules.addToEsoRank(member.id, account.server, account.platform, account.alliance);
+            dClient.modules.addToEsoRank(member.id, account.server, account.platform, account.alliance);
         });
     });
 });

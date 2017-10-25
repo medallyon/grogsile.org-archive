@@ -1,8 +1,10 @@
 // === [ LIBRARIES ] === //
 
-const fs = require("fs-extra")
-, path = require("path")
-, join = path.join;
+global.Discord = require("discord.js");
+global.fs = require("fs-extra");
+global.path = require("path");
+global.join = path.join;
+global.dateFormat = require("dateformat");
 
 // === [ GLOBALS ] === //
 
@@ -24,6 +26,18 @@ let templateFiles = fs.readdirSync(join(__data, "templates"));
 for (let i = 0; i < templateFiles.length; i++) {
     _templates[templateFiles[i].replace(".json", "")] = fs.readJsonSync(join(__data, "templates", templateFiles[i]));
 }
+
+// import global utils
+global.utils = {};
+for (let file of fs.readdirSync(join(__dirname, "utils")))
+{
+    utils[file.replace(".js", "")] = require(join(__dirname, "utils", file));
+}
+
+// a global object containing re-usable process-wide constants
+global.constants = require(join(__dirname, "constants", "constants.json"));
+// a script to add / alter pre-existing constants that may only be alter-able during runtime (circular objects)
+require(join(__dirname, "constants", "constants.js"));
 
 // === [ IMPORTS ] === //
 
