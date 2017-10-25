@@ -188,7 +188,8 @@ function filterOutImagesFromMD(markdown)
 const restrictedImages = [
     "//images.uesp.net//thumb/b/b4/ON-icon-ActiveFrame.png/48px-ON-icon-ActiveFrame.png",
     "//images.uesp.net//thumb/3/39/ON-icon-achievement-Blank.png/48px-ON-icon-achievement-Blank.png",
-    "//images.uesp.net//thumb/5/51/ON-icon-Thieves_Guild.png/32px-ON-icon-Thieves_Guild.png"
+    "//images.uesp.net//thumb/5/51/ON-icon-Thieves_Guild.png/32px-ON-icon-Thieves_Guild.png",
+    "//images.uesp.net//thumb/0/06/ON-icon-PassiveFrame.png/48px-ON-icon-PassiveFrame.png"
 ];
 function imageIsRestricted(img)
 {
