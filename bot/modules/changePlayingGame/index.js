@@ -13,6 +13,8 @@ function chooseRandomGame(games)
 
 function changePlayingGame()
 {
+    if (dClient.maintenance) return dClient.user.setGame("ESO: Maintenance").catch(console.error);
+
     fs.readJson(join(__dirname, "games.json"), function(err, games)
     {
         if (err) return console.error(err);
