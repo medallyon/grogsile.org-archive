@@ -165,9 +165,6 @@ class RSS
         item.markdown = item.markdown.replace(/\[.*?\]\(.*?\) blogged on \[b2evolution\]\(https?:\/\/b2evolution\.net\/?\)\.?/g, "");
         item.markdown = item.markdown.replace(/\n\n\n/g, "\n\n");
 
-        console.log(item.markdown);
-        console.log(item.image);
-
         return item;
     }
 
@@ -188,7 +185,7 @@ class RSS
 
     curatePost(item)
     {
-        return new Discord.RichEmbed(constants.discord.embed)
+        return new Discord.MessageEmbed(constants.discord.embed)
             .setAuthor(this.meta.title, "", this.meta.link)
             .setTitle(item.title)
             .setURL(item.link)
