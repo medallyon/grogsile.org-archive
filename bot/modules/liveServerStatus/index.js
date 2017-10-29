@@ -102,7 +102,7 @@ function deletePreviousUpdate(doDelete, channel, id)
     {
         if (!doDelete) return resolve(null);
 
-        channel.fetchMessage(id)
+        channel.messages.fetch(id)
         .then(msg => {
             resolve(msg.delete());
         }).catch(resolve);
@@ -153,7 +153,7 @@ function liveServerStatus()
                         {
                             let liveChannel = guild.channels.get(guild.config.guild.liveServerStatus.panel.channel);
 
-                            liveChannel.fetchMessage(liveVars.panelId)
+                            liveChannel.messages.fetch(liveVars.panelId)
                             .then(panelMessage => {
                                 panelMessage.edit({ embed: finalPanelEmbed }).catch(console.error);
                             }).catch(err => {
