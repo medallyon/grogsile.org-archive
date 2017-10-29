@@ -10,19 +10,19 @@ function structureEmbed(status)
     e.addField("\u200b", "**PC**");
     for (let server in status["PC"])
     {
-        e.addField(`:flag_${(server == "EU") ? server.toLowerCase() : "us"}: ` + server, status["PC"][server] ? "💚 Online" : "💔 Offline", true);
+        e.addField(`:${((server === "EU") ? "flag_eu" : ((server === "NA") ? "flag_us" : "tools"))}: ` + server, status["PC"][server] ? "💚 Online" : "💔 Offline", true);
     }
 
     e.addField("\u200b", "**PlayStation 4**");
     for (let server in status["PS4"])
     {
-        e.addField(`:flag_${(server == "EU") ? server.toLowerCase() : "us"}: ` + server, status["PS4"][server] ? "💚 Online" : "💔 Offline", true);
+        e.addField(`:${((server === "EU") ? "flag_eu" : ((server === "NA") ? "flag_us" : "tools"))}: ` + server, status["PS4"][server] ? "💚 Online" : "💔 Offline", true);
     }
 
     e.addField("\u200b", "**XBox One**");
     for (let server in status["XBONE"])
     {
-        e.addField(`:flag_${(server == "EU") ? server.toLowerCase() : "us"}: ` + server, status["XBONE"][server] ? "💚 Online" : "💔 Offline", true);
+        e.addField(`:${((server === "EU") ? "flag_eu" : ((server === "NA") ? "flag_us" : "tools"))}: ` + server, status["XBONE"][server] ? "💚 Online" : "💔 Offline", true);
     }
 
     return e;
@@ -40,7 +40,7 @@ function prepareAnnouncement(servers)
     {
         for (let server of servers.filter(s => s.platform === "PC"))
         {
-            strings.push(`The **${(server.server === "NA") ? ":flag_na: North American [NA]" : ((server.server === "EU") ? ":flag_eu: European [EU]" : "Public Test [PTS]")}** MegaServer is now ${(server.status) ? "💚 **Online**" : "💔 **Offline**"}`);
+            strings.push(`The **${(server.server === "NA") ? ":flag_us: North American [NA]" : ((server.server === "EU") ? ":flag_eu: European [EU]" : "Public Test [PTS]")}** MegaServer is now ${(server.status) ? "💚 **Online**" : "💔 **Offline**"}`);
         }
         e.addField("PC", strings.join("\n"), false);
     }
@@ -50,7 +50,7 @@ function prepareAnnouncement(servers)
     {
         for (let server of servers.filter(s => s.platform === "PS4"))
         {
-            strings.push(`The **${(server.server === "NA") ? ":flag_na: North American [NA]" : ":flag_eu: European [EU]"}** MegaServer is now ${(server.status) ? "💚 **Online**" : "💔 **Offline**"}`);
+            strings.push(`The **${(server.server === "NA") ? ":flag_us: North American [NA]" : ":flag_eu: European [EU]"}** MegaServer is now ${(server.status) ? "💚 **Online**" : "💔 **Offline**"}`);
         }
         e.addField("PlayStation 4", strings.join("\n"), false);
     }
@@ -60,7 +60,7 @@ function prepareAnnouncement(servers)
     {
         for (let server of servers.filter(s => s.platform === "XBONE"))
         {
-            strings.push(`The **${(server.server === "NA") ? ":flag_na: North American [NA]" : ":flag_eu: European [EU]"}** MegaServer is now ${(server.status) ? "💚 **Online**" : "💔 **Offline**"}`);
+            strings.push(`The **${(server.server === "NA") ? ":flag_us: North American [NA]" : ":flag_eu: European [EU]"}** MegaServer is now ${(server.status) ? "💚 **Online**" : "💔 **Offline**"}`);
         }
         e.addField("XBox One", strings.join("\n"), false);
     }
