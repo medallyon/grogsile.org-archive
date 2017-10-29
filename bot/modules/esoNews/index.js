@@ -1,86 +1,144 @@
-const cheerio = require("cheerio");
+const request = require("request")
+, FeedParser = require("feedparser")
+, toMarkdown = require("to-markdown");
 
-const ESO_DOMAIN = "http://www.elderscrollsonline.com/"
-, NEWS_PAGE = "http://www.elderscrollsonline.com/en-us/news/";
+const ESO_RSS_URL = "http://files.elderscrollsonline.com/rss/en-gb/eso-rss.xml";
 
-function scrapeSite(request)
+function update()
 {
-    return new Promise(function(resolve, reject)
-    {
-        let newsData = {};
-        request(NEWS_PAGE, (err, res, body) => {
-            if (err) return reject(err);
-
-            let $ = cheerio.load(body);
-
-            fs.readJson(join(__dirname, "savedVars.json"), (err, savedVars) => {
-                if (err) return reject(err);
-
-                newsData.text = $(" hgroup ").find(" h2.text-info ").text();
-                if (newsData.text === savedVars.text) return reject("modules.esoNews: No new articles present");
-
-                newsData.link = ESO_DOMAIN + $(" .hilight-image > a ").prop("href");
-                request(newsData.link, (err, res, newsPage) => {
-                    if (err) return reject(err);
-
-                    $ = cheerio.load(newsPage);
-
-                    newsData.title = $(" div.post-title ").find(" h1 ").text();
-                    newsData.pubDate = new Date($(" div.post-title ").find(" span.date ").text());
-                    newsData.description = $(" #post-body > div > p > i ").first().text();
-                    newsData.image = $(" #post-body > div > p > img ").prop("src");
-
-                    resolve(newsData);
-                });
+    return new Promise((resolve, reject) => {
+        request(ESO_RSS_URL)
+            .pipe(new FeedParser())
+            .on("error", function(error) {
+                reject(error);
+            })
+            .on("readable", function()
+            {
+                let stream = this, item;
+                while (item = stream.read()) return resolve(item);
             });
-        });
     });
 }
 
-function checkUpdate()
+function checkUpdate(item)
 {
     return new Promise(function(resolve, reject)
     {
-        let myESOSession = new utils.ESOWebsiteSession();
+        fs.readJson(join(__dirname, "savedVars.json")).then(function(savedVars)
+        {
+            if (Date.parse(item.pubDate) <= savedVars.pubDate) return reject("modules.esoNews: Nothing new");
 
-        myESOSession.init()
-        .then(request => {
-            scrapeSite(request).then(resolve).catch(reject);
+            let news = {
+                title: item.title || "ESO_TITLE_HEADER",
+                description: item.summary || item.description || "ESO_DESC_SUMMARY",
+                pubDate: Date.parse(item.pubDate) || 0,
+                link: item.link || "#"
+            };
+
+            fs.outputJson(join(__dirname, "savedVars.json"), news, { spaces: 2 }).then(function()
+            {
+                resolve(news);
+            }).catch(reject);
         }).catch(reject);
     });
 }
 
-function createEmbed(data)
+function curateUpdate(item)
 {
+    item.markdown = toMarkdown(item.description);
+
+    item.image = item.image || "";
+    if (/(!\[.*?\]\((.+?\.(?:jpg|png|bmp|gif))\))/g.test(item.markdown))
+    {
+        for (let i = 1; i < matchingImages.length; i+=2) {
+            item.markdown = item.markdown.replace(matchingImages[i], "");
+        }
+    }
+
+    item.markdown = item.markdown.replace(/\<.*?\>/g, "");
+    item.markdown = item.markdown.replace(/\n\n\n/g, "\n\n");
+
+    return item;
+}
+
+function prepareEmbed(item)
+{
+    item = curateUpdate(item);
     return new Discord.MessageEmbed(utils.createEmptyRichEmbedObject())
-        .setAuthor("ESO News", constants.icons.eso, NEWS_PAGE)
-        .setTitle(data.title)
-        .setDescription(data.description)
-        .setImage(data.image || "")
-        .setFooter(`Brought to you by © Grogsile Inc. | ${utils.fancyESODate(data.pubDate)}`, constants.icons.grogsile)
-        .setURL(data.link);
+        .setAuthor("ESO News", "http://i.imgur.com/qqvt2UX.png", "http://elderscrollsonline.com/en-us/news")
+        .setTitle(item.title)
+        .setURL(item.link)
+        .setDescription(item.markdown)
+        .setImage(item.image)
+        .setFooter(`${constants.discord.embed.footer.text} | ${utils.fancyESODate(new Date(item.pubDate))}`, constants.discord.embed.footer.icon_url);
 }
 
 function distribute(embed)
 {
     for (let guild of dClient.guilds.values())
     {
-        utils.readGuildConfig(guild)
-        .then(config => {
-            if (config.eso.news.active)
+        if (guild.config.eso.news.active)
+        {
+            let newsChannel = dClient.channels.get(guild.config.eso.news.channel);
+
+            newsChannel.send({ embed }).then(function(newsMessage)
             {
-                guild.channels.get(config.eso.news.channel).send({ embed: embed }).catch(console.error);
-            }
-        });
+                fs.outputJson(join(__data, "guilds", guild.id, "esoNews", "savedVariables.json"), { latest: newsMessage.id }, { spaces: 2 }).catch(console.error);
+            }).catch(console.error);
+        }
     }
 }
 
 function esoNews()
 {
-    checkUpdate()
-    .then(update => {
-        fs.outputJson(join(__dirname, "savedVars.json"), { text: update.text }, (err) => { if (err) console.error(err); });
-        distribute(createEmbed(update));
+    update().then(function(item)
+    {
+        checkUpdate(item).then(function(news)
+        {
+            distribute(prepareEmbed(news));
+            collectESOImage(news);
+        }).catch(console.error);
+    }).catch(console.error);
+}
+
+function addImageToLatest(image)
+{
+    fs.readJson(join(__dirname, "savedVars.json")).then(function(item)
+    {
+        item.image = image;
+        embed = prepareEmbed(item);
+
+        for (let guild of dClient.guilds.values())
+        {
+            if (guild.config.eso.news.active)
+            {
+                let newsChannel = dClient.channels.get(guild.config.eso.news.channel);
+
+                fs.readJson(join(__data, "guilds", guild.id, "esoNews", "savedVariables.json")).then(function(savedVars)
+                {
+                    newsChannel.messages.fetch(savedVars.latest).then(function(message)
+                    {
+                        message.edit({ embed }).catch(console.error);
+                    }).catch(console.error);
+                }).catch(console.error);
+            }
+        }
+    }).catch(console.error);
+}
+
+function collectESOImage(item)
+{
+    dClient.channels.get("345610226562629632").send(`<@${dClient.config.discord.ownerId}> The latest ESO News Update has been dispatched. Type \`url\` to set the latest image.\nHere is the link to the post: ${item.link}`).then(function(sentMessage)
+    {
+        const imageCollector = sentMessage.channel.createMessageCollector(
+            m => m.author.id !== dClient.user.id &&
+                /https?:\/\/.+?\.jpg|png|bmp|gif/g.test(m.content),
+            { maxProcessed: 1 });
+
+        imageCollector.on("end", function(messages)
+        {
+            addImageToLatest(messages.first().content);
+        });
     }).catch(console.error);
 }
 
