@@ -41,7 +41,7 @@ function prepareAnnouncement(servers)
     {
         for (let server of servers.filter(s => s.platform === "PC"))
         {
-            strings.push(`The **${(server.server === "NA") ? "North American [NA]" : ((server.server === "EU") ? "European [EU]" : "Public Test [PTS]")}** MegaServer is now ${(server.status) ? "💚 **Online**" : "💔 **Offline**"}`);
+            strings.push(`The **${(server.server === "NA") ? ":flag_na: North American [NA]" : ((server.server === "EU") ? ":flag_eu: European [EU]" : "Public Test [PTS]")}** MegaServer is now ${(server.status) ? "💚 **Online**" : "💔 **Offline**"}`);
         }
         e.addField("PC", strings.join("\n"), false);
     }
@@ -51,7 +51,7 @@ function prepareAnnouncement(servers)
     {
         for (let server of servers.filter(s => s.platform === "PS4"))
         {
-            strings.push(`The **${(server.server === "NA") ? "North American [NA]" : "European [EU]"}** MegaServer is now ${(server.status) ? "💚 **Online**" : "💔 **Offline**"}`);
+            strings.push(`The **${(server.server === "NA") ? ":flag_na: North American [NA]" : ":flag_eu: European [EU]"}** MegaServer is now ${(server.status) ? "💚 **Online**" : "💔 **Offline**"}`);
         }
         e.addField("PlayStation 4", strings.join("\n"), false);
     }
@@ -61,7 +61,7 @@ function prepareAnnouncement(servers)
     {
         for (let server of servers.filter(s => s.platform === "XBONE"))
         {
-            strings.push(`The **${(server.server === "NA") ? "North American [NA]" : "European [EU]"}** MegaServer is now ${(server.status) ? "💚 **Online**" : "💔 **Offline**"}`);
+            strings.push(`The **${(server.server === "NA") ? ":flag_na: North American [NA]" : ":flag_eu: European [EU]"}** MegaServer is now ${(server.status) ? "💚 **Online**" : "💔 **Offline**"}`);
         }
         e.addField("XBox One", strings.join("\n"), false);
     }
@@ -133,43 +133,43 @@ function liveServerStatus()
             const finalPanelEmbed = structureEmbed(status)
             , finalUpdateEmbed = prepareAnnouncement(changedServers);
             
-            if (changedServers.length)
+            if (changedServers.some(x => x.platform === "PC" && !x.status) && changedServers.some(x => x.server === "EU") && changedServers.some(x => x.server === "NA")) dClient.maintenance = true;
+            else dClient.maintenance = false;
+
+            for (let guild of dClient.guilds.values())
             {
-                if (changedServers.some(x => x.platform === "PC" && !x.status) && changedServers.some(x => x.server === "EU") && changedServers.some(x => x.server === "NA")) dClient.maintenance = true;
-                else dClient.maintenance = false;
+                if (!guild.available) continue;
 
-                for (let guild of dClient.guilds.values())
+                const baseGuildPath = join(__data, "guilds", guild.id);
+
+                if (!guild.config.guild.liveServerStatus.panel.enabled || !guild.config.guild.liveServerStatus.update.enabled) return;
+
+                else
                 {
-                    if (!guild.available) continue;
-
-                    const baseGuildPath = join(__data, "guilds", guild.id);
-
-                    if (!guild.config.guild.liveServerStatus.panel.enabled || !guild.config.guild.liveServerStatus.update.enabled) return;
-
-                    else
+                    fs.readJson(join(baseGuildPath, "liveServerUpdate", "savedVariables.json")).then(function(liveVars)
                     {
-                        fs.readJson(join(baseGuildPath, "liveServerUpdate", "savedVariables.json")).then(function(liveVars)
+                        // live panel
+                        if (guild.config.guild.liveServerStatus.panel.enabled)
                         {
-                            // live panel
-                            if (guild.config.guild.liveServerStatus.panel.enabled)
-                            {
-                                let liveChannel = guild.channels.get(guild.config.guild.liveServerStatus.panel.channel);
+                            let liveChannel = guild.channels.get(guild.config.guild.liveServerStatus.panel.channel);
 
-                                liveChannel.fetchMessage(liveVars.panelId)
-                                .then(panelMessage => {
-                                    panelMessage.edit({ embed: finalPanelEmbed }).catch(console.error);
-                                }).catch(err => {
-                                    liveChannel.send({ embed: finalPanelEmbed })
-                                    .then(function(sentMessage)
-                                    {
-                                        liveVars.panelId = sentMessage.id;
-                                        fs.outputJson(join(baseGuildPath, "liveServerUpdate", "savedVariables.json"), liveVars).catch(console.error);
-                                    }).catch(console.error);
-                                });
-                            }
+                            liveChannel.fetchMessage(liveVars.panelId)
+                            .then(panelMessage => {
+                                panelMessage.edit({ embed: finalPanelEmbed }).catch(console.error);
+                            }).catch(err => {
+                                liveChannel.send({ embed: finalPanelEmbed })
+                                .then(function(sentMessage)
+                                {
+                                    liveVars.panelId = sentMessage.id;
+                                    fs.outputJson(join(baseGuildPath, "liveServerUpdate", "savedVariables.json"), liveVars).catch(console.error);
+                                }).catch(console.error);
+                            });
+                        }
 
-                            // global announcements
-                            if (guild.config.guild.liveServerStatus.update.enabled)
+                        // global announcements
+                        if (guild.config.guild.liveServerStatus.update.enabled)
+                        {
+                            if (changedServers.length)
                             {
                                 let updateChannel = guild.channels.get(guild.config.guild.liveServerStatus.update.channel)
                                 , roles = guild.config.guild.liveServerStatus.update.roles.map(x => guild.roles.get(x));
@@ -189,8 +189,8 @@ function liveServerStatus()
                                     });
                                 }).catch(console.error);
                             }
-                        }).catch(console.error);
-                    }
+                        }
+                    }).catch(console.error);
                 }
             }
         }).catch(console.error);
