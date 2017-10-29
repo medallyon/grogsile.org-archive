@@ -113,10 +113,8 @@ function liveServerStatus()
 {
     utils.fetchServerStatus().then(function(status)
     {
-        fs.readJson(join(__dirname, "savedVars.json"), function(err, savedVars)
+        fs.readJson(join(__dirname, "savedVars.json")).then(function(savedVars)
         {
-            if (err) return console.error(err);
-
             let changedServers = [];
             for (let platform in status)
             {
@@ -130,7 +128,7 @@ function liveServerStatus()
             }
 
             savedVars.status = status;
-            fs.outputJson(join(__dirname, "savedVars.json"), savedVars, err => { if (err) console.error(err) });
+            fs.outputJson(join(__dirname, "savedVars.json"), savedVars).catch(console.error);
             
             const finalPanelEmbed = structureEmbed(status)
             , finalUpdateEmbed = prepareAnnouncement(changedServers);
@@ -144,64 +142,58 @@ function liveServerStatus()
                 {
                     if (!guild.available) continue;
 
-                    utils.readGuildConfig(guild).then(function(config)
+                    const baseGuildPath = join(__data, "guilds", guild.id);
+
+                    if (!guild.config.guild.liveServerStatus.panel.enabled || !guild.config.guild.liveServerStatus.update.enabled) return;
+
+                    else
                     {
-                        if (err) return console.error(err);
-                        const baseGuildPath = join(__data, "guilds", guild.id);
-
-                        if (!config.guild.liveServerStatus.panel.enabled || !config.guild.liveServerStatus.update.enabled) return;
-                        
-                        else
+                        fs.readJson(join(baseGuildPath, "liveServerUpdate", "savedVariables.json")).then(function(liveVars)
                         {
-                            fs.readJson(join(baseGuildPath, "liveServerUpdate", "savedVariables.json"), function(err, liveVars)
+                            // live panel
+                            if (guild.config.guild.liveServerStatus.panel.enabled)
                             {
-                                if (err) return console.error(err);
+                                let liveChannel = guild.channels.get(guild.config.guild.liveServerStatus.panel.channel);
 
-                                // live panel
-                                if (config.guild.liveServerStatus.panel.enabled)
+                                liveChannel.fetchMessage(liveVars.panelId)
+                                .then(panelMessage => {
+                                    panelMessage.edit({ embed: finalPanelEmbed }).catch(console.error);
+                                }).catch(err => {
+                                    liveChannel.send({ embed: finalPanelEmbed })
+                                    .then(function(sentMessage)
+                                    {
+                                        liveVars.panelId = sentMessage.id;
+                                        fs.outputJson(join(baseGuildPath, "liveServerUpdate", "savedVariables.json"), liveVars).catch(console.error);
+                                    }).catch(console.error);
+                                });
+                            }
+
+                            // global announcements
+                            if (guild.config.guild.liveServerStatus.update.enabled)
+                            {
+                                let updateChannel = guild.channels.get(guild.config.guild.liveServerStatus.update.channel)
+                                , roles = guild.config.guild.liveServerStatus.update.roles.map(x => guild.roles.get(x));
+
+                                toggleRoles(guild.config.guild.liveServerStatus.update.toggleRoles, roles.filter(r => !r.mentionable))
+                                .then(function(modifiedRoles)
                                 {
-                                    let liveChannel = guild.channels.get(config.guild.liveServerStatus.panel.channel);
-
-                                    liveChannel.fetchMessage(liveVars.panelId)
-                                    .then(panelMessage => {
-                                        panelMessage.edit({ embed: finalPanelEmbed }).catch(console.error);
-                                    }).catch(err => {
-                                        liveChannel.send({ embed: finalPanelEmbed })
-                                        .then(function(sentMessage)
-                                        {
-                                            liveVars.panelId = sentMessage.id;
-                                            fs.outputJson(join(baseGuildPath, "liveServerUpdate", "savedVariables.json"), liveVars, err => { if (err) console.error(err) });
+                                    deletePreviousUpdate(guild.config.guild.liveServerStatus.update.deletePrevious, updateChannel, liveVars.updateId)
+                                    .then(function(deletedMessage)
+                                    {
+                                        updateChannel.send(roles.map(r => r.toString()).join(" "), { embed: finalUpdateEmbed })
+                                        .then(sentMessage => {
+                                            toggleRoles(guild.config.guild.liveServerStatus.update.toggleRoles, roles);
+                                            liveVars.updateId = sentMessage.id;
+                                            fs.outputJson(join(baseGuildPath, "liveServerUpdate", "savedVariables.json"), liveVars, (err) => { if (err) console.error(err) });
                                         }).catch(console.error);
                                     });
-                                }
-
-                                // global announcements
-                                if (config.guild.liveServerStatus.update.enabled)
-                                {
-                                    let updateChannel = guild.channels.get(config.guild.liveServerStatus.update.channel)
-                                    , roles = config.guild.liveServerStatus.update.roles.map(x => guild.roles.get(x));
-
-                                    toggleRoles(config.guild.liveServerStatus.update.toggleRoles, roles.filter(r => !r.mentionable))
-                                    .then(function(modifiedRoles)
-                                    {
-                                        deletePreviousUpdate(config.guild.liveServerStatus.update.deletePrevious, updateChannel, liveVars.updateId)
-                                        .then(function(deletedMessage)
-                                        {
-                                            updateChannel.send(roles.map(r => r.toString()).join(" "), { embed: finalUpdateEmbed })
-                                            .then(sentMessage => {
-                                                toggleRoles(config.guild.liveServerStatus.update.toggleRoles, roles);
-                                                liveVars.updateId = sentMessage.id;
-                                                fs.outputJson(join(baseGuildPath, "liveServerUpdate", "savedVariables.json"), liveVars, (err) => { if (err) console.error(err) });
-                                            }).catch(console.error);
-                                        });
-                                    }).catch(console.error);
-                                }
-                            });
-                        }
-                    }).catch(console.error);
+                                }).catch(console.error);
+                            }
+                        }).catch(console.error);
+                    }
                 }
             }
-        });
+        }).catch(console.error);
     }).catch(console.error);
 }
 

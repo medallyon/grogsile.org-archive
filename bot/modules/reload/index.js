@@ -27,7 +27,7 @@ function reloadBot(msg)
         require(join(__botdir, "bot.js"));
         dClient.config.reloading = false;
 
-        fs.outputJson(join(__botdir, "config.json"), dClient.config);
+        fs.outputJson(join(__botdir, "config.json"), dClient.config).catch(console.error);
 
         msg.channel.send(":white_check_mark: Successfully reloaded the **Bot** partition.");
     }
@@ -35,7 +35,7 @@ function reloadBot(msg)
     catch(err)
     {
         dClient.config.reloading = false;
-        fs.outputJson(join(__botdir, "config.json"), dClient.config);
+        fs.outputJson(join(__botdir, "config.json"), dClient.config).catch(console.error);
         msg.channel.send(`:negative_squared_cross_mark: Could not reload the Bot partition:\`\`\`js\n${err}\`\`\``);
     }
 }
@@ -65,7 +65,7 @@ function reloadWeb(msg)
         require(join(__webdir, "web.js"));
         dClient.config.reloading = false;
 
-        fs.outputJson(join(__botdir, "config.json"), dClient.config);
+        fs.outputJson(join(__botdir, "config.json"), dClient.config).catch(console.error);
 
         msg.channel.send(":white_check_mark: Successfully reloaded the **Web** partition.");
     }
@@ -73,7 +73,7 @@ function reloadWeb(msg)
     catch(err)
     {
         dClient.config.reloading = false;
-        fs.outputJson(join(__botdir, "config.json"), dClient.config);
+        fs.outputJson(join(__botdir, "config.json"), dClient.config).catch(console.error);
         msg.channel.send(`:negative_squared_cross_mark: Could not reload the Web partition:\`\`\`js\n${err}\`\`\``);
     }
 }
@@ -85,9 +85,8 @@ function reload(msg)
     if (msg.args.length) partition = msg.args[0].toLowerCase();
 
     dClient.config.reloading = true;
-    fs.outputJson(join(__botdir, "config.json"), dClient.config, (err) => {
-        if (err) return console.error(err);
-
+    fs.outputJson(join(__botdir, "config.json"), dClient.config).then(function()
+    {
         if (!partition)
         {
             reloadBot();
@@ -99,7 +98,7 @@ function reload(msg)
             if (!["web", "bot"].some(p => partition === p))
             {
                 dClient.config.reloading = false;
-                fs.outputJson(join(__botdir, "config.json"), dClient.config);
+                fs.outputJson(join(__botdir, "config.json"), dClient.config).catch(console.error);
 
                 return msg.channel.send("Specified partition is not recognised.");
             }
@@ -111,7 +110,7 @@ function reload(msg)
             if (partition === "bot") reloadBot(msg);
             else if (partition === "web") reloadWeb(msg);
         }
-    });
+    }).catch(console.error);
 }
 
 module.exports = reload;

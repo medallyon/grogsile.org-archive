@@ -15,7 +15,7 @@ dClient.on("message", function (msg) {
     if (msg.author.bot) return;
 
     // do not support direct messages yet
-    if (!msg.guild) return;
+    if (!msg.guild) return msg.send("Mighty Sorry, but direct messages are not supported yet.");
 
     let splitMsg = msg.content.split(" ");
     // check whether user is using command prefix or mention to execute a command, and assign them to 'msg' accordingly
@@ -44,26 +44,23 @@ dClient.on("message", function (msg) {
                 // check if some alias matches the filtered command string
                 if (msg.command === alias)
                 {
-                    // read the guild's config
-                    utils.readGuildConfig(msg.guild).then(function(config)
+                    // check if command is enabled for this guild
+                    let config = msg.guild.config;
+                    if (config.commands[cmd].enabled)
                     {
-                        // check if command is enabled for this guild
-                        if (config.commands[cmd].enabled)
+                        // check if the member actually has permission to execute the command
+                        if (utils.hasPermission(dClient.commands[cmd], msg.member))
                         {
-                            // check if the member actually has permission to execute the command
-                            if (utils.hasPermission(dClient.commands[cmd], msg.member))
-                            {
-                                try {
-                                    // execute the command module
-                                    return dClient.modules[cmd](msg);
-                                } catch (err) {
-                                    // catch an error in case the command module is faulty
-                                    console.error(err);
-                                    msg.channel.send(err, { code: "js" });
-                                }
+                            try {
+                                // execute the command module
+                                return dClient.modules[cmd](msg);
+                            } catch (err) {
+                                // catch an error in case the command module is faulty
+                                console.error(err);
+                                msg.channel.send(err, { code: "js" });
                             }
                         }
-                    });
+                    }
                 }
             }
         }
@@ -71,13 +68,12 @@ dClient.on("message", function (msg) {
 
     if (/\[.+\]/g.test(msg.content) && !/`.*?\[.+\].*?`/g.test(msg.content))
     {
-        utils.readGuildConfig(msg.guild).then(config => {
-            if (!config.commands.esoItem.enabled || !config.commands.esoItem.usage.inline) return;
+        let config = msg.guild.config;
+        if (!config.commands.esoItem.enabled || !config.commands.esoItem.usage.inline) return;
 
-            let requestedItem = /\[(.+)\]/g.exec(msg.content)[1];
-            if (requestedItem.length < 2) return;
-            
-            dClient.modules.esoItem(msg, requestedItem);
-        });
+        let requestedItem = /\[(.+)\]/g.exec(msg.content)[1];
+        if (requestedItem.length < 2) return;
+        
+        dClient.modules.esoItem(msg, requestedItem);
     }
 });
