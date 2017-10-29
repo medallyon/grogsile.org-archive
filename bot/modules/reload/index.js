@@ -17,6 +17,7 @@ function reload(msg)
 
                 catch (err)
                 {
+                    console.log(err);
                     msg.channel.send(`Something went wrong while reloading this script. Have a look at this: \`\`\`js\n${err}\`\`\``).catch(console.error);
                 }
             } else msg.channel.send("Script not found. Ensure case-sensitivity.").catch(console.error);
@@ -34,6 +35,7 @@ function reload(msg)
 
                 catch (err)
                 {
+                    console.log(err);
                     msg.channel.send(`Something went wrong while reloading this script. Have a look at this: \`\`\`js\n${err}\`\`\``).catch(console.error);
                 }
             } else msg.channel.send("Script not found. Ensure case-sensitivity.").catch(console.error);
@@ -51,6 +53,7 @@ function reload(msg)
 
                 catch (err)
                 {
+                    console.log(err);
                     msg.channel.send(`Something went wrong while reloading this script. Have a look at this: \`\`\`js\n${err}\`\`\``).catch(console.error);
                 }
             } else msg.channel.send("Script not found. Ensure case-sensitivity.").catch(console.error);
@@ -70,6 +73,7 @@ function reload(msg)
                 for (const module of dClient.modules) module.reload();
             } catch (err)
             {
+                console.log(err);
                 msg.channel.send(`Something went wrong while reloading this Script Group. Have a look at this: \`\`\`js\n${err}\`\`\``).then(process.exit).catch(console.error);
             }
         } else
@@ -81,6 +85,7 @@ function reload(msg)
                 for (const util of utils) util.reload();
             } catch (err)
             {
+                console.log(err);
                 msg.channel.send(`Something went wrong while reloading this Script Group. Have a look at this: \`\`\`js\n${err}\`\`\``).then(process.exit).catch(console.error);
             }
         } else
@@ -92,6 +97,7 @@ function reload(msg)
                 for (const struct of dClient.structs) struct.reload();
             } catch (err)
             {
+                console.log(err);
                 msg.channel.send(`Something went wrong while reloading this Script Group. Have a look at this: \`\`\`js\n${err}\`\`\``).then(process.exit).catch(console.error);
             }
         } else
@@ -104,6 +110,7 @@ function reload(msg)
                 for (const struct of dClient.structs) struct.reload();
             } catch (err)
             {
+                console.log(err);
                 msg.channel.send(`Something went wrong while reloading this Script Group. Have a look at this: \`\`\`js\n${err}\`\`\``).then(process.exit).catch(console.error);
             }
         } else
