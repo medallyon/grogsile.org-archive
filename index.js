@@ -28,10 +28,14 @@ for (let i = 0; i < templateFiles.length; i++) {
 }
 
 // import global utils
-global.utils = {};
+global.utils = { implementReload: require(join(__dirname, "utils", "implementReload.js")) };
 for (let file of fs.readdirSync(join(__dirname, "utils")))
 {
-    utils[file.replace(".js", "")] = require(join(__dirname, "utils", file));
+    let scriptPath = join(__dirname, "utils", file)
+    , scriptName = file.replace(".js", "");
+
+    utils[scriptName] = require(scriptPath);
+    utils[scriptName].reload = utils.implementReload(scriptName, scriptPath, utils);
 }
 
 // a global object containing re-usable process-wide constants

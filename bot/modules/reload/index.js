@@ -1,116 +1,122 @@
-const decache = require("decache");
-
-function reloadBot(msg)
-{
-    try
-    {
-        decache(join(__botdir, "bot.js"));
-
-        for (let util in utils)
-        {
-            decache(join(__botdir, "utils", `${util}.js`));
-        }
-        global.utils = {};
-
-        for (let module in modules)
-        {
-            decache(join(__botdir, "modules", module, "index.js"));
-        }
-        global.modules = {};
-
-        for (let struct in structs)
-        {
-            decache(join(__botdir, "structs", `${struct}.js`));
-        }
-        global.structs = {};
-
-        require(join(__botdir, "bot.js"));
-        dClient.config.reloading = false;
-
-        fs.outputJson(join(__botdir, "config.json"), dClient.config).catch(console.error);
-
-        msg.channel.send(":white_check_mark: Successfully reloaded the **Bot** partition.");
-    }
-
-    catch(err)
-    {
-        dClient.config.reloading = false;
-        fs.outputJson(join(__botdir, "config.json"), dClient.config).catch(console.error);
-        msg.channel.send(`:negative_squared_cross_mark: Could not reload the Bot partition:\`\`\`js\n${err}\`\`\``);
-    }
-}
-
-function reloadWeb(msg)
-{
-    try
-    {
-        global.server.close();
-        decache(join(__webdir, "web.js"));
-
-        for (let script in middleware)
-        {
-            decache(join(__webdir, "middleware", script, `${script}.js`));
-        }
-        global.middleware = {};
-
-        fs.readdir(join(__webdir, "routers"), (err, routers) => {
-            if (err) return process.exit(1);
-
-            for (let router in routers)
-            {
-                decache(join(__webdir, "routers", router, router));
-            }
-        });
-
-        require(join(__webdir, "web.js"));
-        dClient.config.reloading = false;
-
-        fs.outputJson(join(__botdir, "config.json"), dClient.config).catch(console.error);
-
-        msg.channel.send(":white_check_mark: Successfully reloaded the **Web** partition.");
-    }
-
-    catch(err)
-    {
-        dClient.config.reloading = false;
-        fs.outputJson(join(__botdir, "config.json"), dClient.config).catch(console.error);
-        msg.channel.send(`:negative_squared_cross_mark: Could not reload the Web partition:\`\`\`js\n${err}\`\`\``);
-    }
-}
-        
-
 function reload(msg)
 {
-    let partition;
-    if (msg.args.length) partition = msg.args[0].toLowerCase();
-
-    dClient.config.reloading = true;
-    fs.outputJson(join(__botdir, "config.json"), dClient.config).then(function()
+    if (msg.args.length === 2)
     {
-        if (!partition)
-        {
-            reloadBot();
-            reloadWeb();
-        }
+        let group = msg.args[0];
+        let script = msg.args[1];
 
-        else
+        if (group.toLowerCase().includes("module"))
         {
-            if (!["web", "bot"].some(p => partition === p))
+            if (dClient.modules[script])
             {
-                dClient.config.reloading = false;
-                fs.outputJson(join(__botdir, "config.json"), dClient.config).catch(console.error);
+                try
+                {
+                    dClient.modules[script].reload();
+                    msg.channel.send(`Successfully reloaded \`${script}.js\``).catch(console.error);
+                }
 
-                return msg.channel.send("Specified partition is not recognised.");
-            }
+                catch (err)
+                {
+                    msg.channel.send(`Something went wrong while reloading this script. Have a look at this: \`\`\`js\n${err}\`\`\``).catch(console.error);
+                }
+            } else msg.channel.send("Script not found. Ensure case-sensitivity.").catch(console.error);
+        } else
 
-            decache(join(__base, "constants", "constants.json"));
-            decache(join(__base, "constants", "constants.js"));
-            global.constants = {};
+        if (group.toLowerCase().includes("util"))
+        {
+            if (utils[script])
+            {
+                try
+                {
+                    utils[script].reload();
+                    msg.channel.send(`Successfully reloaded \`${script}.js\``).catch(console.error);
+                }
 
-            if (partition === "bot") reloadBot(msg);
-            else if (partition === "web") reloadWeb(msg);
+                catch (err)
+                {
+                    msg.channel.send(`Something went wrong while reloading this script. Have a look at this: \`\`\`js\n${err}\`\`\``).catch(console.error);
+                }
+            } else msg.channel.send("Script not found. Ensure case-sensitivity.").catch(console.error);
+        } else
+
+        if (group.toLowerCase().includes("struct"))
+        {
+            if (dClient.structs[script])
+            {
+                try
+                {
+                    dClient.structs[script].reload();
+                    msg.channel.send(`Successfully reloaded \`${script}.js\``).catch(console.error);
+                }
+
+                catch (err)
+                {
+                    msg.channel.send(`Something went wrong while reloading this script. Have a look at this: \`\`\`js\n${err}\`\`\``).catch(console.error);
+                }
+            } else msg.channel.send("Script not found. Ensure case-sensitivity.").catch(console.error);
         }
-    }).catch(console.error);
+
+        else msg.channel.send("Specified Script Group not found.").catch(console.error);
+    } else
+
+    if (msg.args.length === 1)
+    {
+        let group = msg.args[0];
+
+        if (group.toLowerCase() === "modules")
+        {
+            try
+            {
+                for (const module of dClient.modules) module.reload();
+            } catch (err)
+            {
+                msg.channel.send(`Something went wrong while reloading this Script Group. Have a look at this: \`\`\`js\n${err}\`\`\``).then(process.exit).catch(console.error);
+            }
+        } else
+
+        if (group.toLowerCase() === "utils")
+        {
+            try
+            {
+                for (const util of utils) util.reload();
+            } catch (err)
+            {
+                msg.channel.send(`Something went wrong while reloading this Script Group. Have a look at this: \`\`\`js\n${err}\`\`\``).then(process.exit).catch(console.error);
+            }
+        } else
+
+        if (group.toLowerCase() === "structs")
+        {
+            try
+            {
+                for (const struct of dClient.structs) struct.reload();
+            } catch (err)
+            {
+                msg.channel.send(`Something went wrong while reloading this Script Group. Have a look at this: \`\`\`js\n${err}\`\`\``).then(process.exit).catch(console.error);
+            }
+        } else
+
+        if (group.toLowerCase() === "bot")
+        {
+            try
+            {
+                for (const module of dClient.modules) module.reload();
+                for (const struct of dClient.structs) struct.reload();
+            } catch (err)
+            {
+                msg.channel.send(`Something went wrong while reloading this Script Group. Have a look at this: \`\`\`js\n${err}\`\`\``).then(process.exit).catch(console.error);
+            }
+        } else
+
+        if (group.toLowerCase() === "web")
+        {
+            msg.channel.send("Reloading of the Web partition is not yet featured. Check back later.").catch(console.error);
+        }
+
+        else msg.channel.send("Specified Script Group not found.").catch(console.error);
+    }
+
+    else msg.channel.send("That's not how this works. That's not how any of this works!").catch(console.error);
 }
 
 module.exports = reload;

@@ -1,3 +1,5 @@
+const decache = require("decache");
+
 // === [ DISCORD ] === //
 
 if (typeof dClient === "undefined")
@@ -16,14 +18,21 @@ if (typeof dClient === "undefined")
 dClient.modules = {};
 for (let file of fs.readdirSync(join(__dirname, "modules")))
 {
-    dClient.modules[file] = require(join(__dirname, "modules", file, "index.js"));
+    let scriptPath = join(__dirname, "modules", file, "index.js");
+
+    dClient.modules[file] = require(scriptPath);
+    dClient.modules[file].reload = utils.implementReload(file, scriptPath, dClient.modules);
 }
 
 // import custom structures
 dClient.structs = {};
 for (let file of fs.readdirSync(join(__dirname, "structs")))
 {
-    dClient.structs[file.replace(".js", "")] = require(join(__dirname, "structs", file));
+    let scriptPath = join(__dirname, "structs", file)
+    , scriptName = file.replace(".js", "");
+
+    dClient.structs[scriptName] = require(scriptPath);
+    dClient.structs[scriptName].reload = utils.implementReload(scriptName, scriptPath, dClient.structs);
 }
 
 if (!dClient.config.reloading)
