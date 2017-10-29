@@ -167,7 +167,7 @@ function searchWiki(arg)
 
 function removeUnnessecaryHTML(html)
 {
-    return html.replace(/<\/?span.*?>/g, "").replace(/<\/?sup.*?>/g, "");
+    return html.replace(/<\/?span.*?>/g, "").replace(/<\/?sup.*?>/g, "").replace(/<\/?small.*?>/g, "").replace(/<\/?big.*?>/g, "");
 }
 
 function filterOutAllHTML(html)
