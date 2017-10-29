@@ -1,5 +1,4 @@
-const LIVE_CHANNEL = "319641305388941315"
-, STATUS_DOMAIN = "https://eso.xc.ms/";
+const STATUS_DOMAIN = "https://eso.xc.ms/";
 
 function structureEmbed(status)
 {
@@ -11,19 +10,19 @@ function structureEmbed(status)
     e.addField("\u200b", "**PC**");
     for (let server in status["PC"])
     {
-        e.addField(server, status["PC"][server] ? "💚 Online" : "💔 Offline", true);
+        e.addField(`:flag_${(server == "EU") ? server.toLowerCase() : "us"}: ` + server, status["PC"][server] ? "💚 Online" : "💔 Offline", true);
     }
 
     e.addField("\u200b", "**PlayStation 4**");
     for (let server in status["PS4"])
     {
-        e.addField(server, status["PS4"][server] ? "💚 Online" : "💔 Offline", true);
+        e.addField(`:flag_${(server == "EU") ? server.toLowerCase() : "us"}: ` + server, status["PS4"][server] ? "💚 Online" : "💔 Offline", true);
     }
 
     e.addField("\u200b", "**XBox One**");
     for (let server in status["XBONE"])
     {
-        e.addField(server, status["XBONE"][server] ? "💚 Online" : "💔 Offline", true);
+        e.addField(`:flag_${(server == "EU") ? server.toLowerCase() : "us"}: ` + server, status["XBONE"][server] ? "💚 Online" : "💔 Offline", true);
     }
 
     return e;
