@@ -131,8 +131,8 @@ function liveServerStatus()
             
             const finalPanelEmbed = structureEmbed(status)
             , finalUpdateEmbed = prepareAnnouncement(changedServers);
-            
-            if (changedServers.some(x => x.platform === "PC" && !x.status) && changedServers.some(x => x.server === "EU") && changedServers.some(x => x.server === "NA")) dClient.maintenance = true;
+
+            if (!status.PC.EU && !status.PC.NA) dClient.maintenance = true;
             else dClient.maintenance = false;
 
             for (let guild of dClient.guilds.values())
