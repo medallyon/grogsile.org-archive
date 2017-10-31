@@ -26,5 +26,5 @@ dClient.once("ready", function()
     new CronJob("0 0,5,10,15,20,25,30,35,40,45,50,55,60 * * * *", dClient.modules.liveServerStatus, null, true, "UTC");
     new CronJob("0 0,15,30,45 * * * *", dClient.modules.esoNews, null, true, "UTC");
     new CronJob("0 0 * * * *", dClient.modules.esoPatchNotes, null, true, "UTC");
-    new CronJob("0 */15 * * * *", dClient.modules.changePlayingGame, null, true, "UTC", {}, true);
+    new CronJob("0 */15 * * * *", dClient.modules.changeActivity, null, true, "UTC", {}, true);
 });
