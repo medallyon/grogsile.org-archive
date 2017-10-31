@@ -3,7 +3,7 @@ const request = require("request")
 
 const STATUS_DOMAIN = "https://eso.xc.ms/ajax";
 
-// resolves with a discord.js Collection if successful
+// resolves with a Status Object if successful
 function fetchServerStatus()
 {
     return new Promise(function(resolve, reject)
