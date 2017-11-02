@@ -1,5 +1,3 @@
-const decache = require("decache");
-
 // === [ DISCORD ] === //
 
 if (typeof dClient === "undefined")
