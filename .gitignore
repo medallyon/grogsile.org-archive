@@ -44,3 +44,4 @@ sftp-config.json
 /web/.pub_src/esoi/users
 bot/modules/esoItem/items.json
 /.vs
+package-lock.json
