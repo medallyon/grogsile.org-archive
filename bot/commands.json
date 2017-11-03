@@ -165,7 +165,7 @@
         "optional": true
       }
     },
-    "userPermissions": 100,
+    "userPermissions": 900,
     "example": "[ @Medallyon#5012 ]"
   }
 }
