@@ -12,7 +12,7 @@ dClient.on("guildCreate", function(guild)
     guild.config = _templates.guild;
     guild.config.id = guild.id;
 
-    guild.config = treatConfig(guild, guild.config);
+    guild.config = utils.treatConfig(guild, guild.config);
     guild.config.save();
 
     prepareFiles(guild);
