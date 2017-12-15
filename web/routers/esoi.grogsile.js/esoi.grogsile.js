@@ -172,7 +172,7 @@ router.post("/account", middleware.isLoggedIn, resetLocals, function(req, res)
                 locals.content.success = true;
                 res.render("pages/account.ejs", locals);
 
-                dClient.modules.addToEsoRank(req.user.id, req.body.server, req.body.platform, req.body.alliance);
+                utils.addToEsoRank(req.user.id, req.body.server, req.body.platform, req.body.alliance);
 
                 let esoiServer = dClient.guilds.get(constants.discord.esoi.id);
                 if (!esoiServer.members.has(req.user.id)) return;

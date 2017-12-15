@@ -4,7 +4,7 @@ global.constants = {
 
 // === [ BOT INVITE ] === //
 
-constants.discord.inviteURL = `https://discordapp.com/oauth2/authorize?scope=bot&client_id=${dClient.user.id}&permissions=339012678`;
+constants.discord.inviteURL = "https://discordapp.com/oauth2/authorize?scope=bot&client_id=231606856663957505&permissions=339012678";
 
 // === [ ICONS ] === //
 constants.icons = {
@@ -301,7 +301,7 @@ constants.discord.esoi = {
 // === [ DEFAULT EMBED ] === //
 
 constants.discord.embed = {
-    color: utils.randColor(),
+    color: "",
     author: {
         name: "",
         icon_url: ""
@@ -320,6 +320,6 @@ constants.discord.embed = {
 // === [ API URLS ] === //
 
 constants.apiURLS = [
-    ["discordBotsOrg", `https://discordbots.org/api/bots/${dClient.user.id}/stats`],
-    ["botsDiscordPW", `https://bots.discord.pw/api/bots/${dClient.user.id}/stats`]
+    ["discordBotsOrg", "https://discordbots.org/api/bots/231606856663957505/stats"],
+    ["botsDiscordPW", "https://bots.discord.pw/api/bots/231606856663957505/stats"]
 ]
