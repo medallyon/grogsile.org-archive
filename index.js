@@ -8,6 +8,9 @@ global.dateFormat = require("dateformat");
 
 // === [ GLOBALS ] === //
 
+// a script to add / alter pre-existing constants that may only be alter-able during runtime (circular objects)
+require(join(__dirname, "constants", "constants.js"));
+
 // ./
 global.__base = __dirname;
 // ./data/
@@ -38,10 +41,7 @@ for (let file of fs.readdirSync(join(__dirname, "utils")))
     utils[scriptName].reload = utils.implementReload(scriptName, scriptPath, utils);
 }
 
-// a global object containing re-usable process-wide constants
-global.constants = require(join(__dirname, "constants", "constants.json"));
-// a script to add / alter pre-existing constants that may only be alter-able during runtime (circular objects)
-require(join(__dirname, "constants", "constants.js"));
+global.constants.discord.embed.color = utils.randColor();
 
 // === [ IMPORTS ] === //
 
