@@ -58,7 +58,10 @@ router.get("/callback", passport.authenticate("discord", { failureRedirect: "/",
                 if (files.indexOf("characters.json") === -1) fs.outputJson(join(userDir, "characters.json"), [], (err) => { if (err) console.error(err) });
                 if (files.indexOf("account.json") === -1)
                 {
-                    fs.outputJson(join(userDir, "account.json"), _templates.account, (err) => {
+                    let userAccount = JSON.parse(JSON.stringify(_templates.account));
+                    userAccount.id = req.user.id;
+
+                    fs.outputJson(join(userDir, "account.json"), userAccount, (err) => {
                         if (err) console.error(err);
 
                         res.redirect("/dashboard");
@@ -151,44 +154,38 @@ router.post("/account", middleware.isLoggedIn, resetLocals, function(req, res)
     if (req.body)
     {
         let userDir = join(__data, "users", req.user.id);
-        fs.outputJson(join(userDir, "account.json"), {
-            accountName: req.body.accountName.replace(/\@/g, ""),
-            champion: ((req.body.champion === "on") ? true : false),
-            level: req.body.level,
-            about: req.body.about,
-            server: req.body.server,
-            platform: req.body.platform,
-            alliance: req.body.alliance,
-            private: ((req.body.private === "on") ? true : false),
-            updates: ((req.body.updates === "on") ? true : false)
-        }, (err) => {
-            if (err) {
-                console.error(err);
-                res.send("Something went wrong :/\nDo tell a developer over at <a href='https://esoi.grogsile.org/discord'>Discord</a>!");
-            }
+        fs.readJson(join(userDir, "account.json")).then(function(acc)
+        {
+            let oldAccount = JSON.parse(JSON.stringify(acc));
+            let newAccount = {
+                id: req.user.id,
+                accountName: req.body.accountName.replace(/\@/g, ""),
+                champion: ((req.body.champion === "on") ? true : false),
+                level: req.body.level,
+                about: req.body.about,
+                server: req.body.server,
+                platform: req.body.platform,
+                alliance: req.body.alliance || null,
+                private: ((req.body.private === "on") ? true : false),
+                updates: ((req.body.updates === "on") ? true : false)
+            };
 
-            else {
+            fs.outputJson(join(userDir, "account.json"), newAccount).then(function()
+            {
                 locals.content.account = req.body;
                 locals.content.success = true;
                 res.render("pages/account.ejs", locals);
 
-                utils.addToEsoRank(req.user.id, req.body.server, req.body.platform, req.body.alliance);
-
-                let esoiServer = dClient.guilds.get(constants.discord.esoi.id);
-                if (!esoiServer.members.has(req.user.id)) return;
-                let member = esoiServer.members.get(req.user.id)
-                , serverUpdatesRole = esoiServer.roles.get(constants.discord.esoi.roles["Server Updates"]);
-
-                if (req.body.updates === "on")
-                {
-                    if (!member.roles.has(serverUpdatesRole.id)) member.addRole(serverUpdatesRole).catch(console.error);
-                }
-
-                else
-                {
-                    if (member.roles.has(serverUpdatesRole.id)) member.removeRole(serverUpdatesRole).catch(console.error);
-                }
-            }
+                _esoi.emit("accountUpdate", oldAccount, newAccount);
+            }).catch(function(err)
+            {
+                console.error(err);
+                res.send("Something went wrong :/\nDo tell a developer over at <a href='https://esoi.grogsile.org/discord'>Discord</a>!");
+            });
+        }).catch(function(err)
+        {
+            console.error(err);
+            res.send("Something went wrong :/\nDo tell a developer over at <a href='https://esoi.grogsile.org/discord'>Discord</a>!");
         });
     }
 });
@@ -338,6 +335,15 @@ router.get("/api/users/:id/characters", middleware.apiAuth, function(req, res)
     });
 });
 
+var ValidationError = class extends Error
+{
+    constructor(code, message = undefined, fileName = undefined, lineNumber = undefined)
+    {
+        super(message, fileName, lineNumber);
+        this.code = code;
+    }
+}
+
 function validateFormElements(form)
 {
     delete form._method;
@@ -345,19 +351,23 @@ function validateFormElements(form)
     {
         // existence validation
         if (!form.primary) form.primary = false;
-        if (!form.characterName) return reject([400, "Submitted no Character Name"]);
+        if (!form.characterName) return reject(new ValidationError(400, "Submitted no Character Name"));
         if (!form.level) form.level = 0;
         if (!form.biography) form.biography = "";
-        if (!form.alliance) return reject([400, "Submitted no Alliance"]);
-        if (!form.class) return reject([400, "Submitted no Class"]);
-        if (!form.race) return reject([400, "Submitted no Race"]);
-        if (!form.roles) return reject([400, "Submitted no Role(s)"]);
+        if (!form.alliance) return reject(new ValidationError(400, "Submitted no Alliance"));
+        if (!form.class) return reject(new ValidationError(400, "Submitted no Class"));
+        if (!form.race) return reject(new ValidationError(400, "Submitted no Race"));
+        if (!form.roles) return reject(new ValidationError(400, "Submitted no Role(s)"));
         if (!form.professions) form.professions = [];
 
         // acceptance validation
-        if (form.characterName.length < 3 || form.characterName.length > 25) return reject([400, "Character Name length is out of bounds"]);
-        // if (/[^a-zA-Z-'öüäß ]/g.test(form.characterName)) return reject([400, "Character Name contains illegal characters"]);
-        if ("abcdefghijklmopqrstuvwxyzABCDEFGHIJKLMOPQRSTUVWXYZ-'öüäß ".split("").some(x => form.characterName.includes(x.repeat(3)))) return reject([400, "Character name contains a character three consecutive times"]);
+        if (form.characterName.length < 3 || form.characterName.length > 25) return reject(new ValidationError(400, "Character Name length is out of bounds"));
+
+        if (!/[a-zA-Z-'öüäß ]/g.test(form.characterName)) return reject(new ValidationError(400, "Character Name contains illegal characters"));
+
+        if ("abcdefghijklmopqrstuvwxyzABCDEFGHIJKLMOPQRSTUVWXYZ-'öüäß ".split("").some(x => form.characterName.includes(x.repeat(3)))) return reject(new ValidationError(400, "Character name contains a character three consecutive times"));
+
+        if (!["Aldmeri Dominion", "Daggerfall Covenant", "Ebonheart Pact"].some(f => f === form.alliance)) return reject(new ValidationError(400, "Alliance is not valid"));
 
         if (form.primary === "on") form.primary = true;
         else form.primary = false;
@@ -367,10 +377,19 @@ function validateFormElements(form)
 
         if (!form.champion)
         {
-            if (form.level > 49) form.champion = true;
+            if (form.level > 49)
+            {
+                form.champion = true;
+                form.level = 10;
+            }
         }
 
-        if (form.biography.length > 500) return reject([400, "Biography is too long (max. 500 characters)"]);
+        if (form.champion)
+        {
+            if (form.level < 0 || form.level > 660) return reject(new ValidationError(400, "Level is out of bounds"));
+        }
+
+        if (form.biography.length > 500) return reject(new ValidationError(400, "Biography is too long (max. 500 characters)"));
 
         if (typeof form.roles === "string") form.roles = [form.roles];
         if (typeof form.professions === "string") form.professions = [form.professions];
@@ -401,7 +420,7 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
 
                 validateFormElements(req.body)
                 .then((charData) => {
-                    const character = {};
+                    const character = { ownerId: req.user.id };
                     Object.assign(character, charData);
 
                     character.id = null, usedIds = characters.map(x => x.id);
@@ -432,14 +451,17 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
                                 fs.outputJson(join(userDir, "characters.json"), characters, (err) => {
                                     if (err) return res.status(500).send("Could not save character to file");
 
+                                    _esoi.emit("characterAdd", character);
+
                                     res.redirect("/dashboard");
                                 });
                             });
                         }).catch(console.error);
                     });
                 })
-                .catch(([statusCode, statusMessage]) => {
-                    res.status(statusCode).send(statusMessage);
+                .catch((error) => {
+                    console.warn(error);
+                    res.status(error.code).send(error.message);
                 });
             });
         });
@@ -456,7 +478,9 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
 
                 validateFormElements(req.body)
                 .then((charData) => {
-                    const character = characters[charData.id];
+                    let character = characters[charData.id];
+                    let oldChar = JSON.parse(JSON.stringify(character));
+
                     Object.assign(character, charData);
 
                     if (character.primary)
@@ -477,6 +501,8 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
 
                         fs.outputJson(join(userDir, "characters.json"), characters, (err) => {
                             if (err) return res.status(500).send("Could not save character to file");
+
+                            _esoi.emit("characterEdit", oldChar, character);
 
                             res.redirect("/dashboard");
                         });
@@ -507,6 +533,8 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
                                         fs.outputJson(join(userDir, "characters.json"), characters, (err) => {
                                             if (err) return res.status(500).send("Could not save character to file");
 
+                                            _esoi.emit("characterEdit", oldChar, character);
+
                                             res.redirect("/dashboard");
                                         });
                                     });
@@ -515,8 +543,9 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
                         });
                     }
                 })
-                .catch(([statusCode, statusMessage]) => {
-                    res.status(statusCode).send(statusMessage);
+                .catch((error) => {
+                    console.warn(error);
+                    res.status(error.code).send(error.message);
                 });
             });
         });
@@ -532,7 +561,9 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
                 if (characters.some(x => parseInt(x.id) === parseInt(req.body.id)))
                 {
                     // delete relative avatar
-                    fs.remove(join(__src, "esoi", "users", userId, `${req.body.id}.png`), (err) => { if (err) console.error(err) });
+                    fs.remove(join(__src, "esoi", "users", userId, `${req.body.id}.png`)).catch(console.warn);
+
+                    _esoi.emit("characterDelete", characters.find(c => parseInt(c.id) === parseInt(req.body.id)));
 
                     // delete the specified character
                     characters.splice(characters.findIndex(x => parseInt(x.id) === parseInt(req.body.id)), 1);
@@ -542,6 +573,11 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
 
                         res.redirect("/dashboard");
                     });
+                }
+
+                else
+                {
+                    res.status(404).send("Provided Character ID does not exist");
                 }
             });
         } else res.status(400).send("Need to provide a parameter for character 'id'");

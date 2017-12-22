@@ -36,14 +36,11 @@ for (let file of fs.readdirSync(join(__dirname, "structs")))
 if (!dClient.config.reloading)
 {
     // import Discord event handlers
-    for (let file of fs.readdirSync(join(__dirname, "handlers")))
+    for (let file of fs.readdirSync(join(__dirname, "handlers")).filter(x => x !== "esoi"))
     {
         require(join(__dirname, "handlers", file));
     }
-}
 
-if (!dClient.config.reloading)
-{
     // log in to Discord using the Discord BOT token
     dClient.login(dClient.config.discord.token)
         .catch(console.error);

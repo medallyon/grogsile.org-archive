@@ -1,8 +1,16 @@
 const CronJob = require("cron").CronJob;
+global._esoi;
+
+function initESOI()
+{
+    _esoi = new dClient.structs.ESOI(constants.discord.esoi.id);
+}
 
 dClient.once("ready", function()
 {
     console.log(dClient.user.username + " is ready to serve.");
+
+    initESOI();
 
     if (dClient.config.restarted)
     {

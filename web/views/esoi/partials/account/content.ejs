@@ -46,7 +46,7 @@
           <div class="input-group">
 
             <input type="checkbox" id="championBox" name="champion" aria-label="Champion Input" <% if (content.account.champion) { %> checked <% } %>>
-            <label for="championBox"></label>
+            <label for="championBox" data-toggle="tooltip" data-placement="top" title="" data-original-title="Champion Level"></label>
 
             <% if (content.account.champion) { %><input type="number" id="championInput" name="level" class="form-control text-center" value="<%- content.account.level %>" min="1" max="600" placeholder="<%- content.account.level %>" required><% } %>
           </div>
@@ -73,10 +73,10 @@
                 <div class="form-check form-check-inline">
               
                   <input type="radio" id="eu" class="roster" name="server" value="EU" required <% if (content.account.server === "EU") { %> checked <% } %>>
-                  <label for="eu"></label>
+                  <label for="eu" data-toggle="tooltip" data-placement="top" title="" data-original-title="Europe"></label>
                   
                   <input type="radio" id="na" class="roster" name="server" value="NA" <% if (content.account.server === "NA") { %> checked <% } %>>
-                  <label for="na"></label>
+                  <label for="na" data-toggle="tooltip" data-placement="top" title="" data-original-title="North America"></label>
                   
                 </div>
               </div>
@@ -88,20 +88,20 @@
       <div class="col-md-4">
           
         <div class="form-group">
-          <label>Preferred Alliance</label>
+          <label>Preferred Alliance <small>(Optional)</small></label>
           <div class="row">
             
             <div class="col-md-12">
               <div class="form-check form-check-inline">
                 
-                <input type="radio" id="ad" class="roster" name="alliance" value="Aldmeri Dominion" required <% if (content.account.alliance === "Aldmeri Dominion") { %> checked <% } %>>
-                <label for="ad"></label>
+                <input type="checkbox" id="ad" class="roster" name="alliance" value="Aldmeri Dominion" <% if (content.account.alliance === "Aldmeri Dominion") { %> checked <% } %>>
+                <label for="ad" data-toggle="tooltip" data-placement="top" title="" data-original-title="Aldmeri Dominion"></label>
                 
-                <input type="radio" id="dc" class="roster" name="alliance" value="Daggerfall Covenant" <% if (content.account.alliance === "Daggerfall Covenant") { %> checked <% } %>>
-                <label for="dc"></label>
+                <input type="checkbox" id="dc" class="roster" name="alliance" value="Daggerfall Covenant" <% if (content.account.alliance === "Daggerfall Covenant") { %> checked <% } %>>
+                <label for="dc" data-toggle="tooltip" data-placement="top" title="" data-original-title="Daggerfall Covenant"></label>
                 
-                <input type="radio" id="ep" class="roster" name="alliance" value="Ebonheart Pact" <% if (content.account.alliance === "Ebonheart Pact") { %> checked <% } %>>
-                <label for="ep"></label>
+                <input type="checkbox" id="ep" class="roster" name="alliance" value="Ebonheart Pact" <% if (content.account.alliance === "Ebonheart Pact") { %> checked <% } %>>
+                <label for="ep" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ebonheart Pact"></label>
                 
               </div>
             </div>
@@ -120,13 +120,13 @@
               <div class="form-check form-check-inline">
                 
                 <input type="radio" id="pc" class="roster" name="platform" value="PC" required <% if (content.account.platform === "PC") { %> checked <% } %>>
-                <label for="pc"></label>
+                <label for="pc" data-toggle="tooltip" data-placement="top" title="" data-original-title="PC"></label>
                 
                 <input type="radio" id="xbone" class="roster" name="platform" value="XBOne" <% if (content.account.platform === "XBOne") { %> checked <% } %>>
-                <label for="xbone"></label>
+                <label for="xbone" data-toggle="tooltip" data-placement="top" title="" data-original-title="XBox One"></label>
                 
                 <input type="radio" id="ps4" class="roster" name="platform" value="PS4" <% if (content.account.platform === "PS4") { %> checked <% } %>>
-                <label for="ps4"></label>
+                <label for="ps4" data-toggle="tooltip" data-placement="top" title="" data-original-title="PlayStation 4"></label>
                 
               </div>
             </div>
