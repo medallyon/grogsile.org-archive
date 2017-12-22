@@ -46,4 +46,16 @@ _esoi.on("accountUpdate", function(oldAccount, newAccount)
 
     member.addRoles(rolesToAdd).catch(console.error);
     dClient.setTimeout(() => { member.removeRoles(rolesToRemove).catch(console.error) }, 1000 * 10);
+
+    let nickname = member.displayName;
+    let newPrefix = `[${newAccount.platform}] `, prefix;
+    if (newAccount.platform === "XBOne") newPrefix = `[XB1] `;
+
+    if (/\[(?:PC|XB1|PS4)\] /g.test(nickname))
+    {
+        prefix = /\[(?:PC|XB1|PS4)\] /g.exec(nickname)[1];
+        nickname = nickname.replace(prefix, newPrefix);
+    } else nickname = newPrefix + nickname;
+
+    member.setNickname(nickname, "Web Account Platform Update").catch(console.error);
 });
