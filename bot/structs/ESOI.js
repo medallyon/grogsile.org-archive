@@ -15,11 +15,28 @@ class ESOI extends EventEmitter
         }).catch(console.error);
     }
 
-    static fetchCharacters(member)
+    fetchAccount(member)
     {
         return new Promise(function(resolve, reject)
         {
-            if (member instanceof Discord.GuildMember) member = member.id;
+            if (member instanceof Discord.GuildMember || member instanceof Discord.User) member = member.id;
+            else if ((typeof member) !== "string") return reject(new TypeError("Member parameter must be a String"));
+
+            fs.readdir(join(__data, "users")).then(function(files)
+            {
+                let userDir = join(__data, "users", member);
+                if (files.indexOf(member) == -1) return reject(new ReferenceError(`Member ${member} is not part of data`));
+
+                fs.readJson(join(userDir, "account.json")).then(resolve).catch(reject);
+            }).catch(reject);
+        });
+    }
+
+    fetchCharacters(member)
+    {
+        return new Promise(function(resolve, reject)
+        {
+            if (member instanceof Discord.GuildMember || member instanceof Discord.User) member = member.id;
             else if ((typeof member) !== "string") return reject(new TypeError("Member parameter must be a String"));
 
             fs.readdir(join(__data, "users")).then(function(files)
