@@ -97,7 +97,7 @@ function esoNews()
         {
             distribute(prepareEmbed(news));
             collectESOImage(news);
-        }).catch(console.error);
+        }).catch(console.info);
     }).catch(console.error);
 }
 

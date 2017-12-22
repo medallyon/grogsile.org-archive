@@ -67,7 +67,7 @@ function esoPatchNotes()
 
                 distribute(createRichEmbed(update));
             });
-        }).catch(console.error);
+        }).catch(console.info);
     }).catch(console.error);
 }
 

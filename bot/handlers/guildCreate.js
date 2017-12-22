@@ -13,7 +13,9 @@ dClient.on("guildCreate", function(guild)
     guild.config.id = guild.id;
 
     guild.config = utils.treatConfig(guild, guild.config);
-    guild.config.save();
+    guild.config._save().catch(console.error);
 
     prepareFiles(guild);
+
+    // utils.postServerCountToAPI(constants.apiURLs);
 });

@@ -47,7 +47,7 @@ dClient.on("guildMemberAdd", function(member)
 
         fs.readJson(join(__data, "users", member.id, "account.json")).then(function(err, account)
         {
-            if (err) console.error(err);
+            if (err) return console.error(err);
 
             dClient.modules.addToEsoRank(member.id, account.server, account.platform, account.alliance);
         }).catch(console.error);

@@ -1,6 +1,6 @@
 const cropperOptions = {
     aspectRatio: 5/4,
-    viewMode: 1,
+    viewMode: 2,
     responsive: true,
     autoCropArea: 1
 };
