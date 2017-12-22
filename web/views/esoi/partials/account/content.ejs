@@ -28,7 +28,7 @@
 
             <div class="input-group-addon">@</div>
 
-            <input type="text" id="accountName" class="form-control text-center" autocomplete="off" pattern="[a-zA-Z0-9.\-'_]{3,20}" name="accountName" value="<% if (account.accountName !== "undefined") { %><%- content.account.accountName %><% } %>" placeholder="RinkydinkFrumblesnatch123" required>
+            <input type="text" id="accountName" class="form-control text-center" autocomplete="off" pattern="[a-zA-Z0-9\.\-'_]{3,20}" name="accountName" value="<% if (account.accountName !== "undefined") { %><%- content.account.accountName %><% } %>" placeholder="RinkydinkFrumblesnatch123" required>
 
           </div>
         </div>
@@ -48,7 +48,7 @@
             <input type="checkbox" id="championBox" name="champion" aria-label="Champion Input" <% if (content.account.champion) { %> checked <% } %>>
             <label for="championBox" data-toggle="tooltip" data-placement="top" title="" data-original-title="Champion Level"></label>
 
-            <% if (content.account.champion) { %><input type="number" id="championInput" name="level" class="form-control text-center" value="<%- content.account.level %>" min="1" max="600" placeholder="<%- content.account.level %>" required><% } %>
+            <% if (content.account.champion) { %><input type="number" id="championInput" name="level" class="form-control text-center" value="<%- content.account.level %>" min="1" max="660" placeholder="<%- content.account.level %>" required><% } %>
           </div>
           <p class="form-text text-muted">If you have achieved level 50 in-game, you should check this icon.</p>
         </div>
