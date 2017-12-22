@@ -386,7 +386,7 @@ function validateFormElements(form)
 
         if (form.champion)
         {
-            if (form.level < 0 || form.level > 660) return reject(new ValidationError(400, "Level is out of bounds"));
+            if (form.level < 0 || form.level > 690) return reject(new ValidationError(400, "Level is out of bounds"));
         }
 
         if (form.biography.length > 500) return reject(new ValidationError(400, "Biography is too long (max. 500 characters)"));
