@@ -54,6 +54,9 @@
     "ban": {
       "enabled": true
     },
+    "character": {
+      "enabled": true
+    },
     "esoItem": {
       "enabled": true,
       "usage": {

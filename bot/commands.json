@@ -165,7 +165,28 @@
         "optional": true
       }
     },
-    "userPermissions": 900,
+    "userPermissions": 100,
     "example": "[ @Medallyon#5012 ]"
+  },
+
+  "character": {
+    "description": "Shows character summary.",
+    "alias": [
+      "characters",
+      "character",
+      "char"
+    ],
+    "arguments": {
+      "user": {
+        "description": "An optional @mention to show the character for.",
+        "optional": true
+      },
+      "character": {
+        "description": "The character you would like to look up. Omit this to view all characters.",
+        "optional": true
+      }
+    },
+    "userPermissions": 100,
+    "example": "[ @Medallyon#5012 ] [ Medallyah ]"
   }
 }
