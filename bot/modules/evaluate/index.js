@@ -2,7 +2,8 @@ function evaluate(msg)
 {
     try {
         let evaluated = eval(msg.args.join(" "));
-        msg.channel.send((evaluated !== undefined ? evaluated : "undefined"), { code: "js" }).catch(console.error);
+        if ((typeof evaluated) === undefined) msg.channel.send("Command executed successfully.", { code: "js" });
+        msg.channel.send(evaluated, { code: "js" }).catch(console.error);
     } catch (err) {
         msg.channel.send(err, { code: "js" }).catch(console.error);
     }
