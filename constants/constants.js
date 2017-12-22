@@ -9,7 +9,7 @@ constants.discord.inviteURL = "https://discordapp.com/oauth2/authorize?scope=bot
 // === [ ICONS ] === //
 constants.icons = {
     "eso": "https://cdn.discordapp.com/icons/130716876937494528/5e66980df808cf1cdbaf73efaf36e6ee.png",
-    "grogsile": "https://i.grogsile.me/favicon.png"
+    "grogsile": "https://i.grogsile.org/favicon.png"
 }
 
 // === [ ESOI EMOJI ALLOC ] ===
@@ -116,17 +116,17 @@ constants.discord.esoi = {
             }
         },
         "alliance":{
-            "AldmeriDominion":{
+            "Aldmeri Dominion":{
                 "name":"alliance_AldmeriDominion",
                 "id":"231366333869064193",
                 "emoji":"<:alliance_AldmeriDominion:231366333869064193>"
             },
-            "DaggerfallCovenant":{
+            "Daggerfall Covenant":{
                 "name":"alliance_DaggerfallCovenant",
                 "id":"231366430094786562",
                 "emoji":"<:alliance_DaggerfallCovenant:231366430094786562>"
             },
-            "EbonheartPact":{
+            "Ebonheart Pact":{
                 "name":"alliance_EbonheartPact",
                 "id":"231366236879978496",
                 "emoji":"<:alliance_EbonheartPact:231366236879978496>"
@@ -316,7 +316,7 @@ constants.discord.embed = {
     fields: [],
     timestamp: "",
     footer: {
-        icon_url: "https://i.grogsile.me/favicon.png",
+        icon_url: "https://i.grogsile.org/favicon.png",
         text: "Brought to you by Grogsile, Inc."
     }
 }
