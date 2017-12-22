@@ -15,7 +15,7 @@ class ESOI extends EventEmitter
         }).catch(console.error);
     }
 
-    fetchCharacters(member)
+    static fetchCharacters(member)
     {
         return new Promise(function(resolve, reject)
         {
