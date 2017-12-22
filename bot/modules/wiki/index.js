@@ -351,7 +351,7 @@ function wiki(msg)
                 console.error(err);
                 addReactions.stop();
                 sentMessage.clearReactions().catch(console.error);
-                sentMessage.send(":x: That didn't work. :/").catch(console.error);
+                sentMessage.channel.send(":x: That didn't work. :/").catch(console.error);
             });
         }
 
