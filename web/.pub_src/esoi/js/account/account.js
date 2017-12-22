@@ -23,3 +23,11 @@ $("#championBox").change(function(e)
         $("#championInput").remove();
     }
 });
+
+$(".roster[name=\"alliance\"]").change(function(e)
+{
+    $(this).siblings().each(function(i, ele)
+    {
+        $(ele).prop("checked", false);
+    });
+});
