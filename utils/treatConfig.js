@@ -37,6 +37,27 @@ function treatConfig(guild, config)
         });
     }
 
+    config._reload = function()
+    {
+        return new Promise(function(resolve, reject)
+        {
+            fs.readJson(config._path).then(function(data)
+            {
+                let intermediateVars = {
+                    _guild: config._guild,
+                    _path: config._path,
+                    _save: config._save,
+                    _reload: config._reload
+                }
+
+                config = data;
+                config = Object.assign(config, intermediateVars);
+
+                resolve(config);
+            }).catch(reject);
+        });
+    }
+
     return config;
 }
 
