@@ -35,7 +35,8 @@
     "esoPatchNotes": {
       "enabled": false,
       "channel": ""
-    }
+    },
+    "restricted": []
   },
   "eso": {
     "news": {

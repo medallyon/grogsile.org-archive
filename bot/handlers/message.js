@@ -15,16 +15,20 @@ dClient.on("message", function (msg) {
     if (msg.author.bot) return;
 
     // do not support direct messages yet
-    if (!msg.guild) return msg.send("Mighty Sorry, but direct messages are not supported yet.");
+    if (!msg.guild) return msg.channel.send("Mighty Sorry, but direct messages are not supported yet.").catch(console.error);
+
+    if (msg.guild.config.guild.restricted.some(x => x === msg.channel.id)) return console.info(`Chat is restricted in channel ${msg.channel.id}`);
 
     let splitMsg = msg.content.split(" ");
     // check whether user is using command prefix or mention to execute a command, and assign them to 'msg' accordingly
-    if (msg.mentions.users.has(dClient.user.id) && splitMsg[0].includes(dClient.user.id) && splitMsg.length > 1) {
+    if (msg.mentions.users.has(dClient.user.id) && splitMsg[0].includes(dClient.user.id) && splitMsg.length > 1)
+    {
         msg.command = splitMsg[1].toLowerCase();
         msg.args = splitMsg.slice(2);
     } else
 
-    if (splitMsg[0].startsWith(dClient.config.discord.prefix)) {
+    if (splitMsg[0].startsWith(dClient.config.discord.prefix))
+    {
         msg.command = splitMsg[0].slice(dClient.config.discord.prefix.length).toLowerCase();
         msg.args = splitMsg.slice(1);
     }
