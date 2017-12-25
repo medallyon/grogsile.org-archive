@@ -7,5 +7,6 @@
   "server": "EU|NA",
   "platform": "PC|XBOne|PS4",
   "alliance": "Aldmeri Dominion|Daggerfall Covenant|Ebonheart Pact",
-  "private": false
+  "private": false,
+  "nickname": true
 }

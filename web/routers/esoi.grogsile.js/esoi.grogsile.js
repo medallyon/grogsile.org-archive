@@ -167,7 +167,8 @@ router.post("/account", middleware.isLoggedIn, resetLocals, function(req, res)
                 platform: req.body.platform,
                 alliance: req.body.alliance || null,
                 private: ((req.body.private === "on") ? true : false),
-                updates: ((req.body.updates === "on") ? true : false)
+                updates: ((req.body.updates === "on") ? true : false),
+                nickname: ((req.body.nickname === "on") ? true : false)
             };
 
             fs.outputJson(join(userDir, "account.json"), newAccount).then(function()
@@ -375,6 +376,9 @@ function validateFormElements(form)
         if (form.champion === "on") form.champion = true;
         else form.champion = false;
 
+        if (form.nickname === "on") form.nickname = true;
+        else form.nickname = false;
+
         if (!form.champion)
         {
             if (form.level > 49)
@@ -424,7 +428,8 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
                     Object.assign(character, charData);
 
                     character.id = null, usedIds = characters.map(x => x.id);
-                    for (let i = 0; i < characters.length + 1; i++) {
+                    for (let i = 0; i < characters.length + 1; i++)
+                    {
                         if (!usedIds.includes(i)) character.id = i;
                     }
 
@@ -441,14 +446,16 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
                             image.crop(avatarData.x, avatarData.y, avatarData.width, avatarData.height);
                             delete character.avatarData;
 
-                            image.write(join(userAvatarDir, `${character.id}.png`), (err) => {
+                            image.write(join(userAvatarDir, `${character.id}.png`), function(err)
+                            {
                                 if (err) return res.status(500).send("Cannot write avatar to file");
 
                                 character.avatarURL = `https://i.grogsile.org/esoi/users/${userId}/${character.id}.png`;
                                 
                                 characters.push(character);
 
-                                fs.outputJson(join(userDir, "characters.json"), characters, (err) => {
+                                fs.outputJson(join(userDir, "characters.json"), characters, function(err)
+                                {
                                     if (err) return res.status(500).send("Could not save character to file");
 
                                     _esoi.emit("characterAdd", character);
@@ -476,8 +483,8 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
             fs.readJson(join(userDir, "characters.json"), (err, characters) => {
                 if (err) return res.status(500).send("Cannot read characters from user");
 
-                validateFormElements(req.body)
-                .then((charData) => {
+                validateFormElements(req.body).then(function(charData)
+                {
                     let character = characters[charData.id];
                     let oldChar = JSON.parse(JSON.stringify(character));
 
@@ -499,19 +506,21 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
                         let characterIndex = characters.map(x => parseInt(x.id)).indexOf(parseInt(character.id));
                         characters.splice(characterIndex, 1, character);
 
-                        fs.outputJson(join(userDir, "characters.json"), characters, (err) => {
-                            if (err) return res.status(500).send("Could not save character to file");
-
+                        fs.outputJson(join(userDir, "characters.json"), characters).then(function()
+                        {
                             _esoi.emit("characterEdit", oldChar, character);
 
                             res.redirect("/dashboard");
+                        }).catch((error) => {
+                            res.status(500).send("Could not save character to file");
                         });
                     }
 
                     else
                     {
                         const userAvatarDir = join(__webdir, ".pub_src", "esoi", "users", userId);
-                        fs.ensureDir(userAvatarDir, (err) => {
+                        fs.ensureDir(userAvatarDir, function(err)
+                        {
                             if (err) return res.status(500).send("Could not establish user avatar directory");
 
                             jimp.read(req.file.buffer).then(function(image)
@@ -520,17 +529,20 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
                                 image.crop(avatarData.x, avatarData.y, avatarData.width, avatarData.height);
                                 delete character.avatarData;
 
-                                fs.remove(join(userAvatarDir, `${character.id}.png`), (err) => {
+                                fs.remove(join(userAvatarDir, `${character.id}.png`), function(err)
+                                {
                                     if (err) return res.status(500).send("Could not remove avatar");
 
-                                    image.write(join(userAvatarDir, `${character.id}.png`), (err) => {
+                                    image.write(join(userAvatarDir, `${character.id}.png`), function(err)
+                                    {
                                         if (err) return res.status(500).send("Could not write avatar to file");
 
                                         character.avatarURL = `https://i.grogsile.org/esoi/users/${userId}/${character.id}.png`;
                                         
                                         characters.splice(characters.findIndex((x, i) => x.id === i), 1, character);
 
-                                        fs.outputJson(join(userDir, "characters.json"), characters, (err) => {
+                                        fs.outputJson(join(userDir, "characters.json"), characters, function(err)
+                                        {
                                             if (err) return res.status(500).send("Could not save character to file");
 
                                             _esoi.emit("characterEdit", oldChar, character);
@@ -555,9 +567,8 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
     {
         if (req.body.id)
         {
-            fs.readJson(join(userDir, "characters.json"), (err, characters) => {
-                if (err) return res.json(err);
-
+            fs.readJson(join(userDir, "characters.json")).then(function(characters)
+            {
                 if (characters.some(x => parseInt(x.id) === parseInt(req.body.id)))
                 {
                     // delete relative avatar
@@ -573,13 +584,8 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
 
                         res.redirect("/dashboard");
                     });
-                }
-
-                else
-                {
-                    res.status(404).send("Provided Character ID does not exist");
-                }
-            });
+                } else res.status(404).send("Provided Character ID does not exist");
+            }).catch(res.json);
         } else res.status(400).send("Need to provide a parameter for character 'id'");
     }
 });

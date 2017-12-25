@@ -137,28 +137,28 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row justify-content-center">
 
-      <div class="col-md-4">
-        
+      <div class="col-md-8">
+
         <div class="form-group">
-          <label>Profile Visibility</label>
+          <label><b>Other Settings</b></label>
+
           <div class="abc-checkbox">
             <input type="checkbox" id="private" name="private" <% if (content.account.private) { %> checked <% } %>>
             <label for="private">Make my profile <span class="text-muted">invisible</span> to others</label>
           </div>
-        </div>
 
-      </div>
-
-      <div class="col-md-8">
-        
-        <div class="form-group">
-          <label>Server Updates</label>
           <div class="abc-checkbox">
             <input type="checkbox" id="updates" name="updates" <% if (content.account.updates) { %> checked <% } %>>
             <label for="updates">Get notified on the <a href="https://esoi.grogsile.org/discord">ESOI Discord Server</a> whenever an ESO Server goes off- or online</label>
           </div>
+
+          <div class="abc-checkbox">
+            <input type="checkbox" id="nickname" name="nickname" <% if (content.account.nickname) { %> checked <% } %>>
+            <label for="nickname">Reflect your Platform [PC|PS4|XB1] as part of your nickname on the ESOI Discord Server</label>
+          </div>
+
         </div>
 
       </div>
