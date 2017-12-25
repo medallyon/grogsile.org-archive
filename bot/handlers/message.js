@@ -17,8 +17,6 @@ dClient.on("message", function (msg) {
     // do not support direct messages yet
     if (!msg.guild) return msg.channel.send("Mighty Sorry, but direct messages are not supported yet.").catch(console.error);
 
-    if (msg.guild.config.guild.restricted.some(x => x === msg.channel.id)) return console.info(`Chat is restricted in channel ${msg.channel.id}`);
-
     let splitMsg = msg.content.split(" ");
     // check whether user is using command prefix or mention to execute a command, and assign them to 'msg' accordingly
     if (msg.mentions.users.has(dClient.user.id) && splitMsg[0].includes(dClient.user.id) && splitMsg.length > 1)
@@ -39,6 +37,9 @@ dClient.on("message", function (msg) {
     // check if the command prefix exists
     if (msg.command)
     {
+        // don't check commands in blacklisted channels
+        if (msg.guild.config.guild.restricted.some(x => x === msg.channel.id)) return console.info(`Commands are restricted in channel ${msg.channel.id}`);
+
         // iterate through all commands
         for (let cmd in dClient.commands)
         {
