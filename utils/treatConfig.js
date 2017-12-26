@@ -1,6 +1,7 @@
 // Discord.Guild : guild, Object : object
 function treatConfig(guild, config)
 {
+    config.raw = JSON.parse(JSON.stringify(config));
     config._guild = guild;
     config._path = join(__data, "guilds", guild.id, "config.json");
 
