@@ -86,6 +86,9 @@
     "restart": {
       "enabled": true
     },
+    "serverStatus": {
+      "enabled": true
+    },
     "wiki": {
       "enabled": true
     }

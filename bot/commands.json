@@ -188,5 +188,22 @@
     },
     "userPermissions": 100,
     "example": "[ @Medallyon#5012 ] [ Medallyah ]"
+  },
+
+  "serverStatus": {
+    "description": "Shows the status of the ESO Servers.",
+    "alias": [
+      "serverstatus",
+      "servers",
+      "server"
+    ],
+    "arguments": {
+      "platform": {
+        "description": "The platform to view the status of.",
+        "optional": true
+      }
+    },
+    "userPermissions": 100,
+    "example": "[ PC | PS4 | XBOne ]"
   }
 }
