@@ -141,7 +141,7 @@ function liveServerStatus()
 
                 const baseGuildPath = join(__data, "guilds", guild.id);
 
-                if (!guild.config.guild.liveServerStatus.panel.enabled || !guild.config.guild.liveServerStatus.update.enabled) return;
+                if (!guild.config.guild.liveServerStatus.panel.enabled && !guild.config.guild.liveServerStatus.update.enabled) continue;
 
                 else
                 {
