@@ -5,7 +5,7 @@ function structureEmbed(status)
     let e = new Discord.MessageEmbed(utils.createEmptyRichEmbedObject())
         .setAuthor("ESO Server Status", "", STATUS_DOMAIN)
         .setDescription("This live panel is updated every 5 minutes to check for all ESO Server Statuses.")
-        .setFooter(`${constants.discord.embed.footer.text} | ${utils.fancyESODate()} ${dateFormat("HH:MM")} UTC`, dClient.user.displayAvatarURL);
+        .setFooter(`${constants.discord.embed.footer.text} | ${utils.fancyESODate()} ${dateFormat("HH:MM")} UTC`, constants.discord.embed.footer.icon_url);
 
     e.addField("\u200b", "**PC**");
     for (let server in status["PC"])
@@ -33,7 +33,7 @@ function prepareAnnouncement(servers)
     let e = new Discord.MessageEmbed()
         .setAuthor("ESO Server Status", "", STATUS_DOMAIN)
         .setDescription("The following servers have been updated:")
-        .setFooter(`Brought to you by Grogsile, Inc. | ${utils.fancyESODate(new Date())} ${dateFormat("HH:MM")} UTC`, dClient.user.displayAvatarURL)
+        .setFooter(`Brought to you by Grogsile, Inc. | ${utils.fancyESODate(new Date())} ${dateFormat("HH:MM")} UTC`, constants.discord.embed.footer.icon_url)
     , strings = [];
 
     if (servers.findIndex(x => x.platform === "PC") > -1)
