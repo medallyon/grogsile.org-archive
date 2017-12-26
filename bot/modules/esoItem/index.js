@@ -27,24 +27,19 @@ function deduceItemSummary([item, number])
 
 function findItem(itemCollection, item)
 {
-    console.log(3.1);
     // check if requested item is itemID
     if (itemCollection.has(item)) return [itemCollection.get(item), 0];
 
-    console.log(3.2);
     // check if requested item is item.name
     if (itemCollection.exists("name", item)) return [itemCollection.find("name", item), 0];
 
     // filter out items containing requested item's words
     let matchingItems = itemCollection.filter(x => x.name.toLowerCase().includes(item.toLowerCase()));
 
-    console.log(3.3);
     if (matchingItems.size === 1) return [matchingItems.first(), 0];
 
-    console.log(3.4);
     if (matchingItems.size === 0) return [null, 0];
 
-    console.log(3.5);
     if (matchingItems.size > 1) return [matchingItems.array()[Math.floor(Math.random() * matchingItems.size)], matchingItems.size];
 }
 
@@ -52,10 +47,8 @@ function searchUESPItem(item)
 {
     return new Promise(function(resolve, reject)
     {
-        console.log(2);
         let foundItem = findItem(dClient.eso.items, item);
 
-        console.log(4);
         if (foundItem[0]) resolve(deduceItemSummary(foundItem));
         else reject(`Item '${item}' not found`);
     });
@@ -64,7 +57,6 @@ function searchUESPItem(item)
 function esoItem(msg, item = null)
 {
     utils.readGuildConfig(msg.guild).then(config => {
-        console.log(1);
         if (msg.command && !config.commands.esoItem.usage.command) return;
 
         if (msg.command) item = msg.args.join(" ");
@@ -72,7 +64,6 @@ function esoItem(msg, item = null)
 
         searchUESPItem(item)
         .then(([itemObj, otherItems]) => {
-            console.log(5);
             console.log(JSON.stringify(itemObj, null, 2));
             msg.channel.send((otherItems > 1) ? `There are **${otherItems - 1}** other items like this one` : "This item is quite unique, some say.", { files: [{ "name": `${itemObj.name}.png`, "attachment": itemObj.url }] }).catch(console.error);
         }).catch(console.log);
