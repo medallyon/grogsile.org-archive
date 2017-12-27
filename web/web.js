@@ -16,8 +16,14 @@ app.set("view engine", "ejs");
 
 app.use(cookieParser());
 
-app.use( bodyparser.json({ limit: "10mb" }) );
-app.use( bodyparser.urlencoded({ limit: "10mb", extended: true }) );
+let attachRawBody = function(req, res, buf, encoding)
+{
+    console.log(buf);
+    if (buf && buf.length) req.rawBody = buf.toString(encoding || 'utf8');
+}
+app.use( bodyparser.json({ limit: "10mb", verify: attachRawBody }) );
+app.use( bodyparser.urlencoded({ limit: "10mb", extended: true, verify: attachRawBody }) );
+app.use( bodyparser.raw({ limit: "10mb", verify: attachRawBody }) );
 
 app.use(function(req, res, next) {
     res.setHeader("Access-Control-Allow-Origin", "*");
