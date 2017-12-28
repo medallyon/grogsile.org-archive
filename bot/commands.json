@@ -69,44 +69,6 @@
     "example": "ping"
   },
 
-  "kick": {
-    "description": "Kicks a mentioned member.",
-    "alias": [
-      "kick"
-    ],
-    "arguments": {
-      "@mention": {
-        "description": "The mentioned user to kick.",
-        "optional": false
-      },
-      "User_ID": {
-        "description": "The User ID to kick.",
-        "optional": true
-      }
-    },
-    "userPermissions": 200,
-    "example": "[ @@Medallyon | 129036763367735297 ]"
-  },
-
-  "ban": {
-    "description": "Bans a mentioned member.",
-    "alias": [
-      "ban"
-    ],
-    "arguments": {
-      "@mention": {
-        "description": "The mentioned user to ban.",
-        "optional": false
-      },
-      "User_ID": {
-        "description": "The User ID to ban.",
-        "optional": true
-      }
-    },
-    "userPermissions": 300,
-    "example": "[ @@Medallyon | 129036763367735297 ]"
-  },
-
   "ping": {
     "description": "Pong!",
     "alias": [
