@@ -9,6 +9,7 @@ function apiAuth(req, res, next)
         let apiKey;
         if (req.body.key) apiKey = req.body.key;
         else if (req.query.key) apiKey = req.query.key;
+        else apiKey = req.get("Authorization") || req.get("Authorisation");
 
         if (apiKey && keys.some(key => key === apiKey)) return next();
         else return res.status(401).send("Submitted none or wrong API key.");
