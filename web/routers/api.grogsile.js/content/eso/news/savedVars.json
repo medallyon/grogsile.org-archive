@@ -1,8 +1,14 @@
 {
-  "link": "",
+  "publishedAt": "",
+  "channelId": "",
   "title": "",
-  "pubDate": 0,
-  "image": "",
-  "summary": "",
-  "description": ""
+  "description": "",
+  "thumbnails": {},
+  "channelTitle": "",
+  "playlistId": "",
+  "position": 0,
+  "resourceId": {
+    "kind": "",
+    "videoId": ""
+  }
 }
