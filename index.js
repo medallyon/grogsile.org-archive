@@ -41,7 +41,8 @@ for (let file of fs.readdirSync(join(__dirname, "utils")))
     utils[scriptName].reload = utils.implementReload(scriptName, scriptPath, utils);
 }
 
-global.constants.discord.embed.color = utils.randColor();
+constants.discord.embed.color = utils.randColor();
+constants.web.session.secret = utils.genSecret();
 
 // === [ IMPORTS ] === //
 
