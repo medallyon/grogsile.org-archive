@@ -12,9 +12,9 @@ function character(msg)
         if (!msg.mentions.users.size) character = msg.args[0];
     } else
 
-    if (msg.args.length === 2)
+    if (msg.args.length >= 2)
     {
-        if (msg.mentions.users.size) character = msg.args[1];
+        if (msg.mentions.users.size) character = msg.args.slice(1);
         else character = msg.args[0];
     }
 
@@ -30,7 +30,7 @@ function character(msg)
                 return msg.channel.send({ embed }).catch(console.error);
             }
 
-            if (!character || msg.command === "characters")
+            if (!character)
             {
                 let finalEmbed = new Discord.MessageEmbed()
                     .setColor(utils.randColor())
@@ -40,7 +40,7 @@ function character(msg)
 
                 for (let char of characters)
                 {
-                    finalEmbed.addField(`${char.characterName} (${char.champion ? ("CP" + account.level) : ("lvl " + char.level)})`, `${constants.discord.esoi.emojis.class[char.class.toLowerCase()].emoji}${char.class}\n${constants.discord.esoi.emojis.alliance[char.alliance].emoji}${char.alliance}\n${constants.discord.esoi.emojis.race[char.race.toLowerCase()].emoji}${char.race}\n${char.roles.map(r => constants.discord.esoi.emojis.role[r.toLowerCase()].emoji).join(" ")}`, true);
+                    finalEmbed.addField(`${char.characterName} (${char.champion ? ("CP" + account.level) : ("lvl " + char.level)})`, `${constants.discord.esoi.emojis.class[char.class.toLowerCase().split(" ").join("")].emoji}${char.class}\n${constants.discord.esoi.emojis.alliance[char.alliance].emoji}${char.alliance}\n${constants.discord.esoi.emojis.race[char.race.toLowerCase()].emoji}${char.race}\n${char.roles.map(r => constants.discord.esoi.emojis.role[r.toLowerCase()].emoji).join(" ")}`, true);
                 }
 
                 msg.channel.send({ embed: finalEmbed }).catch(console.error);
@@ -48,7 +48,7 @@ function character(msg)
 
             else
             {
-                character = characters.find(c => character === c.characterName);
+                character = characters.find(c => character === c.characterName || c.characterName.includes(character));
 
                 if (!character)
                 {
@@ -66,7 +66,7 @@ function character(msg)
                     .setDescription(character.biography)
                     .addField("Level", (character.champion ? (constants.discord.esoi.emojis.level.champion.emoji + account.level) : (constants.discord.esoi.emojis.level.normal.emoji + character.level)), true)
                     .addField("Race", constants.discord.esoi.emojis.race[character.race.toLowerCase()].emoji + character.race, true)
-                    .addField("Class", constants.discord.esoi.emojis.class[character.class.toLowerCase().split(" ").join()].emoji + character.class, true)
+                    .addField("Class", constants.discord.esoi.emojis.class[character.class.toLowerCase().split(" ").join("")].emoji + character.class, true)
                     .addField("Alliance", constants.discord.esoi.emojis.alliance[character.alliance].emoji + character.alliance, true)
                     .addField("Roles", character.roles.map(r => constants.discord.esoi.emojis.role[r.toLowerCase()].emoji + r).join(", "), true)
                     .addField("Professions", "`" + character.professions.join("`, `") + "`", true)
