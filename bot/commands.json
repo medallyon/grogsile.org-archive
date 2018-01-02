@@ -135,6 +135,7 @@
     "description": "Shows character summary.",
     "alias": [
       "characters",
+      "chars",
       "character",
       "char"
     ],
