@@ -1,65 +1,50 @@
 const express = require("express")
+, session = require("express-session")
 , multer = require("multer")
 , jimp = require("jimp")
-, passport = require("passport")
-, session = require("express-session");
+, sessionStore = require("sessionstore")
+, Grant = require("grant-express");
+let grant = new Grant(require(join(__webdir, "config.json")));
 
 let router = express.Router()
 , locals = {};
 
 // ===== [ DISCORD AUTH ] ===== //
 
-passport.serializeUser(function(user, done) {
-    done(null, user);
-});
-passport.deserializeUser(function(obj, done) {
-    done(null, obj);
-});
-
-let esoiStrategy = new middleware.DiscordStrategy({
-    clientID: dClient.config.discord.auth.id,
-    clientSecret: dClient.config.discord.auth.secret,
-    callbackURL: "https://esoi.grogsile.org/callback",
-    scope: ["identify", "guilds"]
-}, function(accessToken, refreshToken, profile, done) {
-    process.nextTick(function() {
-        return done(null, profile);
-    });
-});
-passport.use(esoiStrategy);
-
 router.use(session({
-    secret: utils.genSecret(),
+    secret: constants.web.session.secret,
     resave: false,
     saveUninitialized: false
 }));
-router.use(passport.initialize());
-router.use(passport.session());
+router.use(grant);
 
 router.get("/login", middleware.isLoggedIn, function(req, res)
 {
-    res.redirect("/dashboard");
+    res.redirect("/");
 });
 
-router.get("/actuallylogin", passport.authenticate("discord", { scope: ["identify", "guilds"], callbackURL: "https://esoi.grogsile.org/callback" }), (req, res) => {});
-
-router.get("/callback", passport.authenticate("discord", { failureRedirect: "/", callbackURL: "https://esoi.grogsile.org/callback" }), function(req, res)
+router.get("/actuallylogin", function(req, res)
 {
-    let userDir = join(__data, "users", req.user.id);
+    res.redirect("https://discordapp.com/api/oauth2/authorize?client_id=231606856663957505&redirect_uri=https%3A%2F%2Fesoi.grogsile.org%2Fcallback&response_type=code&scope=identify");
+});
+
+router.get("/callback", middleware.completeSignIn, function(req, res)
+{
+    let userDir = join(__data, "users", req.session.user.id);
     fs.ensureDir(userDir, (err) => {
         if (err) console.error(err);
 
         fs.readdir(userDir, (err, files) => {
             if (err) console.error(err);
 
-            fs.outputJson(join(userDir, "user.json"), req.user, (err) => {
+            fs.outputJson(join(userDir, "user.json"), req.session.user, (err) => {
                 if (err) console.error(err);
 
                 if (files.indexOf("characters.json") === -1) fs.outputJson(join(userDir, "characters.json"), [], (err) => { if (err) console.error(err) });
                 if (files.indexOf("account.json") === -1)
                 {
                     let userAccount = JSON.parse(JSON.stringify(_templates.account));
-                    userAccount.id = req.user.id;
+                    userAccount.id = req.session.user.id;
 
                     fs.outputJson(join(userDir, "account.json"), userAccount, (err) => {
                         if (err) console.error(err);
@@ -72,8 +57,9 @@ router.get("/callback", passport.authenticate("discord", { failureRedirect: "/",
     });
 });
 
-router.get("/logout", function(req, res) {
-    req.logout();
+router.get("/logout", function(req, res)
+{
+    if (req.session.user) delete req.session.user;
     res.redirect("/");
 });
 
@@ -81,6 +67,18 @@ router.get("/logout", function(req, res) {
 
 function resetLocals(req, res, next)
 {
+    if (req.session.user) req.user = req.session.user;
+
+    let webApp = webApps["esoi.grogsile.org"];
+    res.render = function(view, _locals)
+    {
+        webApp.render(view, { _locals }, function(err, htmlString)
+        {
+            if (err) throw err;
+            else res.send(htmlString);
+        });
+    }
+
     locals = {
         location: "",
         content: {},
@@ -88,7 +86,7 @@ function resetLocals(req, res, next)
         account: {}
     };
     
-    if (req.user)
+    if (locals.user)
     {
         fs.readJson(join(__data, "users", req.user.id, "account.json"), (err, account) => {
             if (err) console.error(err);
@@ -109,7 +107,7 @@ router.get("/", resetLocals, function(req, res)
 
 // ===== [ DASHBOARD ] ===== //
 
-router.get("/dashboard", middleware.isLoggedIn, middleware.isAccountSetup, resetLocals, function(req, res)
+router.get("/dashboard", middleware.isLoggedIn, resetLocals, middleware.isAccountSetup, function(req, res)
 {
     let userDir = join(__data, "users", req.user.id);
     fs.readJson(join(userDir, "characters.json"), (err, characters) => {
@@ -193,7 +191,7 @@ router.post("/account", middleware.isLoggedIn, resetLocals, function(req, res)
 
 // ===== [ NEW CHARACTER | NEW GUILD ] ===== //
 
-router.get("/new", middleware.isLoggedIn, middleware.isAccountSetup, resetLocals, function(req, res)
+router.get("/new", middleware.isLoggedIn, resetLocals, middleware.isAccountSetup, function(req, res)
 {
     if (!req.query.type) req.query.type = "character";
 
@@ -204,7 +202,7 @@ router.get("/new", middleware.isLoggedIn, middleware.isAccountSetup, resetLocals
 
 // ===== [ EDIT CHARACTER | EDIT GUILD ] ===== //
 
-router.get("/edit", middleware.isLoggedIn, middleware.isAccountSetup, resetLocals, function(req, res)
+router.get("/edit", middleware.isLoggedIn, resetLocals, middleware.isAccountSetup, function(req, res)
 {
     if (!req.query.type) req.query.type = "character";
 

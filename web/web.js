@@ -13,6 +13,7 @@ const http = require("http")
 var app = express();
 
 app.set("view engine", "ejs");
+app.set("views", join(__webdir, "views"));
 
 app.use(cookieParser());
 
@@ -40,9 +41,12 @@ for (let script of fs.readdirSync(join(__dirname, "middleware")))
 
 // === [ VHOSTS ] === //
 
+global.webApps = {};
 for (let subdomain of fs.readdirSync(join(__dirname, "domains")))
 {
-    app.use(vhost(subdomain, require(join(__dirname, "domains", subdomain, "index.js"))));
+    let webApp = require(join(__dirname, "domains", subdomain, "index.js"));
+    app.use(vhost(subdomain, webApp));
+    webApps[subdomain] = webApp;
 }
 
 // === [ LISTENER ] === //
