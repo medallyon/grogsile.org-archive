@@ -68,33 +68,6 @@ function prepareAnnouncement(servers)
     return e;
 }
 
-function toggleRoles(doToggle, roles)
-{
-    return new Promise(function(resolve, reject)
-    {
-        if (!doToggle) return resolve(roles);
-        if (!roles.length) return resolve(roles);
-
-        for (let i = 0; i < roles.length; i++)
-        {
-            let role = roles[i];
-
-            role.setMentionable(!role.mentionable)
-            .then(newRole => {
-                if (i === roles.length - 1)
-                {
-                    resolve(roles);
-                }
-            }).catch(err => {
-                if (i === roles.length - 1)
-                {
-                    resolve(roles);
-                }
-            });
-        }
-    });
-}
-
 function deletePreviousUpdate(doDelete, channel, id)
 {
     return new Promise(function(resolve, reject)
@@ -173,7 +146,7 @@ function liveServerStatus()
                                 let updateChannel = guild.channels.get(guild.config.guild.liveServerStatus.update.channel)
                                 , roles = guild.config.guild.liveServerStatus.update.roles.map(x => guild.roles.get(x));
 
-                                toggleRoles(guild.config.guild.liveServerStatus.update.toggleRoles, roles.filter(r => !r.mentionable))
+                                utils.toggleRoles(guild.config.guild.liveServerStatus.update.toggleRoles, roles.filter(r => !r.mentionable))
                                 .then(function(modifiedRoles)
                                 {
                                     deletePreviousUpdate(guild.config.guild.liveServerStatus.update.deletePrevious, updateChannel, liveVars.updateId)
@@ -181,7 +154,7 @@ function liveServerStatus()
                                     {
                                         updateChannel.send(roles.map(r => r.toString()).join(" "), { embed: finalUpdateEmbed })
                                         .then(sentMessage => {
-                                            toggleRoles(guild.config.guild.liveServerStatus.update.toggleRoles, roles);
+                                            utils.toggleRoles(guild.config.guild.liveServerStatus.update.toggleRoles, roles);
                                             liveVars.updateId = sentMessage.id;
                                             fs.outputJson(join(baseGuildPath, "liveServerUpdate", "savedVariables.json"), liveVars, (err) => { if (err) console.error(err) });
                                         }).catch(console.error);
