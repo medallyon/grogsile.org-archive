@@ -9,6 +9,8 @@ function implementReload(scriptName, path, group)
 
         group[scriptName] = require(path);
         group[scriptName].reload = implementReload(scriptName, path, group);
+
+        return "Module successfully reloaded";
     }
 }
 

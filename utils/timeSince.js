@@ -1,5 +1,8 @@
 function timeSince(date)
 {
+    if (date instanceof Date) date = Date.parse(date);
+    if ((typeof date) !== "number") throw new TypeError("{date} must be of type number");
+
     this.date = date;
     this.fullYears = (date / 12 / 30.436875 / 24 / 60 / 60 / 1000);
     this.fullMonths = (date / 30.436875 / 24 / 60 / 60 / 1000);
@@ -24,7 +27,7 @@ function timeSince(date)
     if (this.days >= 1) output.push(`${this.days} Day${this.days === 1 ? "" : "s"}`);
     if (this.hours >= 1) output.push(`${this.hours} Hour${this.hours === 1 ? "" : "s"}`);
     if (this.minutes >= 1) output.push(`${this.minutes} Minute${this.minutes === 1 ? "" : "s"}`);
-    if (this.seconds >= 1) output.push(`${this.seconds} Second${this.seconds === 1 ? "" : "s"}`);
+    if (this.seconds >= 1) output.push(`${(output.length > 0) ? "and " : ""}${this.seconds} Second${this.seconds === 1 ? "" : "s"}`);
 
     if (output.length === 0) output.push("No time has passed since " + this.date);
     return output.join(" ");

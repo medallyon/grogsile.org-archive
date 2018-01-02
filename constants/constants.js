@@ -1,5 +1,15 @@
 global.constants = {
-    discord: {}
+    discord: {},
+    web: {}
+};
+
+// === [ WEB SESSION ] === //
+
+constants.web.session = {
+    secret: ""
+};
+constants.web.bot = {
+    redirectURL: "https://bot.grogsile.org/callback"
 };
 
 // === [ BOT INVITE ] === //
