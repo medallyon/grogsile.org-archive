@@ -2,9 +2,9 @@ const express = require("express")
 , session = require("express-session")
 , multer = require("multer")
 , jimp = require("jimp")
-, sessionStore = require("sessionstore")
 , Grant = require("grant-express");
 let grant = new Grant(require(join(__webdir, "config.json")));
+const FileStore = require('session-file-store')(session);
 
 let router = express.Router()
 , locals = {};
@@ -12,9 +12,11 @@ let router = express.Router()
 // ===== [ DISCORD AUTH ] ===== //
 
 router.use(session({
-    secret: constants.web.session.secret,
+    secret: dClient.config.web.session.secret,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: { path: '/', httpOnly: false, secure: false, maxAge: 864000000 },
+    store: new FileStore({ path: join(__data, "sessions") })
 }));
 router.use(grant);
 
@@ -30,6 +32,12 @@ router.get("/actuallylogin", function(req, res)
 
 router.get("/callback", middleware.completeSignIn, function(req, res)
 {
+    if (!req.session.user)
+    {
+        console.error("Session User does not exist");
+        return res.redirect("/");
+    }
+
     let userDir = join(__data, "users", req.session.user.id);
     fs.ensureDir(userDir, (err) => {
         if (err) console.error(err);
@@ -101,7 +109,7 @@ function resetLocals(req, res, next)
 
 router.get("/", resetLocals, function(req, res)
 {
-    if (!req.user) res.render("pages/cover.ejs", locals);
+    if (!req.session.user) res.render("pages/cover.ejs", locals);
     else res.redirect("/dashboard");
 });
 
@@ -111,7 +119,7 @@ router.get("/dashboard", middleware.isLoggedIn, resetLocals, middleware.isAccoun
 {
     let userDir = join(__data, "users", req.user.id);
     fs.readJson(join(userDir, "characters.json"), (err, characters) => {
-        if (err) console.error(err);
+        if (err) console.error(err.message);
 
         locals.characters = characters;
         res.render("pages/dashboard.ejs", locals);
@@ -301,7 +309,7 @@ router.get("/u/:id", resetLocals, function(req, res)
 
 router.get("/api/users/:id", middleware.apiAuth, function(req, res)
 {
-    const userId = (req.params.id === "@me" ? req.user.id : req.params.id);
+    const userId = (req.params.id === "@me" ? req.session.user.id : req.params.id);
 
     fs.readdir(join(__data, "users"), (err, users) => {
         if (err) console.error(err);
@@ -320,7 +328,7 @@ router.get("/api/users/:id", middleware.apiAuth, function(req, res)
 
 router.get("/api/users/:id/characters", middleware.apiAuth, function(req, res)
 {
-    const userId = (req.params.id === "@me" ? req.user.id : req.params.id);
+    const userId = (req.params.id === "@me" ? req.session.user.id : req.params.id);
     const userDir = join(__data, "users", userId);
     fs.access(userDir, (err) => {
         if (err && err.code === "ENOENT") return res.status(400).send("This user does not exist");
@@ -406,7 +414,7 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
 {
     if (!req.body) return res.status(400).send("No form data was sent with the request");
 
-    const userId = (req.params.id === "@me" ? req.user.id : req.params.id);
+    const userId = (req.params.id === "@me" ? req.session.user.id : req.params.id);
     const userDir = join(__data, "users", userId);
 
     if (req.body._method.toUpperCase() === "POST")
@@ -422,7 +430,7 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
 
                 validateFormElements(req.body)
                 .then((charData) => {
-                    const character = { ownerId: req.user.id };
+                    const character = { ownerId: req.session.user.id };
                     Object.assign(character, charData);
 
                     character.id = null, usedIds = characters.map(x => x.id);

@@ -6,6 +6,7 @@ app = express();
 // 
 app.set("views", join(__webdir, "views", "esoi"));
 app.set("view engine", "ejs");
+app.set("trust proxy", 1);
 
 app.use( bodyparser.json({ limit: "10mb" }) );
 app.use( bodyparser.urlencoded({ limit: "10mb", extended: true }) );

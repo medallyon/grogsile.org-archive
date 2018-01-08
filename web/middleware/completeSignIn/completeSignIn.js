@@ -55,6 +55,13 @@ function completeSignIn(req, res, next)
         if (err) throw err;
 
         let accessData = JSON.parse(body);
+        console.log(accessData);
+
+        if (accessData.error)
+        {
+            if (accessData.error === "invalid_request") return res.redirect("/");
+            else return res.status(500).send(`<p>We couldn't authenticate you. :/ ERROR MESSAGE: ${accessData.error}</p><p>Go back to <a href="https://esoi.grogsile.org/">ESO International</a></p>`);
+        }
 
         if (req.hostname === "bot.grogsile.org")
         {
@@ -64,21 +71,17 @@ function completeSignIn(req, res, next)
                 {
                     req.session.user = user;
                     req.session.user.guilds = guilds;
-                    req.session.user.logout = function()
-                    {
-                        req.session.user = null;
-                    }
 
                     next();
                 }).catch(function(err)
                 {
                     console.error(err);
-                    res.json(err);
+                    res.redirect("/");
                 });
             }).catch(function(err)
             {
                 console.error(err);
-                res.json(err);
+                res.redirect("/");
             });
         } else
 
@@ -87,16 +90,12 @@ function completeSignIn(req, res, next)
             fetchUser(accessData).then(function(user)
             {
                 req.session.user = user;
-                req.session.user.logout = function()
-                {
-                    req.session.user = null;
-                }
 
                 next();
             }).catch(function(err)
             {
                 console.error(err);
-                res.json(err);
+                res.redirect("/");
             });
         }
     });
