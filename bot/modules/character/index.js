@@ -48,7 +48,7 @@ function character(msg)
 
             else
             {
-                character = characters.find(c => character === c.characterName || c.characterName.includes(character));
+                character = characters.find(c => character.toLowerCase() === c.characterName.toLowerCase() || c.characterName.toLowerCase().includes(character.toLowerCase()));
 
                 if (!character)
                 {
