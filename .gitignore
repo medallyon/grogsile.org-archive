@@ -45,3 +45,4 @@ sftp-config.json
 bot/modules/esoItem/items.json
 /.vs
 package-lock.json
+/data/sessions
