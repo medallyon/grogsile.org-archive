@@ -110,7 +110,7 @@ function liveServerStatus()
 
             for (let guild of dClient.guilds.values())
             {
-                if (!guild.available) continue;
+                if (!guild.available || !guild.config) continue;
 
                 const baseGuildPath = join(__data, "guilds", guild.id);
 
