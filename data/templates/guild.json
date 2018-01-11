@@ -12,6 +12,67 @@
         "message": "Welcome {user} to **{guild}**!"
       }
     },
+    "RSS": {
+      "enabled": false,
+      "url": "",
+      "interval": 30000,
+      "channel": "",
+      "roles": []
+    },
+    "restricted": [],
+    "commands": {
+      "about": {
+        "enabled": true
+      },
+      "character": {
+        "enabled": true
+      },
+      "esoItem": {
+        "enabled": true,
+        "usage": {
+          "command": true,
+          "inline": false
+        }
+      },
+      "evaluate": {
+        "enabled": true
+      },
+      "help": {
+        "enabled": true
+      },
+      "ping": {
+        "enabled": true
+      },
+      "profile": {
+        "enabled": true
+      },
+      "reload": {
+        "enabled": true
+      },
+      "restart": {
+        "enabled": true
+      },
+      "serverStatus": {
+        "enabled": true
+      },
+      "wiki": {
+        "enabled": true
+      }
+    }
+  },
+  "eso": {
+    "news": {
+      "enabled": false,
+      "channel": ""
+    },
+    "youtube": {
+      "enabled": false,
+      "channel": ""
+    },
+    "patchNotes": {
+      "enabled": false,
+      "channel": ""
+    },
     "liveServerStatus": {
       "panel": {
         "enabled": false,
@@ -24,73 +85,6 @@
         "toggleRoles": true,
         "deletePrevious": false
       }
-    },
-    "RSS": {
-      "enabled": false,
-      "url": "",
-      "interval": 30000,
-      "channel": "",
-      "roles": []
-    },
-    "patchNotes": {
-      "enabled": false,
-      "channel": ""
-    },
-    "restricted": []
-  },
-  "eso": {
-    "news": {
-      "active": false,
-      "channel": ""
-    },
-    "youtube": {
-      "active": false,
-      "channel": ""
-    }
-  },
-  "commands": {
-    "about": {
-      "enabled": true
-    },
-    "ban": {
-      "enabled": true
-    },
-    "character": {
-      "enabled": true
-    },
-    "esoItem": {
-      "enabled": true,
-      "usage": {
-        "command": true,
-        "inline": false
-      }
-    },
-    "evaluate": {
-      "enabled": true
-    },
-    "help": {
-      "enabled": true
-    },
-    "kick": {
-      "enabled": true
-    },
-    "ping": {
-      "enabled": true
-    },
-    "profile": {
-      "enabled": true
-    },
-    "reload": {
-      "enabled": true
-    },
-    "restart": {
-      "enabled": true
-    },
-    "serverStatus": {
-      "enabled": true
-    },
-    "wiki": {
-      "enabled": true
     }
   }
 }
