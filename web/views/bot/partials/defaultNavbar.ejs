@@ -1,0 +1,76 @@
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="/">Grogsile</a>
+
+  <% if (!user) { %>
+    <div class="collapse navbar-collapse" id="navbar">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="<% if (document.location === "/") { %>#<% } else { %>/<% } %>">Home <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav pull-right">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            More
+          </a>
+          <div class="dropdown-menu" aria-labelledby="more">
+            <a class="dropdown-item" href="/invite">Bot Invite</a>
+            <a class="dropdown-item" href="https://esoi.grogsile.org/discord">Join ESOI</a>
+            <a class="dropdown-item" href="/partners">Partners</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/login">Sign In</a>
+        </li>
+      </ul>
+    </div>
+  <% } else { %>
+    <div class="collapse navbar-collapse" id="navbar">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item <% if (document.location === "/guilds") { %>active<% } %>">
+          <a class="nav-link" href="<% if (document.location === "/guilds") { %>#<% } else { %>/guilds<% } %>">Overview</a>
+        </li>
+        <li class="nav-item dropdown <% if (/\/guilds\/\d+/g.test(document.location)) { %>active<% } %>">
+          <a class="nav-link dropdown-toggle" href="/guilds" id="guildSelectMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Servers
+          </a>
+          <div class="dropdown-menu" aria-labelledby="guildSelectMenu">
+            <% for (let guild of user.guilds) { %>
+              <a class="dropdown-item navbar-brand text-muted" href="/guilds/<%- guild.id %>" <% if (document.location === "/guilds/" + guild.id) { %> style="color: black!important;"<% } %>>
+                <img src="https://cdn.discordapp.com/icons/<%- guild.id %>/<%- guild.icon %>.png" width="30" height="30" class="d-inline-block align-top rounded" alt="<%- guild.name %>">
+                <%- guild.name %>
+              </a>
+            <% } %>
+          </div>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav pull-right">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            More
+          </a>
+          <div class="dropdown-menu" aria-labelledby="more">
+            <a class="dropdown-item" href="/invite">Bot Invite</a>
+            <a class="dropdown-item" href="https://esoi.grogsile.org/discord">Join ESOI</a>
+            <a class="dropdown-item" href="/partners">Partners</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="account" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Account
+          </a>
+          <div class="dropdown-menu" aria-labelledby="account">
+            <a class="dropdown-item" href="/account">Preferences</a>
+            <div class="dropdown-separator"></div>
+            <a class="dropdown-item" href="/logout">Sign Out</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  <% } %>
+</nav>

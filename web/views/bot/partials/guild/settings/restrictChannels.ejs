@@ -1,0 +1,44 @@
+<% let setting = currentGuild.config.guild.restricted; %>
+<div class="container">
+
+  <form id="form-channelRestrict" role="form" method="POST" action="https://bot.grogsile.org/guilds/<%- currentGuild.id %>/restrictChannels" enctype="application/json">
+
+    <h2 class="text-left">Restrict Channels</h2>
+
+    <p class="text-justify">Select channels here to blacklist them from being checked for commands.</p>
+
+    <div id="channelRestrict-content" class="row text-center justify-content-center">
+
+      <div class="form-group col-lg-8">
+        
+        <label for="channelRestrict-textChannels"><b>Text Channels</b></label>
+        <p>
+          <select multiple class="form-control" id="channelRestrict-textChannels" name="channels[]">
+
+            <% let channels = currentGuild.channels.sort((a, b) => a.position - b.position); %>
+            <% let categories = channels.filter(c => c.type === "category" && !c.children.every(x => x.type === "voice")); %>
+
+            <% let children = categories.map(cat => cat.children).reduce((acc, val) => { return acc.concat(val) }, []); %>
+            <% let firstChannels = channels.filter(channel => children.every(child => channel.id !== child.id)); %>
+
+            <% for (let channel of firstChannels.filter(c => c.type === "text")) { %>
+              <option value="<%- channel.id %>" <% if (setting.channel === channel.id) { %> selected<% } %>><b>#</b> <%- channel.name %></option>
+            <% } %>
+
+            <% for (let category of categories) { %>
+              <optgroup label="<%- category.name %>">
+                <% for (let channel of category.children.filter(c => c.type === "text").sort((a, b) => a.position - b.position)) { %><option value="<%- channel.id %>" <% if (setting.includes(channel.id)) { %> selected<% } %>><b>#</b> <%- channel.name %></option><% } %>
+              </optgroup>
+            <% } %>
+
+          </select>
+        </p>
+
+      </div>
+
+    </div>
+
+    <button type="submit" class="btn btn-lg">Submit</button>
+
+  </form>
+</div>

@@ -1,0 +1,107 @@
+<% let setting = currentGuild.config.guild.commands; %>
+<div class="container">
+
+  <form id="form-channelRestrict" role="form" method="POST" action="https://bot.grogsile.org/guilds/<%- currentGuild.id %>/commands" enctype="application/json">
+
+    <h2 class="text-left">Toggle Commands</h2>
+    <p class="text-justify">Check commands here to enable them. Un-check to disable commands. This is a server-wide toggle.</p>
+
+    <div id="channelRestrict-content" class="row">
+
+      <div class="col-lg-4">
+
+        <div class="abc-checkbox abc-checkbox-primary">
+          <input type="checkbox" id="ping-enabled" name="ping-enabled" <% if (setting.ping.enabled) { %> checked<% } %>>
+          <label for="ping-enabled" class="text-center"><b>ping</b></label>
+        </div>
+
+      </div>
+      <div class="col-lg-4">
+
+        <div class="abc-checkbox abc-checkbox-primary">
+          <input type="checkbox" id="about-enabled" name="about-enabled" <% if (setting.about.enabled) { %> checked<% } %>>
+          <label for="about-enabled" class="text-center"><b>about</b></label>
+        </div>
+
+      </div>
+      <div class="col-lg-4">
+
+        <div class="abc-checkbox abc-checkbox-primary">
+          <input type="checkbox" id="help-enabled" name="help-enabled" <% if (setting.help.enabled) { %> checked<% } %>>
+          <label for="help-enabled" class="text-center"><b>help</b></label>
+        </div>
+
+      </div>
+
+      <div class="col-md-12 pt-4 pb-2">
+        <h4>ESO-Related Commands</h4>
+      </div>
+
+      <div class="col-lg-4">
+
+        <div class="abc-checkbox abc-checkbox-primary">
+          <input type="checkbox" id="wiki-enabled" name="wiki-enabled" <% if (setting.wiki.enabled) { %> checked<% } %>>
+          <label for="wiki-enabled" class="text-center"><b>wiki</b></label>
+        </div>
+
+      </div>
+      <div class="col-lg-4">
+
+        <div class="abc-checkbox abc-checkbox-primary">
+          <input type="checkbox" id="serverStatus-enabled" name="serverStatus-enabled" <% if (setting.serverStatus.enabled) { %> checked<% } %>>
+          <label for="serverStatus-enabled" class="text-center"><b>serverStatus</b></label>
+        </div>
+
+      </div>
+      <div class="col-lg-4">
+
+        <div class="abc-checkbox abc-checkbox-primary">
+          <input type="checkbox" id="profile-enabled" name="profile-enabled" <% if (setting.profile.enabled) { %> checked<% } %>>
+          <label for="profile-enabled" class="text-center"><b>profile</b></label>
+        </div>
+
+      </div>
+      <div class="col-lg-4">
+
+        <div class="abc-checkbox abc-checkbox-primary">
+          <input type="checkbox" id="character-enabled" name="character-enabled" <% if (setting.character.enabled) { %> checked<% } %>>
+          <label for="character-enabled" class="text-center"><b>character</b></label>
+        </div>
+
+      </div>
+      <div class="col-lg-4">
+
+        <div class="abc-checkbox abc-checkbox-primary">
+          <input type="checkbox" id="esoItem-enabled" name="esoItem-enabled" <% if (setting.esoItem.enabled) { %> checked<% } %>>
+          <label for="esoItem-enabled" class="text-center"><b>esoItem</b></label>
+        </div>
+
+      </div>
+
+      <div class="col-md-12 pt-4 pb-2">
+        <h4>esoItem Usage</h4>
+      </div>
+
+      <div class="col-lg-6">
+
+        <div class="abc-checkbox abc-checkbox-primary">
+          <input type="checkbox" id="esoItem-usage-command" name="esoItem-usage-command" <% if (setting.esoItem.usage.command) { %> checked<% } %>>
+          <label for="esoItem-usage-command" class="text-center" data-toggle="tooltip" data-placement="top" title="/item fishy stick"><b>Command</b></label>
+        </div>
+
+      </div>
+      <div class="col-lg-6">
+
+        <div class="abc-checkbox abc-checkbox-primary">
+          <input type="checkbox" id="esoItem-usage-inline" name="esoItem-usage-inline" <% if (setting.esoItem.usage.inline) { %> checked<% } %>>
+          <label for="esoItem-usage-inline" class="text-center" data-toggle="tooltip" data-placement="top" title="[fishy stick]"><b>Inline</b></label>
+        </div>
+        
+      </div>
+
+    </div>
+
+    <button type="submit" class="btn btn-lg">Submit</button>
+
+  </form>
+</div>

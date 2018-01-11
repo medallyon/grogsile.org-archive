@@ -1,0 +1,118 @@
+<% let setting = currentGuild.config.eso.liveServerStatus; %>
+<div class="container">
+
+  <form id="form-liveServerStatus" role="form" method="POST" action="https://bot.grogsile.org/guilds/<%- currentGuild.id %>/liveServerStatus" enctype="application/json">
+
+    <h2 class="text-left" style="position: absolute;">Live Server Status Notifications</h2>
+    <div class="abc-checkbox abc-checkbox-success text-right py-2">
+      <input type="checkbox" id="liveServerStatus-enabled" <% if (setting.update.enabled || setting.panel.enabled) { %> checked <% } %>>
+      <label for="liveServerStatus-enabled" class="text-center"><b>Enabled</b></label>
+    </div>
+
+    <p class="text-justify">The <b>Live Server Status</b> Module comes in two parts:
+      <ol>
+        <li>Update Posts mentioning specified roles</li>
+        <li>A static live panel that is updated every 5 minutes</li>
+      </ol>
+    </p>
+
+    <div id="liveServerStatus-content" class="row text-center justify-content-center <% if (!setting.update.enabled && !setting.panel.enabled) { %>d-none<% } %>">
+
+      <div class="col-lg-12 pb-2">
+        
+        <h3 class="text-left" style="position: absolute;">Live Update Posts</h3>
+        <div class="abc-checkbox abc-checkbox-success text-right py-2">
+          <input type="checkbox" id="liveServerStatus-update-enabled" name="update-enabled" <% if (setting.update.enabled) { %> checked <% } %>>
+          <label for="liveServerStatus-update-enabled"><b>Enabled</b></label>
+        </div>
+
+      </div>
+
+      <div class="form-group col-lg-4 justify-content-center">
+
+        <div class="abc-checkbox">
+          <input type="checkbox" id="liveServerStatus-update-roles-enabled" name="roles-enabled" <% if (setting.update.roles.length) { %> checked <% } %>>
+          <label for="liveServerStatus-update-roles-enabled"><b>Mention Roles on Update</b></label>
+        </div>
+        <div id="liveServerStatus-update-toggleRoles-checkbox" class="abc-checkbox <% if (!setting.update.roles.length) { %> d-none <% } %>">
+          <input type="checkbox" id="liveServerStatus-update-toggleRoles" name="update-toggleRoles" <% if (setting.update.toggleRoles) { %> checked <% } %>>
+          <label for="liveServerStatus-update-toggleRoles" data-toggle="tooltip" data-placement="top" title="This option will make the selected roles mentionable and then un-mentionable so that people with the role will be mentioned."><b>Toggle Roles Mentionable</b></label>
+        </div>
+
+      </div>
+      <div id="liveServerStatus-update-roles-section" class="form-group col-lg-7 justify-content-center <% if (!setting.update.roles.length) { %> d-none <% } %>">
+
+        <label for="liveServerStatus-update-roles"><b>Roles to mention on update</b></label>
+        <p>
+          <select multiple class="form-control" id="liveServerStatus-update-roles" name="update-roles[]">
+
+            <% let roles = currentGuild.roles.sort((a, b) => b.position - a.position); %>
+
+            <% for (let role of roles) { %>
+              <option value="<%- role.id %>" <% if (setting.update.roles.includes(role.id)) { %> selected<% } %>>@<%- role.name %></option>
+            <% } %>
+
+          </select>
+        </p>
+
+      </div>
+
+      <div class="form-group col-lg-8 justify-content-center">
+        
+        <label for="liveServerStatus-update-textChannel"><b>Text Channel</b></label>
+        <select class="form-control" id="liveServerStatus-update-textChannel" name="update-channel" required>
+
+          <% let channels = currentGuild.channels.sort((a, b) => a.position - b.position); %>
+          <% let categories = channels.filter(c => c.type === "category" && !c.children.every(x => x.type === "voice")); %>
+
+          <% let children = categories.map(cat => cat.children).reduce((acc, val) => { return acc.concat(val) }, []); %>
+          <% let firstChannels = channels.filter(channel => children.every(child => channel.id !== child.id)); %>
+
+          <% for (let channel of firstChannels.filter(c => c.type === "text")) { %>
+            <option value="<%- channel.id %>" <% if (setting.update.channel === channel.id) { %> selected<% } %>><b>#</b> <%- channel.name %></option>
+          <% } %>
+
+          <% for (let category of categories) { %>
+            <optgroup label="<%- category.name %>">
+              <% for (let channel of category.children.filter(c => c.type === "text").sort((a, b) => a.position - b.position)) { %><option value="<%- channel.id %>" <% if (setting.update.channel === channel.id) { %> selected<% } %>><b>#</b> <%- channel.name %></option><% } %>
+            </optgroup>
+          <% } %>
+
+        </select>
+
+      </div>
+
+      <div class="col-lg-12 pb-2">
+        
+        <h3 class="text-left" style="position: absolute;">Live Panel</h3>
+        <div class="abc-checkbox abc-checkbox-success text-right py-2">
+          <input type="checkbox" id="liveServerStatus-panel-enabled" name="panel-enabled" <% if (setting.panel.enabled) { %> checked <% } %>>
+          <label for="liveServerStatus-panel-enabled"><b>Enabled</b></label>
+        </div>
+
+      </div>
+      <div class="form-group col-lg-8 justify-content-center">
+        
+        <label for="liveServerStatus-panel-textChannel"><b>Text Channel</b></label>
+        <select class="form-control" id="liveServerStatus-panel-textChannel" name="panel-channel" required>
+
+          <% for (let channel of firstChannels.filter(c => c.type === "text")) { %>
+            <option value="<%- channel.id %>" <% if (setting.panel.channel === channel.id) { %> selected<% } %>><b>#</b> <%- channel.name %></option>
+          <% } %>
+
+          <% for (let category of categories) { %>
+            <optgroup label="<%- category.name %>">
+              <% for (let channel of category.children.filter(c => c.type === "text").sort((a, b) => a.position - b.position)) { %><option value="<%- channel.id %>" <% if (setting.panel.channel === channel.id) { %> selected<% } %>><b>#</b> <%- channel.name %></option><% } %>
+            </optgroup>
+          <% } %>
+
+        </select>
+
+      </div>
+
+    </div>
+
+    <button type="submit" class="btn btn-lg">Submit</button>
+
+  </form>
+</div>

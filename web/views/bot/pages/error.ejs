@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <%- include("../partials/defaultHead") %>
+
+  </head>
+
+  <body>
+
+    <%- include("../partials/defaultNavbar") %>
+
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+          <h1><%- error.statusCode %></h1>
+          <h2><%- error.title %></h2>
+
+          <p><%- error.message %></p>
+        </div>
+      </div>
+    </div>
+    
+    <%- include("../partials/defaultFooter") %>
+
+  </body>
+</html>

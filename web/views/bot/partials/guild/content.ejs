@@ -1,0 +1,78 @@
+<div class="container">
+
+  <div class="pb-3">
+    <a href="https://bot.grogsile.org/guilds/<%- currentGuild.id %>" class="text-gray-dark" style="text-decoration: none;">
+      <h1 style="position: relative;">
+        <img src="https://cdn.discordapp.com/icons/<%- currentGuild.id %>/<%- currentGuild.icon %>.png" width="48" height="48" class="d-inline-block mx-auto rounded" alt="<%- currentGuild.name %>" />
+        <%- currentGuild.name %>
+      </h1>
+    </a>
+  </div>
+
+  <div class="row justify-content-center">
+
+    <% if (typeof alert !== "undefined") { %><div class="col-md-9">
+      <div class="alert alert-<%- alert.type %> fade show" role="alert">
+        <%- alert.message %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </div><% } %>
+
+    <div class="col-4">
+
+      <div class="list-group" id="list-tab" role="tablist">
+        <a class="list-group-item list-group-item-action active" id="list-welcomeMessage-list" data-toggle="tab" href="#list-welcomeMessage" role="tab" aria-controls="welcomeMessage"><b>Welcome Message</b></a>
+        <a class="list-group-item list-group-item-action" id="list-esoNews-list" data-toggle="tab" href="#list-esoNews" role="tab" aria-controls="esoNews"><b>ESO News Notifications</b></a>
+        <a class="list-group-item list-group-item-action" id="list-esoYouTube-list" data-toggle="tab" href="#list-esoYouTube" role="tab" aria-controls="esoYouTube"><b>ESO YouTube Notifications</b></a>
+        <a class="list-group-item list-group-item-action disabled" id="list-esoPatchNotes-list" data-toggle="tab" href="#list-esoPatchNotes" role="tab" aria-controls="esoPatchNotes"><b>ESO Patch Notes</b></a>
+        <a class="list-group-item list-group-item-action" id="list-liveServerStatus-list" data-toggle="tab" href="#list-liveServerStatus" role="tab" aria-controls="liveServerStatus"><b>Live ESO Server Status</b></a>
+        <a class="list-group-item list-group-item-action disabled" id="list-rss-list" data-toggle="tab" href="#list-rss" role="tab" aria-controls="rss"><b>Custom RSS</b></a>
+        <a class="list-group-item list-group-item-action" id="list-restrictChannels-list" data-toggle="tab" href="#list-restrictChannels" role="tab" aria-controls="restrictChannels"><b>Restrict Channels</b></a>
+        <a class="list-group-item list-group-item-action" id="list-commands-list" data-toggle="tab" href="#list-commands" role="tab" aria-controls="commands"><b>Toggle Commands</b></a>
+      </div>
+
+    </div>
+
+    <div class="col-8">
+
+      <div class="tab-content" id="nav-tabContent">
+
+        <div class="tab-pane fade show active" id="list-welcomeMessage" role="tabpanel" aria-labelledby="list-welcomeMessage-list">
+          <%- include("./settings/welcomeMessage") %>
+        </div>
+
+        <div class="tab-pane fade" id="list-esoNews" role="tabpanel" aria-labelledby="list-esoNews-list">
+          <%- include("./settings/esoNews") %>
+        </div>
+
+        <div class="tab-pane fade" id="list-esoYouTube" role="tabpanel" aria-labelledby="list-esoYouTube-list">
+          <%- include("./settings/esoYouTube") %>
+        </div>
+
+        <div class="tab-pane fade" id="list-esoPatchNotes" role="tabpanel" aria-labelledby="list-esoPatchNotes-list">
+          <%- include("./settings/esoPatchNotes") %>
+        </div>
+
+        <div class="tab-pane fade" id="list-liveServerStatus" role="tabpanel" aria-labelledby="list-liveServerStatus-list">
+          <%- include("./settings/liveServerStatus") %>
+        </div>
+
+        <div class="tab-pane fade" id="list-rss" role="tabpanel" aria-labelledby="list-rss-list">...</div>
+
+        <div class="tab-pane fade" id="list-restrictChannels" role="tabpanel" aria-labelledby="list-restrictChannels-list">
+          <%- include("./settings/restrictChannels") %>
+        </div>
+
+        <div class="tab-pane fade" id="list-commands" role="tabpanel" aria-labelledby="list-commands-list">
+          <%- include("./settings/commands") %>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

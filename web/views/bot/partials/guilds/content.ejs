@@ -1,0 +1,51 @@
+<div class="container">
+
+  <% for (let guild of user.guilds) { %>
+    <div class="jumbotron">
+
+      <div>
+        <p class="lead pull-right">
+          <svg class="d-inline-block align-middle" height="16" width="16">
+            <circle cx="8" cy="8" r="4" fill="<% if (guild.available) { %>lawngreen<% } else { %>red<% } %>" />
+          </svg>
+          <% if (guild.available) { %>Available<% } else { %>Unavailable<% } %>
+        </p>
+      </div>
+
+      <h1 class="display-4">
+        <img src="https://cdn.discordapp.com/icons/<%- guild.id %>/<%- guild.icon %>.png" width="64" height="64" class="d-inline-block align-top rounded" alt="<%- guild.name %>">
+        <%- guild.name %>
+      </h1>
+
+      <p class="lead">
+        <a class="btn btn-primary btn-lg <% if (!guild.available) { %>disabled<% } %>" href="/guilds/<%- guild.id %>" role="button">Configure</a>
+        <% if (!guild.available && !guild.config) { %><a class="btn btn-primary btn-lg" href="https://discordapp.com/oauth2/authorize?scope=bot&client_id=231606856663957505&permissions=339012678" role="button">Invite Bot</a><% } %>
+      </p>
+
+    </div>
+  <% } %>
+
+  <% if (!user.guilds || !user.guilds.length) { %>
+    <div class="jumbotron">
+      
+      <div>
+        <p class="lead pull-right">
+          <svg class="d-inline-block align-middle" height="16" width="16">
+            <circle cx="8" cy="8" r="4" fill="red" />
+          </svg>
+          Error
+        </p>
+      </div>
+
+      <h1 class="display-4">
+        Looks like it's empty in here
+      </h1>
+
+      <p class="lead">
+        <a class="btn btn-primary btn-lg" href="https://discordapp.com/oauth2/authorize?scope=bot&client_id=231606856663957505&permissions=339012678" role="button">Invite Bot</a>
+      </p>
+
+    </div>
+  <% } %>
+
+</div>

@@ -1,0 +1,46 @@
+<% let setting = currentGuild.config.eso.youtube; %>
+<div class="container">
+
+  <form id="form-esoYouTube" role="form" method="POST" action="https://bot.grogsile.org/guilds/<%- currentGuild.id %>/esoYouTube" enctype="application/json">
+
+    <h2 class="text-left" style="position: absolute;">ESO YouTube</h2>
+    <div class="abc-checkbox abc-checkbox-success text-right py-2">
+      <input type="checkbox" id="esoYouTube-enabled" name="enabled" <% if (setting.enabled) { %> checked <% } %>>
+      <label for="esoYouTube-enabled" class="text-center"><b>Enabled</b></label>
+    </div>
+
+    <p class="text-justify">The ESO YouTube module allows your server to receive notifications from <a href="https://www.youtube.com/user/BethesdaSoftworks">the Bethesda YouTube Channel</a> when a new video related to ESO is published.</p>
+
+    <div id="esoYouTube-content" class="row text-center justify-content-center <% if (!setting.enabled) { %>d-none<% } %>">
+
+      <div class="form-group col-lg-8">
+        
+        <label for="esoYouTube-textChannel"><b>Text Channel</b></label>
+        <select class="form-control" id="esoYouTube-textChannel" name="channel" required>
+
+          <% let channels = currentGuild.channels.sort((a, b) => a.position - b.position); %>
+          <% let categories = channels.filter(c => c.type === "category" && !c.children.every(x => x.type === "voice")); %>
+
+          <% let children = categories.map(cat => cat.children).reduce((acc, val) => { return acc.concat(val) }, []); %>
+          <% let firstChannels = channels.filter(channel => children.every(child => channel.id !== child.id)); %>
+
+          <% for (let channel of firstChannels.filter(c => c.type === "text")) { %>
+            <option value="<%- channel.id %>" <% if (setting.channel === channel.id) { %> selected<% } %>><b>#</b> <%- channel.name %></option>
+          <% } %>
+
+          <% for (let category of categories) { %>
+            <optgroup label="<%- category.name %>">
+              <% for (let channel of category.children.filter(c => c.type === "text").sort((a, b) => a.position - b.position)) { %><option value="<%- channel.id %>" <% if (setting.channel === channel.id) { %> selected<% } %>><b>#</b> <%- channel.name %></option><% } %>
+            </optgroup>
+          <% } %>
+
+        </select>
+
+      </div>
+
+    </div>
+
+    <button type="submit" class="btn btn-lg">Submit</button>
+
+  </form>
+</div>
