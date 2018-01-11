@@ -7,7 +7,7 @@ function createEmptyRichEmbedObject()
         "fields": [],
         "footer": {
             "text": "Brought to you by © Grogsile Inc.",
-            "icon_url": "https://i.grogsile.me/favicon.png"
+            "icon_url": "https://i.grogsile.org/favicon.png"
         },
         "image": "",
         "thumbnail": "",
