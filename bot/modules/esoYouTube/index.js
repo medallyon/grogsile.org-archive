@@ -67,7 +67,7 @@ function distributeEmbed(embed)
 {
     for (const guild of dClient.guilds.values())
     {
-        if (guild.config.eso.youtube.active)
+        if (guild.config.eso.youtube.enabled)
         {
             let channel = dClient.channels.get(guild.config.eso.youtube.channel);
             if (channel) channel.send({ embed }).catch(console.error);

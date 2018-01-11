@@ -77,7 +77,7 @@ function distribute(embed)
 {
     for (let guild of dClient.guilds.values())
     {
-        if (guild.config.eso.news.active)
+        if (guild.config.eso.news.enabled)
         {
             let newsChannel = dClient.channels.get(guild.config.eso.news.channel);
 
@@ -110,7 +110,7 @@ function addImageToLatest(image)
 
         for (let guild of dClient.guilds.values())
         {
-            if (guild.config.eso.news.active)
+            if (guild.config.eso.news.enabled)
             {
                 let newsChannel = dClient.channels.get(guild.config.eso.news.channel);
 

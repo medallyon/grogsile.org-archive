@@ -114,16 +114,16 @@ function liveServerStatus()
 
                 const baseGuildPath = join(__data, "guilds", guild.id);
 
-                if (!guild.config.guild.liveServerStatus.panel.enabled && !guild.config.guild.liveServerStatus.update.enabled) continue;
+                if (!guild.config.eso.liveServerStatus.panel.enabled && !guild.config.eso.liveServerStatus.update.enabled) continue;
 
                 else
                 {
                     fs.readJson(join(baseGuildPath, "liveServerUpdate", "savedVariables.json")).then(function(liveVars)
                     {
                         // live panel
-                        if (guild.config.guild.liveServerStatus.panel.enabled)
+                        if (guild.config.eso.liveServerStatus.panel.enabled)
                         {
-                            let liveChannel = guild.channels.get(guild.config.guild.liveServerStatus.panel.channel);
+                            let liveChannel = guild.channels.get(guild.config.eso.liveServerStatus.panel.channel);
 
                             liveChannel.messages.fetch(liveVars.panelId)
                             .then(panelMessage => {
@@ -139,22 +139,22 @@ function liveServerStatus()
                         }
 
                         // global announcements
-                        if (guild.config.guild.liveServerStatus.update.enabled)
+                        if (guild.config.eso.liveServerStatus.update.enabled)
                         {
                             if (changedServers.length)
                             {
-                                let updateChannel = guild.channels.get(guild.config.guild.liveServerStatus.update.channel)
-                                , roles = guild.config.guild.liveServerStatus.update.roles.map(x => guild.roles.get(x));
+                                let updateChannel = guild.channels.get(guild.config.eso.liveServerStatus.update.channel)
+                                , roles = guild.config.eso.liveServerStatus.update.roles.map(x => guild.roles.get(x));
 
-                                utils.toggleRoles(guild.config.guild.liveServerStatus.update.toggleRoles, roles.filter(r => !r.mentionable))
+                                utils.toggleRoles(guild.config.eso.liveServerStatus.update.toggleRoles, roles.filter(r => !r.mentionable))
                                 .then(function(modifiedRoles)
                                 {
-                                    deletePreviousUpdate(guild.config.guild.liveServerStatus.update.deletePrevious, updateChannel, liveVars.updateId)
+                                    deletePreviousUpdate(guild.config.eso.liveServerStatus.update.deletePrevious, updateChannel, liveVars.updateId)
                                     .then(function(deletedMessage)
                                     {
                                         updateChannel.send(roles.map(r => r.toString()).join(" "), { embed: finalUpdateEmbed })
                                         .then(sentMessage => {
-                                            utils.toggleRoles(guild.config.guild.liveServerStatus.update.toggleRoles, roles);
+                                            utils.toggleRoles(guild.config.eso.liveServerStatus.update.toggleRoles, roles);
                                             liveVars.updateId = sentMessage.id;
                                             fs.outputJson(join(baseGuildPath, "liveServerUpdate", "savedVariables.json"), liveVars, (err) => { if (err) console.error(err) });
                                         }).catch(console.error);

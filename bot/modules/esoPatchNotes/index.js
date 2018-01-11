@@ -46,7 +46,7 @@ function distribute(embed)
 {
     for (let guild of dClient.guilds.values())
     {
-        if (guild.config.guild.patchNotes.enabled) guild.channels.get(guild.config.guild.patchNotes.channel).send({ embed: embed }).catch(console.error);
+        if (guild.config.eso.patchNotes.enabled) guild.channels.get(guild.config.eso.patchNotes.channel).send({ embed: embed }).catch(console.error);
     }
 }
 
