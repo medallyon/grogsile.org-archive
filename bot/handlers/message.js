@@ -50,8 +50,8 @@ dClient.on("message", function (msg) {
                 if (msg.command === alias)
                 {
                     // check if command is enabled for this guild
-                    let config = msg.guild.config;
-                    if (config.commands[cmd].enabled)
+                    let commands = msg.guild.config.guild.commands;
+                    if (commands[cmd].enabled)
                     {
                         // check if the member actually has permission to execute the command
                         if (utils.hasPermission(dClient.commands[cmd], msg.member))
@@ -62,7 +62,7 @@ dClient.on("message", function (msg) {
                             } catch (err) {
                                 // catch an error in case the command module is faulty
                                 console.error(err);
-                                msg.channel.send(err, { code: "js" });
+                                msg.channel.send(err.message, { code: "js" });
                             }
                         }
                     }
@@ -74,7 +74,7 @@ dClient.on("message", function (msg) {
     if (/\[.+\]/g.test(msg.content) && !/`.*?\[.+\].*?`/g.test(msg.content))
     {
         let config = msg.guild.config;
-        if (!config.commands.esoItem.enabled || !config.commands.esoItem.usage.inline) return;
+        if (!config.guild.commands.esoItem.enabled || !config.guild.commands.esoItem.usage.inline) return;
 
         let requestedItem = /\[(.+)\]/g.exec(msg.content)[1];
         if (requestedItem.length < 2) return;
