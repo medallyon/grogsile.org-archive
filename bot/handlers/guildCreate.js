@@ -1,12 +1,3 @@
-function prepareFiles(guild)
-{
-    const baseGuildPath = join(__data, "guilds", guild.id);
-
-    fs.outputJson(join(baseGuildPath, "welcomeMessage", "savedVariables.json"), { latestMembers: [] }).catch(console.error);
-    fs.outputJson(join(baseGuildPath, "RSS", "savedVariables.json"), { latest: 0 }).catch(console.error);
-    fs.outputJson(join(baseGuildPath, "liveServerUpdate", "savedVariables.json"), { panelId: "0", updateId: "0" }).catch(console.error);
-}
-
 dClient.on("guildCreate", function(guild)
 {
     guild.config = _templates.guild;
@@ -15,7 +6,7 @@ dClient.on("guildCreate", function(guild)
     guild.config = utils.treatConfig(guild, guild.config);
     guild.config._save().catch(console.error);
 
-    prepareFiles(guild);
+    utils.prepareBaseGuildFiles(guild);
 
     // utils.postServerCountToAPI(constants.apiURLs);
 });
