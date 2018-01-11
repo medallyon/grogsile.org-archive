@@ -4,33 +4,34 @@ dClient.on("guildMemberAdd", function(member)
     if (member.user.bot) return;
 
     let guildConfig = member.guild.config;
+    let welcomeSetting = guildConfig.guild.welcomeMessage;
 
     // process welcome message
-    if (guildConfig.guild.welcomeMessage.enabled)
+    if (welcomeSetting.enabled)
     {
         // send private welcome message
-        if (guildConfig.guild.welcomeMessage.direct.enabled)
+        if (welcomeSetting.direct.enabled)
         {
             let details = [{ id: member.id, username: member.user.username }];
-            member.send(utils.processWelcomeMessage(guildConfig.guild.welcomeMessage.direct.message, member.guild, details)).catch(console.error);
+            member.send(utils.processWelcomeMessage(welcomeSetting.direct.message, member.guild, details)).catch(console.error);
         }
 
         // send guild-wide welcome message
-        if (!(guildConfig.guild.welcomeMessage.direct.enabled && guildConfig.guild.welcomeMessage.direct.disableGuildWelcome))
+        if (!(welcomeSetting.direct.enabled && welcomeSetting.direct.disableGuildWelcome))
         {
             fs.readJson(join(__data, "guilds", member.guild.id, "welcomeMessage", "savedVariables.json")).then(function(savedVars)
             {
                 // do not allow duplicate name entries
-                if (savedVars.latestMembers.map(x => x.id).indexOf(member.id) === -1) savedVars.latestMembers.push({
+                if (!savedVars.latestMembers.some(x => x.id === member.id && x.username === member.user.username)) savedVars.latestMembers.push({
                     id: member.id,
                     username: member.user.username
                 });
 
                 // make sure that members do not exceed limit of 5 per welcome
-                guildConfig.guild.welcomeMessage.maxMembers = guildConfig.guild.welcomeMessage.maxMembers <= 5 ? guildConfig.guild.welcomeMessage.maxMembers : 5;
-                if (savedVars.latestMembers.length === guildConfig.guild.welcomeMessage.maxMembers)
+                welcomeSetting.maxMembers = welcomeSetting.maxMembers <= 5 ? welcomeSetting.maxMembers : 5;
+                if (savedVars.latestMembers.length === welcomeSetting.maxMembers)
                 {
-                    dClient.channels.get(guildConfig.guild.welcomeMessage.channel).send(utils.processWelcomeMessage(guildConfig.guild.welcomeMessage.message, member.guild, savedVars.latestMembers)).catch(console.error);
+                    dClient.channels.get(welcomeSetting.channel).send(utils.processWelcomeMessage(welcomeSetting.message, member.guild, savedVars.latestMembers)).catch(console.error);
 
                     savedVars.latestMembers = [];
                 }
