@@ -4,10 +4,10 @@ function evaluate(msg)
 {
     try {
         let evaluated = eval(msg.args.join(" "));
-        if (!evaluated) evaluated = "undefined";
+        if (typeof evaluated === "undefined") evaluated = "undefined";
         msg.channel.send(evaluated, { code: "js" }).catch(console.error);
     } catch (err) {
-        msg.channel.send(err, { code: "js" }).catch(console.error);
+        msg.channel.send(err.stack, { code: "js" }).catch(console.error);
     }
 }
 
