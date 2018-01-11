@@ -56,18 +56,16 @@ function searchUESPItem(item)
 
 function esoItem(msg, item = null)
 {
-    utils.readGuildConfig(msg.guild).then(config => {
-        if (msg.command && !config.commands.esoItem.usage.command) return;
+    if (msg.command && !msg.guild.config.guild.commands.esoItem.usage.command) return;
 
-        if (msg.command) item = msg.args.join(" ");
-        if (!item || !item.length) return;
+    if (msg.command) item = msg.args.join(" ");
+    if (!item || !item.length) return;
 
-        searchUESPItem(item)
-        .then(([itemObj, otherItems]) => {
-            console.log(JSON.stringify(itemObj, null, 2));
-            msg.channel.send((otherItems > 1) ? `There are **${otherItems - 1}** other items like this one` : "This item is quite unique, some say.", { files: [{ "name": `${itemObj.name}.png`, "attachment": itemObj.url }] }).catch(console.error);
-        }).catch(console.log);
-    }).catch(console.error);
+    searchUESPItem(item)
+    .then(([itemObj, otherItems]) => {
+        console.log(JSON.stringify(itemObj, null, 2));
+        msg.channel.send((otherItems > 1) ? `There are **${otherItems - 1}** other items like this one` : "This item is quite unique, some say.", { files: [{ "name": `${itemObj.name}.png`, "attachment": itemObj.url }] }).catch(console.error);
+    }).catch(console.log);
 }
 
 module.exports = esoItem;
