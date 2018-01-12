@@ -5,6 +5,7 @@ function toggleRoles(doToggle, roles)
         if (!doToggle) return resolve(roles);
         if (!roles.length) return resolve(roles);
 
+        if (roles instanceof Discord.Collection) roles = roles.array();
         roles = roles.filter(r => r instanceof Discord.Role);
 
         for (let i = 0; i < roles.length; i++)
