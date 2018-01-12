@@ -2,18 +2,18 @@ function constructHelpFor(perm)
 {
     let h = new Discord.MessageEmbed(utils.createEmptyRichEmbedObject())
         .setAuthor("Commands", dClient.user.avatarURL)
-        .setDescription("Here is a list of commands that **You** have access to. To see what more commands there are, visit the [Grogsile Hub](This is still a work in progress.) You can inspect each command by passing their name to the `help` command (see example below).")
+        .setDescription("Here is a list of commands that **You** have access to. To see what more commands there are, visit the [Grogsile Hub](https://bot.grogsile.org/) You can inspect each command by passing their name to the `help` command (see example below).")
         .setTimestamp(new Date());
 
     for (let cmd in dClient.commands) {
         if (perm >= dClient.commands[cmd].userPermissions) h.addField(cmd, dClient.commands[cmd].description, true);
     }
-    h.addField("Example Usage", `\`\`\`fix\n${dClient.config.discord.prefix}help [command]\`\`\``);
+    h.addField("Example Usage", `\`\`\`fix\n${dClient.config.discord.prefix}commands [command]\`\`\``);
 
     return h;
 }
 
-function help(msg)
+function commands(msg)
 {
     let e;
     if (msg.args.length === 0)
@@ -48,7 +48,7 @@ function help(msg)
         if (!command || !utils.hasPermission(dClient.commands[command.name], msg.member))
         {
             msg.args = [];
-            return help(msg);
+            return commands(msg);
         }
 
         e.setTitle(command.name);
@@ -64,4 +64,4 @@ function help(msg)
     return msg.channel.send({ embed: e }).catch(console.error);
 }
 
-module.exports = help;
+module.exports = commands;
