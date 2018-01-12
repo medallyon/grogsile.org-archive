@@ -81,9 +81,13 @@ function distribute(embed)
         {
             let newsChannel = dClient.channels.get(guild.config.eso.news.channel);
 
-            newsChannel.send({ embed }).then(function(newsMessage)
+            utils.toggleRoles(guild.config.eso.news.toggleRoles, guild.roles.filter(r => guild.config.eso.news.roles.includes(r.id))).then(function(roles)
             {
-                fs.outputJson(join(__data, "guilds", guild.id, "esoNews", "savedVariables.json"), { latest: newsMessage.id }, { spaces: 2 }).catch(console.error);
+                newsChannel.send(roles.map(r => r.toString()).join(" "), { embed }).then(function(newsMessage)
+                {
+                    utils.toggleRoles(guild.config.eso.news.toggleRoles, guild.roles.filter(r => guild.config.eso.news.roles.includes(r.id))).catch(console.error);
+                    fs.outputJson(join(__data, "guilds", guild.id, "esoNews", "savedVariables.json"), { latest: newsMessage.id }, { spaces: 2 }).catch(console.error);
+                }).catch(console.error);
             }).catch(console.error);
         }
     }

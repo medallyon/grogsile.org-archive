@@ -46,7 +46,19 @@ function distribute(embed)
 {
     for (let guild of dClient.guilds.values())
     {
-        if (guild.config.eso.patchNotes.enabled) guild.channels.get(guild.config.eso.patchNotes.channel).send({ embed: embed }).catch(console.error);
+        if (guild.config.eso.patchNotes.enabled)
+        {
+            let channel = guild.channels.get(guild.config.eso.patchNotes.channel);
+            if (!channel) continue;
+
+            utils.toggleRoles(guild.config.eso.patchNotes.toggleRoles, guild.config.eso.patchNotes.roles.map(x => guild.roles.get(x))).then(function(roles)
+            {
+                channel.send(roles.map(r => r.toString()).join(" "), { embed }).then(function()
+                {
+                    utils.toggleRoles(guild.config.eso.patchNotes.toggleRoles, guild.config.eso.patchNotes.roles.map(x => guild.roles.get(x))).catch(console.error);
+                }).catch(console.error);
+            }).catch(console.error);
+        }
     }
 }
 

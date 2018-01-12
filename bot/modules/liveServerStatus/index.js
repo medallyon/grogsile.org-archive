@@ -146,19 +146,18 @@ function liveServerStatus()
                                 let updateChannel = guild.channels.get(guild.config.eso.liveServerStatus.update.channel)
                                 , roles = guild.config.eso.liveServerStatus.update.roles.map(x => guild.roles.get(x));
 
-                                utils.toggleRoles(guild.config.eso.liveServerStatus.update.toggleRoles, roles.filter(r => !r.mentionable))
-                                .then(function(modifiedRoles)
+                                utils.toggleRoles(guild.config.eso.liveServerStatus.update.toggleRoles, roles.filter(r => !r.mentionable)).then(function(modifiedRoles)
                                 {
-                                    deletePreviousUpdate(guild.config.eso.liveServerStatus.update.deletePrevious, updateChannel, liveVars.updateId)
-                                    .then(function(deletedMessage)
+                                    deletePreviousUpdate(guild.config.eso.liveServerStatus.update.deletePrevious, updateChannel, liveVars.updateId).then(function(deletedMessage)
                                     {
                                         updateChannel.send(roles.map(r => r.toString()).join(" "), { embed: finalUpdateEmbed })
-                                        .then(sentMessage => {
-                                            utils.toggleRoles(guild.config.eso.liveServerStatus.update.toggleRoles, roles);
+                                        .then(function(sentMessage)
+                                        {
+                                            utils.toggleRoles(guild.config.eso.liveServerStatus.update.toggleRoles, roles).catch(console.error);
                                             liveVars.updateId = sentMessage.id;
-                                            fs.outputJson(join(baseGuildPath, "liveServerUpdate", "savedVariables.json"), liveVars, (err) => { if (err) console.error(err) });
+                                            fs.outputJson(join(baseGuildPath, "liveServerUpdate", "savedVariables.json"), liveVars).catch(console.error);
                                         }).catch(console.error);
-                                    });
+                                    }).catch(console.error);
                                 }).catch(console.error);
                             }
                         }

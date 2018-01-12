@@ -70,7 +70,15 @@ function distributeEmbed(embed)
         if (guild.config.eso.youtube.enabled)
         {
             let channel = dClient.channels.get(guild.config.eso.youtube.channel);
-            if (channel) channel.send({ embed }).catch(console.error);
+            if (!channel) continue;
+
+            utils.toggleRoles(guild.config.eso.youtube.toggleRoles, guild.config.eso.youtube.roles.map(x => guild.roles.get(x))).then(function(roles)
+            {
+                channel.send(roles.map(r => r.toString()).join(" "), { embed }).then(function()
+                {
+                    utils.toggleRoles(guild.config.eso.youtube.toggleRoles, guild.config.eso.youtube.roles.map(x => guild.roles.get(x))).catch(console.error);
+                }).catch(console.error);
+            }).catch(console.error);
         }
     }
 }
