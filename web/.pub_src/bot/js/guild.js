@@ -30,19 +30,18 @@ $(` form > div.abc-checkbox > input `).change(function(e)
     else $formContent.addClass("d-none");
 });
 
-$(" #liveServerStatus-update-roles-enabled ").change(function(e)
+$(` input[id$="-roles-enabled"] `).change(function(e)
 {
+    let idStart = $(this).prop("id").substring(0, $(this).prop("id").indexOf("-roles-enabled"));
     if ($(this).prop("checked"))
     {
-        $(" #liveServerStatus-update-toggleRoles-checkbox ").removeClass("d-none");
-        $(" #liveServerStatus-new-role-image ").removeClass("d-none");
-        $(" #liveServerStatus-update-roles-section ").removeClass("d-none");
+        $(` #${idStart}-toggleRoles-checkbox `).removeClass("d-none");
+        $(` #${idStart}-roles-section `).removeClass("d-none");
     }
 
     else
     {
-        $(" #liveServerStatus-update-toggleRoles-checkbox ").addClass("d-none");
-        $(" #liveServerStatus-new-role-image ").addClass("d-none");
-        $(" #liveServerStatus-update-roles-section ").addClass("d-none");
+        $(` #${idStart}-toggleRoles-checkbox `).addClass("d-none");
+        $(` #${idStart}-roles-section `).addClass("d-none");
     }
 });

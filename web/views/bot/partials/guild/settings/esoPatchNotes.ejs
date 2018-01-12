@@ -13,6 +13,35 @@
 
     <div id="esoPatchNotes-content" class="row text-center justify-content-center <% if (!setting.enabled) { %>d-none<% } %>">
 
+      <div class="form-group col-lg-4 justify-content-center">
+
+        <div class="abc-checkbox">
+          <input type="checkbox" id="esoPatchNotes-roles-enabled" name="roles-enabled" <% if (setting.roles.length) { %> checked <% } %>>
+          <label for="esoPatchNotes-roles-enabled"><b>Mention Roles on Update</b></label>
+        </div>
+        <div id="esoPatchNotes-toggleRoles-checkbox" class="abc-checkbox <% if (!setting.roles.length) { %> d-none <% } %>">
+          <input type="checkbox" id="esoPatchNotes-toggleRoles" name="toggleRoles" <% if (setting.toggleRoles) { %> checked <% } %>>
+          <label for="esoPatchNotes-toggleRoles" data-toggle="tooltip" data-placement="top" title="This option will make the selected roles mentionable and then un-mentionable so that people with the role will be mentioned."><b>Toggle Roles Mentionable</b></label>
+        </div>
+
+      </div>
+      <div id="esoPatchNotes-roles-section" class="form-group col-lg-7 justify-content-center <% if (!setting.roles.length) { %> d-none <% } %>">
+
+        <label for="esoPatchNotes-roles"><b>Roles to mention on update</b></label>
+        <p>
+          <select multiple class="form-control" id="esoPatchNotes-roles" name="roles[]">
+
+            <% let roles = currentGuild.roles.sort((a, b) => b.position - a.position); %>
+
+            <% for (let role of roles) { %>
+              <option value="<%- role.id %>" <% if (setting.roles.includes(role.id)) { %> selected<% } %>>@<%- role.name %></option>
+            <% } %>
+
+          </select>
+        </p>
+
+      </div>
+
       <div class="form-group col-lg-8">
         
         <label for="esoPatchNotes-textChannel"><b>Text Channel</b></label>
