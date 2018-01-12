@@ -37,7 +37,7 @@
       "evaluate": {
         "enabled": true
       },
-      "help": {
+      "commands": {
         "enabled": true
       },
       "ping": {
@@ -63,15 +63,21 @@
   "eso": {
     "news": {
       "enabled": false,
-      "channel": ""
+      "channel": "",
+      "roles": [],
+      "toggleRoles": true
     },
     "youtube": {
       "enabled": false,
-      "channel": ""
+      "channel": "",
+      "roles": [],
+      "toggleRoles": true
     },
     "patchNotes": {
       "enabled": false,
-      "channel": ""
+      "channel": "",
+      "roles": [],
+      "toggleRoles": true
     },
     "liveServerStatus": {
       "panel": {
