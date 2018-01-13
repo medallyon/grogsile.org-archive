@@ -22,14 +22,17 @@ dClient.on("guildMemberAdd", function(member)
             fs.readJson(join(__data, "guilds", member.guild.id, "welcomeMessage", "savedVariables.json")).then(function(savedVars)
             {
                 // do not allow duplicate name entries
-                if (!savedVars.latestMembers.some(x => x.id === member.id && x.username === member.user.username)) savedVars.latestMembers.push({
-                    id: member.id,
-                    username: member.user.username
-                });
+                if (!savedVars.latestMembers.some(x => x.id === member.id && x.username === member.user.username))
+                {
+                    savedVars.latestMembers.push({
+                        id: member.id,
+                        username: member.user.username
+                    });
+                }
 
                 // make sure that members do not exceed limit of 5 per welcome
                 welcomeSetting.maxMembers = welcomeSetting.maxMembers <= 5 ? welcomeSetting.maxMembers : 5;
-                if (savedVars.latestMembers.length === welcomeSetting.maxMembers)
+                if (savedVars.latestMembers.length === parseInt(welcomeSetting.maxMembers))
                 {
                     dClient.channels.get(welcomeSetting.channel).send(utils.processWelcomeMessage(welcomeSetting.message, member.guild, savedVars.latestMembers)).catch(console.error);
 
@@ -46,11 +49,11 @@ dClient.on("guildMemberAdd", function(member)
     {
         if (err) return;
 
-        fs.readJson(join(__data, "users", member.id, "account.json")).then(function(err, account)
+        fs.readJson(join(__data, "users", member.id, "account.json")).then(function(account)
         {
-            if (err) return console.error(err);
+            if (!account.accountName || account.accountName === "undefined") return;
 
-            dClient.modules.addToEsoRank(member.id, account.server, account.platform, account.alliance);
+            if (member.guild.id === constants.discord.esoi.id) _esoi.emit("accountUpdate", null, account);
         }).catch(console.error);
     });
 });
