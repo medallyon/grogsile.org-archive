@@ -19,7 +19,6 @@ app.use(cookieParser());
 
 let attachRawBody = function(req, res, buf, encoding)
 {
-    console.log(buf);
     if (buf && buf.length) req.rawBody = buf.toString(encoding || 'utf8');
 }
 app.use( bodyparser.json({ limit: "10mb", verify: attachRawBody }) );
