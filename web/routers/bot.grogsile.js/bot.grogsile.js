@@ -30,7 +30,34 @@ router.get("/actuallylogin", function(req, res)
 
 router.get("/callback", middleware.completeSignIn, function(req, res)
 {
-    res.redirect("/");
+    if (!req.session.user)
+    {
+        console.error("Session User does not exist");
+        return res.redirect("/");
+    }
+
+    let userDir = join(__data, "users", req.session.user.id);
+    fs.ensureDir(userDir).then(function()
+    {
+        fs.readdir(userDir, function(err, files)
+        {
+            if (err) console.error(err);
+
+            fs.outputJson(join(userDir, "user.json"), req.session.user).then(function()
+            {
+                if (files.indexOf("account.json") === -1)
+                {
+                    let userAccount = JSON.parse(JSON.stringify(_templates.account));
+                    userAccount.id = req.session.user.id;
+
+                    fs.outputJson(join(userDir, "account.json"), userAccount).then(function()
+                    {
+                        res.redirect("/guilds");
+                    }).catch(console.error);
+                } else res.redirect("/guilds");
+            }).catch(console.error);
+        });
+    }).catch(console.error);
 });
 
 router.get("/logout", function(req, res)
