@@ -56,7 +56,7 @@ constants.discord.esoi = {
             },
             "WaitWhat":{
                 "name":"a_WaitWhat",
-                "id":"270273792222298112"
+                "id":"270273792222298112",
                 "emoji":"<:270273792222298112:a_WaitWhat>"
             },
             "banned":{
