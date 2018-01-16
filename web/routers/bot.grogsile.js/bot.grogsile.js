@@ -171,7 +171,7 @@ router.get("/guilds", middleware.isLoggedIn, resetLocals, function(req, res)
 
 router.get("/guilds/:id", middleware.isLoggedIn, resetLocals, function(req, res)
 {
-    if (!dClient.guilds.has(req.params.id)) return res.render("pages/error", Object.assign(locals, { error: { statusCode: 404, title: "Guild not found", message: `Try <a href="${constants.discord.inviteURL}">re-inviting</a> <b>The Tamriel Messenger</b> to your server.`}}));
+    if (!dClient.guilds.has(req.params.id) || !req.user.guilds.some(g => g.id === req.params.id)) return res.render("pages/error", Object.assign(locals, { error: { statusCode: 404, title: "Guild not found", message: `Try <a href="${constants.discord.inviteURL}">re-inviting</a> <b>The Tamriel Messenger</b> to your server.`}}));
 
     locals.currentGuild = locals.user.guilds.find(g => g.id === req.params.id);
     res.render("pages/guild", locals);
