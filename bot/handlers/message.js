@@ -11,6 +11,9 @@ dClient.on("message", function (msg) {
     // log the formatted message
     console.log("\n" + timeOut + "\n" + messageOut + "\n" + targetOut);
 
+    // don't check commands in blacklisted channels
+    if (msg.guild.config.guild.restricted.some(x => x === msg.channel.id)) return;
+
     // return on bot message - we don't want to interfere with other bots
     if (msg.author.bot) return;
 
@@ -37,9 +40,6 @@ dClient.on("message", function (msg) {
     // check if the command prefix exists
     if (msg.command)
     {
-        // don't check commands in blacklisted channels
-        if (msg.guild.config.guild.restricted.some(x => x === msg.channel.id)) return console.info(`Commands are restricted in channel ${msg.channel.id}`);
-
         // iterate through all commands
         for (let cmd in dClient.commands)
         {
