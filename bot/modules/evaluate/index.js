@@ -7,7 +7,7 @@ function evaluate(msg)
         if (typeof evaluated === "undefined") evaluated = "undefined";
         msg.channel.send(evaluated, { code: "js" }).catch(console.error);
     } catch (err) {
-        msg.channel.send(err.stack, { code: "js" }).catch(console.error);
+        msg.channel.send(err.message, { code: "js" }).catch(console.error);
     }
 }
 
