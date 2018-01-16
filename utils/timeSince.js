@@ -1,16 +1,20 @@
-function timeSince(date)
+function timeSince(date, addString = false)
 {
-    if (date instanceof Date) date = Date.parse(date);
-    if ((typeof date) !== "number") throw new TypeError("{date} must be of type number");
+    if ((typeof date) === "number") date = new Date(date);
+    if (!(date instanceof Date)) throw new TypeError("{date} must be an instance of Date");
+
+    let now = Date.now();
+    let millisecondsSince = now - Date.parse(date);
+    if (millisecondsSince < 0) millisecondsSince = millisecondsSince * -1;
 
     this.date = date;
-    this.fullYears = (date / 12 / 30.436875 / 24 / 60 / 60 / 1000);
-    this.fullMonths = (date / 30.436875 / 24 / 60 / 60 / 1000);
-    this.fullWeeks = (date / 7 / 24 / 60 / 60 / 1000);
-    this.fullDays = (date / 24 / 60 / 60 / 1000);
-    this.fullHours = (date / 60 / 60 / 1000);
-    this.fullMinutes = (date / 60 / 1000);
-    this.fullSeconds = (date / 1000);
+    this.fullYears = (millisecondsSince / 12 / 30.436875 / 24 / 60 / 60 / 1000);
+    this.fullMonths = (millisecondsSince / 30.436875 / 24 / 60 / 60 / 1000);
+    this.fullWeeks = (millisecondsSince / 7 / 24 / 60 / 60 / 1000);
+    this.fullDays = (millisecondsSince / 24 / 60 / 60 / 1000);
+    this.fullHours = (millisecondsSince / 60 / 60 / 1000);
+    this.fullMinutes = (millisecondsSince / 60 / 1000);
+    this.fullSeconds = (millisecondsSince / 1000);
 
     this.seconds = Math.floor(this.fullSeconds % 60);
     this.minutes = Math.floor(this.fullMinutes % 60);
@@ -28,6 +32,14 @@ function timeSince(date)
     if (this.hours >= 1) output.push(`${this.hours} Hour${this.hours === 1 ? "" : "s"}`);
     if (this.minutes >= 1) output.push(`${this.minutes} Minute${this.minutes === 1 ? "" : "s"}`);
     if (this.seconds >= 1) output.push(`${(output.length > 0) ? "and " : ""}${this.seconds} Second${this.seconds === 1 ? "" : "s"}`);
+
+    if (addString)
+    {
+        if (Date.parse(this.date) <= now) output.push("since");
+        else output.push("until");
+
+        output.push(this.date.toUTCString());
+    }
 
     if (output.length === 0) output.push("No time has passed since " + this.date);
     return output.join(" ");
