@@ -49,20 +49,15 @@ constants.discord.esoi = {
                 "id":"231365141801730049",
                 "emoji":"<:231365141801730049:a_ouroboros>"
             },
-            "shrimp":{
-                "name":"a_shrimp",
-                "id":"231380474096779264",
-                "emoji":"<:231380474096779264:a_shrimp>"
-            },
             "lol":{
                 "name":"a_lol",
                 "id":"236124911901343744",
                 "emoji":"<:236124911901343744:a_lol>"
             },
-            "Kappa":{
-                "name":"a_Kappa",
-                "id":"240473232598237184",
-                "emoji":"<:240473232598237184:a_Kappa>"
+            "WaitWhat":{
+                "name":"a_WaitWhat",
+                "id":"270273792222298112"
+                "emoji":"<:270273792222298112:a_WaitWhat>"
             },
             "banned":{
                 "name":"a_banned",
@@ -74,25 +69,10 @@ constants.discord.esoi = {
                 "id":"269563799256825856",
                 "emoji":"<:269563799256825856:a_AmuletOfKings>"
             },
-            "WaitWhat":{
-                "name":"a_WaitWhat",
-                "id":"270273792222298112",
-                "emoji":"<:270273792222298112:a_WaitWhat>"
-            },
-            "CancerBuilds":{
-                "name":"a_CancerBuilds",
-                "id":"270313034541432834",
-                "emoji":"<:270313034541432834:a_CancerBuilds>"
-            },
             "mudcrab":{
                 "name":"a_mudcrab",
                 "id":"270612632254283786",
                 "emoji":"<:270612632254283786:a_mudcrab>"
-            },
-            "mango":{
-                "name":"a_mango",
-                "id":"275767882208509954",
-                "emoji":"<:275767882208509954:a_mango>"
             },
             "ZOS":{
                 "name":"a_ZOS",
@@ -104,25 +84,10 @@ constants.discord.esoi = {
                 "id":"287340947384303618",
                 "emoji":"<:287340947384303618:a_CrownCrate>"
             },
-            "Whisperity":{
-                "name":"a_Whisperity",
-                "id":"302846708264599552",
-                "emoji":"<:302846708264599552:a_Whisperity>"
-            },
-            "Invisibru":{
-                "name":"a_Invisibru",
-                "id":"306518085375098890",
-                "emoji":"<:306518085375098890:a_Invisibru>"
-            },
-            "ThinkSomethingWeird":{
-                "name":"a_ThinkSomethingWeird",
+            "vivThink":{
+                "name":"a_vivThink",
                 "id":"310350675232161793",
-                "emoji":"<:310350675232161793:a_ThinkSomethingWeird>"
-            },
-            "Wrobel":{
-                "name":"a_Wrobel",
-                "id":"312697549163331584",
-                "emoji":"<:312697549163331584:a_Wrobel>"
+                "emoji":"<:310350675232161793:a_vivThink>"
             }
         },
         "alliance":{
