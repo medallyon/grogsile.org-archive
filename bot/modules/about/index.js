@@ -8,7 +8,7 @@ function createEmbed()
         .addField("Join the Dev. Hub", "[Grogsile Inc. Dev Hub](http://discord.gg/eKSPgvF)", true)
         .addField("Patreon", "[Support us on Patreon!](https://patreon.com/medallyon/)", true)
         .addField("\u200B", "**Statistics**")
-        .addField("Uptime", utils.timeSince(dClient.uptime))
+        .addField("Uptime", utils.timeSince(Date.now() - dClient.uptime))
         .addField("Guilds", dClient.guilds.size, true)
         .addField("Users", dClient.users.size, true);
 }
