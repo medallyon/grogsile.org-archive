@@ -122,7 +122,7 @@ function addImageToLatest(image)
                 {
                     newsChannel.messages.fetch(savedVars.latest).then(function(message)
                     {
-                        message.edit({ embed }).catch(console.error);
+                        message.edit("<@&" + guild.config.eso.news.roles.join("> <@&") + ">", { embed }).catch(console.error);
                     }).catch(console.error);
                 }).catch(console.error);
             }
