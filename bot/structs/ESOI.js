@@ -62,14 +62,14 @@ class ESOI extends EventEmitter
             alliance = alliance.filter(a => a !== undefined);
 
             if (!alliance.length) console.info(`No roles to add to member ${member.user.username}`);
-            else return member.addRoles(alliance);
+            else return member.roles.add(alliance);
         }
 
         else
         {
             alliance = this.guild.roles.get(alliance);
             if (!alliance) console.info(`Cannot find role on server`);
-            else return member.addRole(alliance);
+            else return member.roles.add(alliance);
         }
     }
 
@@ -86,14 +86,14 @@ class ESOI extends EventEmitter
             alliance = alliance.filter(a => a !== undefined);
 
             if (!alliance.length) console.info(`No roles to add to member ${member.user.username}`);
-            else return member.removeRoles(alliance);
+            else return member.roles.remove(alliance);
         }
 
         else
         {
             alliance = this.guild.roles.get(alliance);
             if (!alliance) console.info(`Cannot find role on server`);
-            else return member.removeRole(alliance);
+            else return member.roles.remove(alliance);
         }
     }
 
@@ -109,7 +109,7 @@ class ESOI extends EventEmitter
 
         server = this.guild.roles.get(server);
         if (!server) console.info("Cannot find role on server");
-        else return member.addRole(server);
+        else return member.roles.add(server);
     }
 
     removeMemberFromServer(member, server)
@@ -124,7 +124,7 @@ class ESOI extends EventEmitter
 
         server = this.guild.roles.get(server);
         if (!server) console.info("Cannot find role on server");
-        else return member.removeRole(server);
+        else return member.roles.remove(server);
     }
 
     addMemberToPlatform(member, platform)
@@ -139,7 +139,7 @@ class ESOI extends EventEmitter
 
         platform = this.guild.roles.get(platform);
         if (!platform) console.info("Cannot find role on server");
-        else return member.addRole(platform);
+        else return member.roles.add(platform);
     }
 
     removeMemberFromPlatform(member, platform)
@@ -154,7 +154,7 @@ class ESOI extends EventEmitter
 
         platform = this.guild.roles.get(platform);
         if (!platform) console.info("Cannot find role on server");
-        else return member.removeRole(platform);
+        else return member.roles.remove(platform);
     }
 }
 

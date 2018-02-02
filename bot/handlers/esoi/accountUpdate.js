@@ -54,8 +54,8 @@ _esoi.on("accountUpdate", function(oldAccount, newAccount)
         }
     }
 
-    member.addRoles(rolesToAdd).catch(console.error);
-    if (oldAccount) dClient.setTimeout(() => { member.removeRoles(rolesToRemove).catch(console.error) }, 1000 * 10);
+    member.roles.add(rolesToAdd).catch(console.error);
+    if (oldAccount) dClient.setTimeout(() => { member.roles.remove(rolesToRemove).catch(console.error) }, 1000 * 10);
 
     let nickname = member.displayName, prefix;
     if (newAccount.nickname)
