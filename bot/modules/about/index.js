@@ -2,15 +2,17 @@ function createEmbed()
 {
     return new Discord.MessageEmbed(utils.createEmptyRichEmbedObject())
         .setAuthor(dClient.user.username, dClient.user.displayAvatarURL(), "")
-        .setDescription(`The Tamriel Messenger is a Discord Bot catered to fans of the Elder Scrolls series, especially TES: Online. With this bot, you will be able to easily integrate your whole ESO experience within Discord. See \`${dClient.config.discord.prefix}help\` for further assistance.`)
-        .addField("Creator", "@Medallyon#5012", true)
-        .addField("ESO International", "[Hub](https://esoi.grogsile.org/) - Manage your Guilds and Characters here", true)
-        .addField("Join the Dev. Hub", "[Grogsile Inc. Dev Hub](http://discord.gg/eKSPgvF)", true)
+        .setDescription(`The Tamriel Messenger is a Discord Bot for fans of the Elder Scrolls series, especially TES: Online. With this bot, you will be able to easily integrate your whole ESO experience within Discord. See \`${dClient.config.discord.prefix}commands\` for a list of commands.`)
+        .addField("Creator", "<@129036763367735297>")
+        .addField("\u200B", "**Information**")
+        .addField("ESO International", "[Join the ESOI Discord Server here](https://esoi.grogsile.org/discord/)", true)
+        .addField("ESOI Hub", "[Manage your Guilds and Characters here](https://esoi.grogsile.org/)", true)
+        .addField("Grogsile, Inc Developer Hub", "[Join our Dev. Hub for latest updates](http://discord.gg/eKSPgvF/)", true)
         .addField("Patreon", "[Support us on Patreon!](https://patreon.com/medallyon/)", true)
         .addField("\u200B", "**Statistics**")
         .addField("Uptime", utils.timeSince(Date.now() - dClient.uptime))
         .addField("Guilds", dClient.guilds.size, true)
-        .addField("Users", dClient.users.size, true);
+        .addField("Total Users", dClient.users.size, true);
 }
 
 function about(msg)
