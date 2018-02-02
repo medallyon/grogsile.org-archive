@@ -83,7 +83,7 @@ function distribute(embed)
 
             utils.toggleRoles(guild.config.eso.news.toggleRoles, guild.roles.filter(r => guild.config.eso.news.roles.includes(r.id))).then(function(roles)
             {
-                newsChannel.send(roles.map(r => r.toString()).join(" "), { embed }).then(function(newsMessage)
+                newsChannel.send((guild.config.eso.news.roles.length) ? roles.map(r => r.toString()).join(" ") : "", { embed }).then(function(newsMessage)
                 {
                     utils.toggleRoles(guild.config.eso.news.toggleRoles, guild.roles.filter(r => guild.config.eso.news.roles.includes(r.id))).catch(console.error);
                     fs.outputJson(join(__data, "guilds", guild.id, "esoNews", "savedVariables.json"), { latest: newsMessage.id }, { spaces: 2 }).catch(console.error);
@@ -122,7 +122,7 @@ function addImageToLatest(image)
                 {
                     newsChannel.messages.fetch(savedVars.latest).then(function(message)
                     {
-                        message.edit("<@&" + guild.config.eso.news.roles.join("> <@&") + ">", { embed }).catch(console.error);
+                        message.edit((guild.config.eso.news.roles.length) ? ("<@&" + guild.config.eso.news.roles.join("> <@&") + ">") : "", { embed }).catch(console.error);
                     }).catch(console.error);
                 }).catch(console.error);
             }
