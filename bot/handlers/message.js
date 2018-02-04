@@ -15,14 +15,14 @@ dClient.on("message", function(msg)
     // log the formatted message
     console.log("\n" + timeOut + "\n" + messageOut + "\n" + targetOut);
 
-    // don't check commands in blacklisted channels
-    if (msg.guild.config.guild.restricted.some(x => x === msg.channel.id)) return;
-
     // return on bot message - we don't want to interfere with other bots
     if (msg.author.bot) return;
 
     // do not support direct messages yet
     if (!msg.guild) return msg.channel.send("Mighty Sorry, but direct messages are not supported yet.").catch(console.error);
+
+    // don't check commands in blacklisted channels
+    if (msg.guild.config.guild.restricted.some(x => x === msg.channel.id)) return;
 
     let splitMsg = msg.content.split(" ");
     // check whether user is using command prefix or mention to execute a command, and assign them to 'msg' accordingly
