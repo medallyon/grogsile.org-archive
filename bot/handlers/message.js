@@ -1,5 +1,9 @@
 // "message" event, taking 1 parameter: message
-dClient.on("message", function (msg) {
+dClient.on("message", function(msg)
+{
+    // wait for `ready` event to be finished
+    if (!dClient.readyYet) return;
+    
     // this variable holds the time it was received
     msg["performance"] = Date.now();
 

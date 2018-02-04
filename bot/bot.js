@@ -8,6 +8,7 @@ if (typeof dClient === "undefined")
     dClient.config = fs.readJsonSync(join(__dirname, "config.json"));
     dClient.commands = fs.readJsonSync(join(__dirname, "commands.json"));
     dClient.eso = {};
+    dClient.readyYet = false;
 }
 
 // === [ MODULE IMPORTS ] === //

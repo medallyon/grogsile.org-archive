@@ -11,6 +11,7 @@ function treatConfig(guild, config)
         delete shallowCopy._guild;
         delete shallowCopy._path;
         delete shallowCopy._save;
+        delete shallowCopy._saveSync;
         delete shallowCopy._reload;
 
         return shallowCopy;
@@ -21,10 +22,11 @@ function treatConfig(guild, config)
     {
         return new Promise(function(resolve, reject)
         {
-            _guild = config._guild;
-            _path = config._path;
-            _save = config._save;
-            _reload = config._reload;
+            let _guild = config._guild;
+            let _path = config._path;
+            let _save = config._save;
+            let _saveSync = config._saveSync;
+            let _reload = config._reload;
             
             if (data !== null)
             {
@@ -38,6 +40,7 @@ function treatConfig(guild, config)
             if (data._guild) delete data._guild;
             if (data._path) delete data._path;
             if (data._save) delete data._save;
+            if (data._saveSync) delete data._saveSync;
             if (data._reload) delete data._reload;
             if (data.raw) delete data.raw;
 
@@ -58,6 +61,44 @@ function treatConfig(guild, config)
         });
     }
 
+    config._saveSync = function(data = null, merge = true)
+    {
+        let _guild = config._guild;
+        let _path = config._path;
+        let _save = config._save;
+        let _saveSync = config._saveSync;
+        let _reload = config._reload;
+        
+        if (data !== null)
+        {
+            if (merge)
+            {
+                config = Object.assign(config, data);
+                data = config;
+            } else config = data;
+        } else data = config;
+
+        if (data._guild) delete data._guild;
+        if (data._path) delete data._path;
+        if (data._save) delete data._save;
+        if (data._saveSync) delete data._saveSync;
+        if (data._reload) delete data._reload;
+        if (data.raw) delete data.raw;
+
+        fs.outputJsonSync(_path, data, { spaces: 2 });
+
+        config = data;
+        config.raw = JSON.parse(JSON.stringify(data));
+
+        _guild.config = config;
+        
+        config._guild = _guild;
+        config._path = _path;
+        config._save = _save;
+        config._saveSync = _saveSync;
+        config._reload = _reload;
+    }
+
     config._reload = function()
     {
         return new Promise(function(resolve, reject)
@@ -68,6 +109,7 @@ function treatConfig(guild, config)
                     _guild: config._guild,
                     _path: config._path,
                     _save: config._save,
+                    _saveSync: config._saveSync,
                     _reload: config._reload
                 }
 
