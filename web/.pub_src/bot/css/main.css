@@ -1,0 +1,109 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-backface-visibility: hidden; 
+  backface-visibility: hidden;
+}
+a {
+  color: #e74c3c;
+  -webkit-transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+a:hover {
+  color: #e76c3c;
+}
+.row {
+  padding: 80px 0;
+}
+.btn {
+  border: none;
+  -webkit-transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+  text-transform: uppercase;
+  border-radius: 0;
+}
+.btn-common {
+  background: #3d566e;
+  color: #fff;
+}
+.btn-common:hover {
+  background: #e74c3c;
+  color: #fff;
+}
+
+.navbar-default {
+  border: none;
+  border-radius: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+.navbar-default .nav-item {
+  color: #fff;
+  font-size: 1.2rem;
+  line-height: 2.5;
+}
+.navbar-default .navbar-brand {
+  font-size: 2.5rem;
+  color: #fff;
+  font-weight: 100;
+}
+.navbar-default .navbar-brand:hover {
+  color: #eee;
+}
+#hero-area {
+  background: #34495e;
+  color: #fff;
+}
+#hero-area .btn {
+  margin-right: 20px;
+}
+#features {
+  background: #34495e;
+  color: #fff;
+}
+#features h3 {
+  margin-top: 0;
+  font-size: 28px;
+  color: #e74c3c;
+}
+#about {
+  background: #fff;
+}
+#about p {
+  line-height: 30px;
+  font-size: 17px;
+}
+
+/*Scroll Top*/
+.to-top i {
+  padding: 10px 15px;
+  margin: 10px;
+  margin-top: -1rem;
+  background: transparent;
+  color: #34495e;
+  border: 2px solid #34495e;
+}
+.to-top i:hover {
+  background: #34495e;
+  color: #fff;
+  -webkit-transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+
+#copyright {
+  color: #333;
+}
+#copyright a {
+  color: #333;
+}

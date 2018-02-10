@@ -1,8 +1,135 @@
-<div class="container">
+<body>
+<!-- Nav Menu Section -->
+  <%- include("./navbar") %>
+<!-- Nav Menu Section End -->
 
-  <div class="starter-template">
-    <h1>Don't worry, we're still working on stuff.</h1>
-    <p class="lead">Why not visit <a href="http://esoi.grogsile.org/">esoi.grogsile.org</a> while you're here?</p>
-  </div>
+<!-- Hero Area Section -->
+  <section id="hero-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 class="display-3 text-center pt-5">The Tamriel Messenger</h1>
+          <h2 class="text-center w-100">Manage your Elder Scrolls themed <i class="fab fa-discord"></i> Discord Server here!</h2>
 
-</div><!-- /.container -->
+          <div class="row">
+            <img class="col-md-6 animated fadeInLeft h-100" src="https://i.grogsile.org/bot/img/home/hero/eso-international-wallpaper.jpg" alt="">
+
+            <div class="col-md-6 animated fadeInRight delay-0-5">
+              <p class="lead pt-5">Welcome to Grogsile, Inc.</p>
+              <p>Sign in using just your <i class="fab fa-discord"></i> Discord account to start configuring The Tamriel Messenger for your server.</p>
+              <a href="https://bot.grogsile.org/login" class="btn btn-primary btn-lg">Sign In</a>
+              <a href="#about" class="btn btn-common btn-lg">Learn More</a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+<!-- Hero Area Section End-->
+
+<!-- About Section -->
+
+  <section id="about">
+    <div class="container">
+      <div class="row">
+        <h1 class="display-3 text-center w-100">About</h1>
+
+        <div class="col-md-8 text-justify">
+          <p>
+            <span class="lead">The Tamriel Messenger</span> (TTM) is a <i class="fab fa-discord"></i> Discord Bot consisting of two main parts:
+            <ol>
+              <li>This, the Discord Server Management Utility, and</li>
+              <li><a href="https://esoi.grogsile.org">Elder Scrolls Online International</a>, your Character Manager</li>
+            </ol>
+          </p>
+          <p>
+            This Website mainly serves as your hub to configure TTM on your Discord Server. Here is a short list of features that currently come with this bot:
+            <ul>
+              <li>feature 1</li>
+              <li>feature 2</li>
+            </ul>
+          </p>
+          <p>
+            Following is an ever-growing list of available commands that can be executed on your Discord Server. To make full use of this bot, head over to our <a href="https://bot.grogsile.org/wiki">Wiki</a> to find out more!
+          </p>
+        </div>
+
+        <!-- INSERT COMMANDS/RICHEMBED HERE -->
+        <img class="col-md-4 h-100" src="https://i.grogsile.org/img/6ctykwoh.png">
+      </div>
+    </div>
+  </section>
+<!-- About Section End -->
+
+<!-- Features Section -->
+  <section id="features">
+    <div class="container text-center">
+      <div class="row">
+        <h1 class="display-3 w-100">Features</h1>
+
+        <div class="col-lg-4">
+          <div class="service-item">
+            <img class="w-50" src="https://vignette3.wikia.nocookie.net/elderscrolls/images/7/73/UESPLogo.png/revision/latest?cb=20170804150930&path-prefix=fr" alt="">
+            <h3>UESP</h3>
+            <p>
+              One of our most beloved features is the <code>/wiki</code> command. It allows you to search the <b>Unofficial Elder Scrolls Pages</b> for anything Elder Scrolls related, and outputs it in a readable format right into your Discord Chat!
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="service-item">
+            <img class="w-50" src="https://i.grogsile.org/bot/img/home/features/character.png" alt="">
+            <h3>Profile Lookup</h3>
+            <p>
+              Using the other portion of this project, <a href="https://esoi.grogsile.org">ESO International</a>, you can import your characters from ESO. Then, using the <code>/character</code> command, you can look up your and others' characters!
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="service-item">
+            <img class="w-50" src="https://i.grogsile.org/esoi/img/ui/gameui/lfg/lfg_indexicon_trial_up.png" alt="">
+            <h3>Events</h3>
+            <p>
+              <i>This feature will be available in an upcoming version of TTM.</i> Now you can create events on your Discord Server and invite people to join them - be it a trial in ESO, an RP-fest, or something in another game. It's up to you to make your events come to life!
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+<!-- Service Section End -->
+
+<!-- Contact Section -->
+  <section id="contact">
+    <div class="container text-center">
+      <div class="row justify-content-center">
+        <h1 class="display-3 w-100">Find out more</h1>
+
+        <div class="col-md-8">
+
+          <div class="py-4">
+            <a class="" href="https://bot.grogsile.org/discord" target="_blank"><i class="fab fa-discord fa-8x"></i><span class="sr-only"> Discord Server</span></a>
+          </div>
+
+          <p class="lead">
+            Join our Development Server for updates on patches, new features, and more. You can also come by to report bugs, request ideas, or just for a chat. See you there!
+          </p>
+        
+        </div>
+
+      </div>
+    </div>
+  </section>
+<!-- Contact Section End-->
+
+<!-- Copyright Section -->
+  <%- include("./footer") %>
+<!-- Copyright Section End-->
+
+</body>
+</html>
