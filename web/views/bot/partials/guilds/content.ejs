@@ -1,51 +1,27 @@
-<div class="container">
+<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+  <header class="masthead mb-auto">
+    <div class="inner">
 
-  <% for (let guild of user.guilds) { %>
-    <div class="jumbotron">
+      <a href="/"><h3 class="masthead-brand">Grogsile, Inc.</h3></a>
 
-      <div>
-        <p class="lead pull-right">
-          <svg class="d-inline-block align-middle" height="16" width="16">
-            <circle cx="8" cy="8" r="4" fill="<% if (guild.available) { %>lawngreen<% } else { %>red<% } %>" />
-          </svg>
-          <% if (guild.available) { %>Available<% } else { %>Unavailable<% } %>
-        </p>
-      </div>
-
-      <h1 class="display-4">
-        <img src="https://cdn.discordapp.com/icons/<%- guild.id %>/<%- guild.icon %>.png" width="64" height="64" class="d-inline-block align-top rounded" alt="<%- guild.name %>">
-        <%- guild.name %>
-      </h1>
-
-      <p class="lead">
-        <a class="btn btn-primary btn-lg <% if (!guild.available) { %>disabled<% } %>" href="/guilds/<%- guild.id %>" role="button">Configure</a>
-        <% if (!guild.available && !guild.config) { %><a class="btn btn-primary btn-lg" href="https://discordapp.com/oauth2/authorize?scope=bot&client_id=231606856663957505&permissions=339012678" role="button">Invite Bot</a><% } %>
-      </p>
-
+      <nav class="nav nav-masthead justify-content-center">
+        <a class="nav-link active" href="/guilds">Overview</a>
+        <a class="nav-link" href="/logout">Sign Out</a>
+      </nav>
     </div>
-  <% } %>
+  </header>
 
-  <% if (!user.guilds || !user.guilds.length) { %>
-    <div class="jumbotron">
-      
-      <div>
-        <p class="lead pull-right">
-          <svg class="d-inline-block align-middle" height="16" width="16">
-            <circle cx="8" cy="8" r="4" fill="red" />
-          </svg>
-          Error
-        </p>
-      </div>
+  <main role="main" class="inner cover">
+    
+    <% for (let guild of user.guilds) { %>
+      <a href="/guilds/<%- guild.id %>"><img class="rounded-circle" src="https://cdn.discordapp.com/icons/<%- guild.id %>/<%- guild.icon %>" data-toggle="tooltip" data-placement="top" title="<%- guild.name %>" /></a>
+    <% } %>
 
-      <h1 class="display-4">
-        Looks like it's empty in here
-      </h1>
+  </main>
 
-      <p class="lead">
-        <a class="btn btn-primary btn-lg" href="https://discordapp.com/oauth2/authorize?scope=bot&client_id=231606856663957505&permissions=339012678" role="button">Invite Bot</a>
-      </p>
-
+  <footer class="mastfoot mt-auto">
+    <div class="inner text-center">
+      <p class="lead">&copy; Grogsile Inc. BETA</p>
     </div>
-  <% } %>
-
+  </footer>
 </div>
