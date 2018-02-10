@@ -46,3 +46,7 @@ bot/modules/esoItem/items.json
 /.vs
 package-lock.json
 /data/sessions
+/web/.pub_src/css
+/web/.pub_src/fonts
+/web/.pub_src/img
+/web/.pub_src/js
