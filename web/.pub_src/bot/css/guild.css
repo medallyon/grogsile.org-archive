@@ -1,0 +1,12 @@
+a.guild-header:hover {
+  color: #565c62;
+  text-decoration: none;
+}
+.guild-header {
+  color: #343a40;
+}
+.guild-header img {
+  height: 3rem;
+  width: 3rem;
+  vertical-align: top;
+}
