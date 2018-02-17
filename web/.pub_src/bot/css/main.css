@@ -37,7 +37,15 @@ a:hover {
   color: #fff;
 }
 .btn-common:hover {
-  background: #e74c3c;
+  background: #4841bc;
+  color: #fff;
+}
+.btn-special {
+  background: #ff5733;
+  color: #fff;
+}
+.btn-special:hover {
+  background: #ff8033;
   color: #fff;
 }
 

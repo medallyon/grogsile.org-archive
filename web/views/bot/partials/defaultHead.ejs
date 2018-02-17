@@ -1,6 +1,3 @@
-<!-- Custom styles for this template -->
-<link href="https://v4-alpha.getbootstrap.com/examples/starter-template/starter-template.css" rel="stylesheet">
-
 <meta charset="utf-8" />
 <meta data-react-helmet="true" charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -21,16 +18,18 @@
 <link rel="icon" href="https://i.grogsile.org/favicon.png" />
 <link rel="image_src" href="https://i.imgur.com/4PO0EpP.jpg">
 
-<title><% if (!document.head.title) { %>Grogsile, Inc.<% } else { %><%- document.head.title %><% } %></title>
+<title><% if (typeof document.title === "undefined" || !document.title) { %>Grogsile, Inc.<% } else { %><%- document.head.title %><% } %></title>
 
 <!-- Bootstrap core CSS -->
-<link href="https://i.grogsile.org/css/bootstrap-4-alpha.min.css" rel="stylesheet">
+<link href="https://i.grogsile.org/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+
+<!--Icon Fonts-->
+<link media="screen" href="https://i.grogsile.org/css/font-awesome/font-awesome.min.css" rel="stylesheet" />
 
 <!-- Awesome Bootstrap Checkboxes -->
-<link href="https://i.grogsile.org/css/awesome-bootstrap-checkbox-4-alpha.css" rel="stylesheet">
-
-<!-- Custom styles -->
-<link href="https://i.grogsile.org/esoi/css/dashboard.css" rel="stylesheet">
+<link href="https://i.grogsile.org/css/bootstrap/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
 
 <!-- Async Scripts -->
 <%- include("./defaultScripts-async") %>
+
+<!-- Page-specific Documents -->
