@@ -5,7 +5,7 @@ const request = require("request")
 const uesp = {
     domain: "http://en.uesp.net",
     baseSearchURL: "http://en.uesp.net/w/index.php?title=Special%3ASearch&search=",
-    iconURL: "http://en.uesp.net/w/extensions/UespCustomCode/files/UespLogo.jpg",
+    iconURL: "https://i.grogsile.org/bot/img/home/features/UESPLogo.png",
     namespaces: new Discord.Collection(require(join(__dirname, "namespaces.json"))),
     types: [
         "People",
@@ -13,83 +13,7 @@ const uesp = {
         "Quests:",
         "Places:"
     ]
-}
-, numberEmoji = [
-    "1⃣",
-    "2⃣",
-    "3⃣",
-    "4⃣",
-    "5⃣",
-    "6⃣",
-    "7⃣",
-    "8⃣",
-    "9⃣",
-    "🔟"
-];
-
-function createAmbiguityEmbed(results, arg)
-{
-    let e = new Discord.MessageEmbed(utils.createEmptyRichEmbedObject())
-        .setAuthor("Search Results", uesp.iconURL, encodeURI(uesp.baseSearchURL + arg))
-        .setDescription(`You searched for **${arg}**. This is what came up:`)
-        .setFooter(`${constants.discord.embed.footer.text} | ${utils.fancyESODate()} ${dateFormat("HH:MM")} UTC`, constants.discord.embed.footer.icon_url);
-
-    for (let i = 0; i < results.length; i++)
-    {
-        let $r = results[i];
-        let $title = $r.children().first();
-        e.addField(`${i+1}. ${$title.children(" a ").prop("title")}`, `[${$title.children(" a ").prop("href")}](${uesp.domain}${$title.children(" a ").prop("href")})`, true);
-    }
-    e.addField("\u200b", "**Please select one of the following emoji to show the appropriate article.**", false);
-
-    return e;
-}
-
-addReactions = {
-    stopped: false,
-
-    init: function(message, from, to)
-    {
-        if (!this.stopped)
-        {
-            message.react(numberEmoji[from])
-            .then(reaction => {
-                if (from < to) addReactions.init(message, from + 1, to);
-            }).catch(err => {
-                console.error(err);
-                if (from < to) addReactions.init(message, from + 1, to);
-            });
-        }
-    },
-
-    stop: function()
-    {
-        this.stopped = true;
-    }
-}
-
-function awaitUserReactionFor(results, msg)
-{
-    addReactions.stopped = false;
-    return new Promise(function(resolve, reject)
-    {
-        msg.channel.send({ embed: createAmbiguityEmbed(results, msg.args.join(" ")) })
-        .then(function(message)
-        {
-            addReactions.init(message, 0, results.length - 1);
-
-            const reactionFilter = (r, u) => (u.id === msg.author.id && numberEmoji.includes(r.emoji.name));
-            message.awaitReactions(reactionFilter, { max: 1, time: 1000 * 45, errors: ["time"] })
-            .then(function(reactions)
-            {
-                addReactions.stop();
-                resolve([reactions.first(), message]);
-            }).catch((collected, reason) => {
-                reject([reason, message]);
-            });
-        }).catch(reject);
-    });
-}
+};
 
 function searchWiki(arg)
 {
@@ -329,37 +253,37 @@ function sendError(err, channel)
 
 function wiki(msg)
 {
-    searchWiki(msg.args.join(" ")).then(function(result)
+    searchWiki(msg.args.join(" ")).then(function(results)
     {
-        if (Array.isArray(result))
+        if (Array.isArray(results))
         {
-            awaitUserReactionFor(result, msg)
-            .then(function([reaction, sentMessage])
+            // prepare selector embed
+            let selectorEmbedItems = results.map($r => { return { name: $r.children(" .mw-search-result-heading ").text(), value: `[${$r.children(" .mw-search-result-heading ").children(" a ").prop("href")}](${uesp.domain}${$r.children(" .mw-search-result-heading ").children(" a ").prop("href")})` } });
+            let selectorEmbed = new Discord.MessageEmbed()
+                .setColor(utils.randColor())
+                .setAuthor("Search Results", uesp.iconURL, uesp.baseSearchURL + msg.args.join(" "))
+                .setDescription(`You searched for **${msg.args.join(" ")}**. This is what came up:`);
+            selectorEmbed.fieldValueLength = 120;
+
+            utils.createSelectorEmbed(msg, selectorEmbedItems, selectorEmbed)
+            .then(function([reaction, coollectorMessage])
             {
-                processWikiPage(result[numberEmoji.indexOf(reaction.emoji.name)])
+                processWikiPage(results[reaction - 1])
                 .then(embed => {
-                    sentMessage.clearReactions().catch(console.error);
-                    sentMessage.edit({ embed: embed }).catch(console.error);
+                    coollectorMessage.edit({ embed }).catch(console.error);
                 }).catch(err => {
                     console.error(err);
-                    sentMessage.clearReactions().catch(console.error);
-                    sentMessage.edit(":x: That didn't work. :/").catch(console.error);
+                    coollectorMessage.edit(":x: That didn't work. :/").catch(console.error);
                 });
-            })
-            .catch(function([err, sentMessage])
-            {
-                console.error(err);
-                addReactions.stop();
-                sentMessage.clearReactions().catch(console.error);
-            });
+            }).catch(console.error);
         }
 
         else
         {
             let embed;
             try {
-                embed = new WikiEmbed(result);
-                msg.channel.send({ embed: embed }).catch(console.error);
+                embed = new WikiEmbed(results);
+                msg.channel.send({ embed }).catch(console.error);
             }
             catch(err) {
                 console.error(err);
