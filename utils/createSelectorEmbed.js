@@ -74,10 +74,8 @@ function awaitUserReactionFor(msg, embed, amount)
     });
 }
 
-function curateFieldValue(value, length)
+function curateFieldValue(value, length = 50)
 {
-    if (!length) return value;
-
     if (value.length === 0) value = "\u200b";
     else if (value.length > length) value = value.slice(0, length) + "...";
 
@@ -108,9 +106,10 @@ function createSelectorEmbed(msg, items, options = null, callback = null)
     {
         embed.addField(`${i+1}. ${items[i].name}`, curateFieldValue(items[i].value, options.fieldValueLength), true);
     }
-    embed.addField("\u200b", "**Please select one of the following emoji to select the relative item.**", false);
 
     if (callback && (typeof callback) === "function") embed = callback(embed);
+
+    embed.addField("\u200b", "**Please select one of the following emoji to select the relative item.**", false);
 
     return awaitUserReactionFor(msg, embed, items.length);
 }
