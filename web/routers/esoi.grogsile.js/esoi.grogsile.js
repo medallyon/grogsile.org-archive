@@ -600,7 +600,7 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
 
 router.get("/discord", function(req, res)
 {
-    res.redirect(dClient.config.eso.invite);
+    res.redirect(dClient.config.eso.inviteURL);
 });
 
 // ===== [ ROUTER EXPORT ] ===== //
