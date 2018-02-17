@@ -17,9 +17,11 @@
           <div class="input-group">
             <input type="text" id="characterName" class="form-control text-center" name="characterName" value="<%- character.characterName %>"  placeholder="Norgred Hardhelm" minlength="3" maxlength="25" required>
 
-            <div class="input-group-addon">
-              <input type="checkbox" id="primary" class="primary" name="primary" aria-label="Primary" <% if (character.primary) { %> checked<% } %>>
-              <label for="primary" data-toggle="tooltip" data-placement="top" title="This will be your primary character"></label>
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <input type="checkbox" id="primary" class="primary" name="primary" aria-label="Primary" <% if (character.primary) { %> checked<% } %>>
+                <label for="primary" data-toggle="tooltip" data-placement="top" title="This will be your primary character"></label>
+              </div>
             </div>
           </div>
           <small class="form-text text-muted">Your name must adhere to the standard Elder Scrolls rules of naming</small>
@@ -33,14 +35,18 @@
           <label>Character level</label>
           <div class="input-group">
 
-            <span class="input-group-addon">
-              <input type="checkbox" id="championBox" name="champion" aria-label="Champion Input" <% if (character.champion) { %> checked<% } %>>
-              <label for="championBox" data-toggle="tooltip" data-placement="top" title="<% if (account.champion) { %> Champion<% } else { %> Non-Champion<% } %>"></label>
-            </span>
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <input type="checkbox" id="championBox" name="champion" aria-label="Champion Input" <% if (character.champion) { %> checked<% } %>>
+                <label for="championBox" data-toggle="tooltip" data-placement="top" title="<% if (account.champion) { %> Champion<% } else { %> Non-Champion<% } %>"></label>
+              </div>
+            </div>
 
             <input type="number" id="championInput" name="level" class="form-control text-center" <% if (character.champion) { %> min="1" max="600" placeholder="<%- account.level %>"<% } else { %> min="3" max="49" value="<%- character.level %>" placeholder="3-50"<% } %> <% if (character.champion) { %> readonly <% } %> required>
 
-            <% if (character.champion) { %><div class="input-group-addon">CP</div><% } %>
+            <% if (account.champion) { %><div class="input-group-append">
+              <span class="input-group-text">CP</span>
+            </div><% } %>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-<div id="navbarHeader" class="hidden-xs-down collapse fixed-top bg-inverse">
+<div id="navbarHeader" class=" collapse fixed-top bg-dark">
   <div class="container">
     <div class="row">
       <div class="col-2 py-4 text-right">
@@ -25,7 +25,7 @@
   </div>
 </div>
 
-<div id="mobile-navbarHeader" class="hidden-sm-up collapse fixed-top bg-inverse mt-5">
+<div id="mobile-navbarHeader" class="hidden-sm-up collapse fixed-top bg-dark mt-5">
   <div class="container">
     <div class="row">
       <div class="col-12 py-4 text-center">
@@ -60,13 +60,13 @@
   </div>
 </div>
 
-<div id="navbar" class="navbar fixed-top navbar-inverse bg-inverse">
+<div id="navbar" class="navbar fixed-top navbar-dark bg-dark">
   <div class="container d-flex justify-content-between">
     <a href="/dashboard" class="navbar-brand"><% if (typeof user !== "undefined") { %><%- user.username %><% } %></a>
-    <button class="hidden-xs-down navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler d-none d-md-inline-block" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <button class="hidden-sm-up navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler d-md-none d-sm-inline-block" type="button" data-toggle="collapse" data-target="#mobile-navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
   </div>
