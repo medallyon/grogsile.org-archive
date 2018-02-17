@@ -84,9 +84,8 @@ function resetLocals(req, res, next)
 
     locals = {
         document: {
-            location: req.originalUrl,
-            head: {},
-            body: {}
+            title: null,
+            location: req.originalUrl
         },
         user: req.user || null,
         account: {}
@@ -191,11 +190,16 @@ router.post("/guilds/:id/liveServerStatus", middleware.isLoggedIn, resetLocals, 
 router.post("/guilds/:id/restrictChannels", middleware.isLoggedIn, resetLocals, require(join(__dirname, "configHandlers", "restrictChannels.js")), resetLocals, successfulConfigRequest);
 router.post("/guilds/:id/commands", middleware.isLoggedIn, resetLocals, require(join(__dirname, "configHandlers", "commands.js")), resetLocals, successfulConfigRequest);
 
-// ===== [ INVITE ] ===== //
+// ===== [ STATIC REDIRECTS ] ===== //
 
 router.get("/invite", function(req, res)
 {
-    res.redirect(constants.discord.inviteURL);
+    res.redirect(constants.discord.bot.inviteURL);
+});
+
+router.get("/discord", function(req, res)
+{
+    res.redirect(constants.discord.devServer.inviteURL);
 });
 
 // ===== [ ABOUT ] ===== //
