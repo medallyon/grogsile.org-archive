@@ -104,7 +104,7 @@
   "esoItem": {
     "description": "Searches for a given item from Elder Scrolls Online.",
     "alias": [
-      "esoItem",
+      "esoitem",
       "item"
     ],
     "arguments": {
