@@ -27,7 +27,7 @@ $().ready(function()
                 .attr("min", 1)
                 .attr("max", 600)
                 .attr("value", initialChampionPoints)
-                .parent().append("<div class=\"input-group-addon\">CP</div>");
+                .parent().append("<div class=\"input-group-append\"><span class=\"input-group-text\">CP</span></div>");
             $("#championBox + label")
                 .tooltip("dispose")
                 .attr("title", "Champion")
@@ -102,12 +102,12 @@ function validateFormElements()
         createWarningElement("longName-warning", "Your Character's Name length is out of bounds");
         validated = false;
     }
-    if (/[^a-zA-Z-'öüäß ]/g.test($("#characterName").val()))
+    if (/[^a-zA-Z-'öüäßíáúóé ]/g.test($("#characterName").val()))
     {
         createWarningElement("specialName-warning", "Your Character's Name contains special characters");
         validated = false;
     }
-    if ("abcdefghijklmopqrstuvwxyzABCDEFGHIJKLMOPQRSTUVWXYZ-'öüäß ".split("").some(x => $("#characterName").val().includes(x.repeat(3))))
+    if ("abcdefghijklmopqrstuvwxyzABCDEFGHIJKLMOPQRSTUVWXYZ-'öüäßíáúóé ".split("").some(x => $("#characterName").val().includes(x.repeat(3))))
     {
         createWarningElement("repeatName-warning", "Your Character's name contains a letter three or more consecutive times");
         validated = false;
@@ -162,7 +162,7 @@ $("#form").submit(function(e)
 {
     e.preventDefault();
 
-    $('button[type="submit"]').replaceWith('<img id="loading" src="https://i.grogsile.me/esoi/img/ui/gameui/screens_app/gamepad/ouroboros_loading-128.png">');
+    $('button[type="submit"]').replaceWith('<img id="loading" src="https://i.grogsile.org/esoi/img/ui/gameui/screens_app/gamepad/ouroboros_loading-128.png">');
 
     $("#avatarData").val(JSON.stringify($("#avatar").cropper("getData"), null, 2));
 
