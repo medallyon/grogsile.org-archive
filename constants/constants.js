@@ -7,14 +7,14 @@ global.constants = {
 
 constants.web.session = {
     secret: ""
-};
+}
 constants.web.bot = {
     redirectURL: "https://bot.grogsile.org/callback"
-};
+}
 
 // === [ BOT INVITE ] === //
 
-constants.discord.inviteURL = "https://discordapp.com/oauth2/authorize?scope=bot&client_id=231606856663957505&permissions=339012678";
+constants.discord.bot = { inviteURL: "https://discordapp.com/oauth2/authorize?scope=bot&client_id=231606856663957505&permissions=339012678" }
 
 // === [ ICONS ] === //
 constants.icons = {
@@ -22,7 +22,7 @@ constants.icons = {
     "grogsile": "https://i.grogsile.org/favicon.png"
 }
 
-// === [ ESOI EMOJI ALLOC ] ===
+// === [ DISCORD ESOI ] ===
 
 constants.discord.esoi = {
     "id":"130716876937494528",
@@ -275,6 +275,12 @@ constants.discord.esoi = {
             }
         }
     }
+}
+
+// === [ DISCORD DEV SERVER ] === //
+
+constants.discord.devServer = {
+    inviteURL: "http://discord.gg/eKSPgvF"
 }
 
 // === [ DEFAULT EMBED ] === //
