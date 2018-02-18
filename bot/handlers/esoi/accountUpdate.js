@@ -1,6 +1,6 @@
 const roleTable = { "Aldmeri Dominion": constants.discord.esoi.roles["yellow"], "Daggerfall Covenant": constants.discord.esoi.roles["blue"], "Ebonheart Pact": constants.discord.esoi.roles["red"] };
 
-_esoi.on("accountUpdate", function(oldAccount, newAccount)
+function accountUpdate(oldAccount, newAccount)
 {
     let member = _esoi.guild.members.get(newAccount.id);
     if (!member) return;
@@ -80,4 +80,6 @@ _esoi.on("accountUpdate", function(oldAccount, newAccount)
     }
 
     member.setNickname(nickname, "Web Account Platform Update").catch(console.error);
-});
+}
+
+module.exports = accountUpdate;

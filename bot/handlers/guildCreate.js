@@ -1,4 +1,4 @@
-dClient.on("guildCreate", function(guild)
+function guildCreate(guild)
 {
     guild.config = _templates.guild;
     guild.config.id = guild.id;
@@ -9,4 +9,6 @@ dClient.on("guildCreate", function(guild)
     utils.prepareBaseGuildFiles(guild);
 
     // utils.postServerCountToAPI(constants.apiURLs);
-});
+}
+
+module.exports = guildCreate;

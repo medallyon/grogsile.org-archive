@@ -51,5 +51,19 @@ dClient.once("ready", function()
     new CronJob("0 */15 * * * *", dClient.modules.changeActivity, null, true, "UTC", {}, true);
 
     dClient.readyYet = true;
+
+    // built-in handlers
+    dClient.on("message", require("./message.js"));
+    dClient.on("guildCreate", require("./guildCreate.js"));
+    dClient.on("guildDelete", require("./guildDelete.js"));
+    dClient.on("guildMemberAdd", require("./guildMemberAdd.js"));
+    dClient.on("guildMemberUpdate", require("./guildMemberUpdate.js"));
+
+    // esoi handlers
+    dClient._esoi.on("accountUpdate", require("./esoi/accountUpdate.js"));
+    dClient._esoi.on("characterAdd", require("./esoi/characterAdd.js"));
+    dClient._esoi.on("characterDelete", require("./esoi/characterDelete.js"));
+    dClient._esoi.on("characterEdit", require("./esoi/characterEdit.js"));
+
     console.log(dClient.user.username + " is ready to serve.");
 });

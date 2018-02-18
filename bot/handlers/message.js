@@ -1,5 +1,5 @@
 // "message" event, taking 1 parameter: message
-dClient.on("message", function(msg)
+function message(msg)
 {
     // wait for `ready` event to be finished
     if (!dClient.readyYet) return;
@@ -62,7 +62,7 @@ dClient.on("message", function(msg)
                         {
                             try {
                                 // execute the command module
-                                return dClient.modules[cmd](msg);
+                                dClient.modules[cmd](msg);
                             } catch (err) {
                                 // catch an error in case the command module is faulty
                                 console.error(err);
@@ -85,4 +85,6 @@ dClient.on("message", function(msg)
         
         dClient.modules.esoItem(msg, requestedItem);
     }
-});
+}
+
+module.exports = message;

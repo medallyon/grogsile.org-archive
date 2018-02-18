@@ -28,7 +28,9 @@ function updateMemberNickname(member)
     }).catch(console.error);
 }
 
-dClient.on("guildMemberUpdate", function(oldMember, newMember)
+function guildMemberUpdate(oldMember, newMember)
 {
     if (_esoi.guild.members.has(newMember.id) && oldMember.displayName !== newMember.displayName) updateMemberNickname(newMember);
-});
+}
+
+module.exports = guildMemberUpdate;

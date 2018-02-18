@@ -1,4 +1,4 @@
-dClient.on("guildMemberAdd", function(member)
+function guildMemberAdd(member)
 {
     // return if the new member is a bot
     if (member.user.bot) return;
@@ -56,4 +56,6 @@ dClient.on("guildMemberAdd", function(member)
             if (member.guild.id === constants.discord.esoi.id) _esoi.emit("accountUpdate", null, account);
         }).catch(console.error);
     });
-});
+}
+
+module.exports = guildMemberAdd;

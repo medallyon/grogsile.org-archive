@@ -1,4 +1,4 @@
-_esoi.on("characterDelete", function(character)
+function characterDelete(character)
 {
     let member = _esoi.guild.members.get(character.ownerId);
     if (!member) return;
@@ -8,4 +8,6 @@ _esoi.on("characterDelete", function(character)
     {
         if (characters.every(c => c.alliance !== character.alliance) && member.roles.has(allianceId)) _esoi.removeMemberFromAlliance(member, allianceId).catch(console.error);
     }).catch(console.error);
-});
+}
+
+module.exports = characterDelete;

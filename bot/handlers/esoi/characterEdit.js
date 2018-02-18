@@ -1,4 +1,4 @@
-_esoi.on("characterEdit", function(oldChar, newChar)
+function characterEdit(oldChar, newChar)
 {
     let member = _esoi.guild.members.get(newChar.ownerId);
     if (!member) return;
@@ -13,4 +13,6 @@ _esoi.on("characterEdit", function(oldChar, newChar)
             dClient.setTimeout(() => { _esoi.removeMemberFromAlliance(member, constants.discord.esoi.roles[oldChar.alliance]).catch(console.error) }, 1000 * 10);
         }
     }).catch(console.error);
-});
+}
+
+module.exports = characterEdit;
