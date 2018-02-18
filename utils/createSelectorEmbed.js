@@ -54,10 +54,10 @@ function awaitUserReactionFor(msg, embed, amount)
         {
             addReactions.init(message, 0, amount - 1);
 
-            const reactionFilter = function(r, u)
-            {
-                return (u.id === msg.author.id && numberEmojis.exists(e => e === r.emoji.toString()));
-            };
+            embed = message.embeds[0];
+            embed.fields.pop();
+
+            const reactionFilter = (r, u) => (u.id === msg.author.id && numberEmojis.exists(e => e === r.emoji.toString()));
 
             message.awaitReactions(reactionFilter, { max: 1, time: 1000 * 45, errors: ["time"] })
                 .then(function(reactions)
@@ -67,7 +67,11 @@ function awaitUserReactionFor(msg, embed, amount)
                     resolve([resolveEmoji(reactions.first()), message]);
                 }).catch(function(collection, reason)
                 {
-                    dClient.setTimeout(() => { message.reactions.removeAll().catch(console.error) }, 1000 * 3);
+                    dClient.setTimeout(function()
+                    {
+                        message.edit({ embed }).catch(console.error);
+                        message.reactions.removeAll().catch(console.error);
+                    }, 1000 * 3);
                     reject([reason, message]);
                 });
         }).catch(reject);
@@ -82,7 +86,7 @@ function curateFieldValue(value, length = 50)
     return value;
 }
 
-function createSelectorEmbed(msg, items, options = null, callback = null)
+function createSelectorEmbed(msg, items, options = {}, callback = null)
 {
     let data = [], embed;
     if (options)
@@ -109,7 +113,7 @@ function createSelectorEmbed(msg, items, options = null, callback = null)
 
     if (callback && (typeof callback) === "function") embed = callback(embed);
 
-    embed.addField("\u200b", "**Please select one of the following emoji to select the relative item.**", false);
+    embed.addField("\u200b", "**Please react with one of the following emoji to select the relative item.**", false);
 
     return awaitUserReactionFor(msg, embed, items.length);
 }
