@@ -2,7 +2,9 @@ const request = require("request")
 , FeedParser = require("feedparser")
 , toMarkdown = require("to-markdown");
 
-const ESO_RSS_URL = "http://files.elderscrollsonline.com/rss/en-gb/eso-rss.xml";
+const ESO_RSS_URL = "http://files.elderscrollsonline.com/rss/en-gb/eso-rss.xml"
+, ESO_NEWS_URL = "http://elderscrollsonline.com/en-us/news"
+, ESO_NEWS_ICON = "http://i.imgur.com/qqvt2UX.png";
 
 function update()
 {
@@ -26,16 +28,21 @@ function checkUpdate(item)
     {
         fs.readJson(join(__dirname, "savedVars.json")).then(function(savedVars)
         {
-            if (Date.parse(item.pubDate) <= savedVars.pubDate) return reject("modules.esoNews: Nothing new");
+            let latestSaved = savedVars[0];
+            if (Date.parse(item.pubDate) <= latestSaved.pubDate) return reject("modules.esoNews: Nothing new");
 
             let news = {
                 title: item.title || "ESO_TITLE_HEADER",
                 description: item.summary || item.description || "ESO_DESC_SUMMARY",
                 pubDate: Date.parse(item.pubDate) || 0,
-                link: item.link || "#"
+                link: item.link || "#",
+                image: ""
             };
 
-            fs.outputJson(join(__dirname, "savedVars.json"), news, { spaces: 2 }).then(function()
+            savedVars.unshift(news);
+            if (savedVars.length > 5) savedVars.pop();
+
+            fs.outputJson(join(__dirname, "savedVars.json"), savedVars, { spaces: 2 }).then(function()
             {
                 resolve(news);
             }).catch(reject);
@@ -65,10 +72,10 @@ function prepareEmbed(item)
 {
     item = curateUpdate(item);
     return new Discord.MessageEmbed(utils.createEmptyRichEmbedObject())
-        .setAuthor("ESO News", "http://i.imgur.com/qqvt2UX.png", "http://elderscrollsonline.com/en-us/news")
+        .setAuthor("ESO News", ESO_NEWS_ICON, ESO_NEWS_URL)
         .setTitle(item.title)
         .setURL(item.link)
-        .setDescription(item.markdown)
+        .setDescription(item.markdown || item.description)
         .setImage(item.image)
         .setFooter(`${constants.discord.embed.footer.text} | ${utils.fancyESODate(new Date(item.pubDate))}`, constants.discord.embed.footer.icon_url);
 }
@@ -93,24 +100,12 @@ function distribute(embed)
     }
 }
 
-function esoNews()
-{
-    update().then(function(item)
-    {
-        checkUpdate(item).then(function(news)
-        {
-            distribute(prepareEmbed(news));
-            collectESOImage(news);
-        }).catch(console.info);
-    }).catch(console.error);
-}
-
 function addImageToLatest(image)
 {
-    fs.readJson(join(__dirname, "savedVars.json")).then(function(item)
+    fs.readJson(join(__dirname, "savedVars.json")).then(function(savedVars)
     {
-        item.image = image;
-        embed = prepareEmbed(item);
+        savedVars[0].image = image;
+        embed = prepareEmbed(savedVars[0]);
 
         for (let guild of dClient.guilds.values())
         {
@@ -118,9 +113,9 @@ function addImageToLatest(image)
             {
                 let newsChannel = dClient.channels.get(guild.config.eso.news.channel);
 
-                fs.readJson(join(__data, "guilds", guild.id, "esoNews", "savedVariables.json")).then(function(savedVars)
+                fs.readJson(join(__data, "guilds", guild.id, "esoNews", "savedVariables.json")).then(function(guildSavedVars)
                 {
-                    newsChannel.messages.fetch(savedVars.latest).then(function(message)
+                    newsChannel.messages.fetch(guildSavedVars.latest).then(function(message)
                     {
                         message.edit((guild.config.eso.news.roles.length) ? ("<@&" + guild.config.eso.news.roles.join("> <@&") + ">") : "", { embed }).catch(console.error);
                     }).catch(console.error);
@@ -141,9 +136,50 @@ function collectESOImage(item)
 
         imageCollector.on("end", function(messages)
         {
-            addImageToLatest(messages.first().content);
+            let imageURL = messages.first().content;
+
+            addImageToLatest(imageURL);
+            fs.readJson(join(__dirname, "savedVars.json")).then(function(savedVars)
+            {
+                savedVars[0].image = imageURL;
+                fs.outputJson(join(__dirname, "savedVars.json"), savedVars).catch(console.error);
+            }).catch(console.error);
         });
     }).catch(console.error);
+}
+
+function esoNews(msg = null)
+{
+    if (!msg)
+    {
+        update().then(function(item)
+        {
+            checkUpdate(item).then(function(news)
+            {
+                distribute(prepareEmbed(news));
+                collectESOImage(news);
+            }).catch(console.info);
+        }).catch(console.error);
+    }
+
+    else
+    {
+        fs.readJson(join(__dirname, "savedVars.json")).then(function(savedVars)
+        {
+            if (savedVars.length > 1)
+            {
+                let selectorEmbed = new Discord.MessageEmbed(utils.createEmptyRichEmbedObject())
+                    .setAuthor("ESO News", ESO_NEWS_ICON, ESO_NEWS_URL)
+                    .setDescription("Here are the most recent ESO News Articles.");
+                selectorEmbed.fieldValueLength = 120;
+
+                utils.createSelectorEmbed(msg, savedVars.map(x => { return { name: x.title, value: `[Read this article online](${x.link}) | ${utils.fancyESODate(new Date(x.pubDate))}` } }), selectorEmbed).then(function([selectedNumber, collectorMessage])
+                {
+                    collectorMessage.edit({ embed: prepareEmbed(savedVars[selectedNumber - 1]) }).catch(console.error);
+                }).catch(console.error);
+            } else msg.channel.send({ embed: prepareEmbed(savedVars[0]) }).catch(console.error);
+        }).catch(console.error);
+    }
 }
 
 module.exports = esoNews;

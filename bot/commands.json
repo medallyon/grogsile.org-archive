@@ -169,5 +169,16 @@
     },
     "userPermissions": 100,
     "example": "[ PC | PS4 | XBOne ]"
+  },
+
+  "esoNews": {
+    "description": "Displays the latest ESO news.",
+    "alias": [
+      "esonews",
+      "news"
+    ],
+    "arguments": {},
+    "userPermissions": 100,
+    "example": ""
   }
 }
