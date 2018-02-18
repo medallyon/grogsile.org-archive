@@ -68,6 +68,15 @@ function message(msg)
                                 console.error(err);
                                 msg.channel.send(err.message, { code: "js" });
                             }
+
+                            // amend statistics
+                            fs.readJson(join(__data, "statistics.json")).then(function(stats)
+                            {
+                                if (!stats.commands.hasOwnProperty(cmd)) stats.commands[cmd] = 1;
+                                stats.commands[cmd]++;
+
+                                fs.outputJson(join(__data, "statistics.json"), stats).catch(console.error);
+                            }).catch(console.error);
                         }
                     }
                 }
@@ -84,6 +93,15 @@ function message(msg)
         if (requestedItem.length < 2) return;
         
         dClient.modules.esoItem(msg, requestedItem);
+
+        // amend statistics
+        fs.readJson(join(__data, "statistics.json")).then(function(stats)
+        {
+            if (!stats.commands.hasOwnProperty("esoItem_inline")) stats.commands["esoItem_inline"] = 1;
+            stats.commands["esoItem_inline"]++;
+
+            fs.outputJson(join(__data, "statistics.json"), stats).catch(console.error);
+        }).catch(console.error);
     }
 }
 
