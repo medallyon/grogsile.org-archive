@@ -1,3 +1,5 @@
+const Raven = require("raven");
+
 // === [ DISCORD ] === //
 
 if (typeof dClient === "undefined")
@@ -9,6 +11,10 @@ if (typeof dClient === "undefined")
     dClient.commands = fs.readJsonSync(join(__dirname, "commands.json"));
     dClient.eso = {};
     dClient.readyYet = false;
+
+    // initialise Raven
+    Raven.config(dClient.config.raven.dsn || dClient.config.raven.key).install();
+    dClient.Raven = Raven;
 }
 
 // === [ MODULE IMPORTS ] === //
