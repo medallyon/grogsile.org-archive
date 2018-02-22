@@ -66,6 +66,7 @@ function message(msg)
                             } catch (err) {
                                 // catch an error in case the command module is faulty
                                 console.error(err);
+                                dClient.Raven.captureException(err);
                                 msg.channel.send(err.message, { code: "js" });
                             }
 

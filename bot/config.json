@@ -37,5 +37,8 @@
         "UCvZHe-SP3xC7DdOk4Ri8QBw"
       ]
     }
+  },
+  "raven": {
+    "dsn": ""
   }
 }
