@@ -50,3 +50,4 @@ package-lock.json
 /web/.pub_src/fonts
 /web/.pub_src/img
 /web/.pub_src/js
+/.idea
