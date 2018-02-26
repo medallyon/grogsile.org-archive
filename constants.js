@@ -308,3 +308,5 @@ constants.apiURLS = [
     ["discordBotsOrg", "https://discordbots.org/api/bots/231606856663957505/stats"],
     ["botsDiscordPW", "https://bots.discord.pw/api/bots/231606856663957505/stats"]
 ]
+
+module.exports = constants;
