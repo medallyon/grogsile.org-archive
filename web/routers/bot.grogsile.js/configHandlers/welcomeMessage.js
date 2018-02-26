@@ -17,7 +17,7 @@ function welcomeMessage(req, res, next)
 
     let config = dClient.guilds.get(req.params.id).config;
     let configSetting = config.guild.welcomeMessage;
-    let body = utils.convertAllInputsToBoolean(ensureAttributesExist(req.body));
+    let body = dClient.modules.utils.convertAllInputsToBoolean(ensureAttributesExist(req.body));
 
     body.direct = {
         enabled: body["direct-enabled"],

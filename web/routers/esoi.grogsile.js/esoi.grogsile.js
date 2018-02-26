@@ -2,9 +2,10 @@ const express = require("express")
 , session = require("express-session")
 , multer = require("multer")
 , jimp = require("jimp")
-, Grant = require("grant-express");
-let grant = new Grant(require(join(__webdir, "config.json")));
-const FileStore = require('session-file-store')(session);
+, Grant = require("grant-express")
+, Discord = require("discord.js");
+let grant = new Grant(require(dClient.libs.join(__webdir, "config.json")));
+const FileStore = require("session-file-store")(session);
 
 let router = express.Router()
 , locals = {};
@@ -12,15 +13,15 @@ let router = express.Router()
 // ===== [ DISCORD AUTH ] ===== //
 
 router.use(session({
-    secret: dClient.config.web.session.secret,
+    secret: dClient.constants.web.session.secret,
     resave: false,
     saveUninitialized: false,
-    cookie: { path: '/', httpOnly: false, secure: false, maxAge: 864000000 },
-    store: new FileStore({ path: join(__data, "sessions") })
+    cookie: { path: "/", httpOnly: false, secure: false, maxAge: 864000000 },
+    store: new FileStore({ path: dClient.libs.join(__data, "sessions") })
 }));
 router.use(grant);
 
-router.get("/login", middleware.isLoggedIn, function(req, res)
+router.get("/login", dClient.middleware.isLoggedIn, function(req, res)
 {
     res.redirect("/");
 });
@@ -30,7 +31,7 @@ router.get("/actuallylogin", function(req, res)
     res.redirect("https://discordapp.com/api/oauth2/authorize?client_id=231606856663957505&redirect_uri=https%3A%2F%2Fesoi.grogsile.org%2Fcallback&response_type=code&scope=identify");
 });
 
-router.get("/callback", middleware.completeSignIn, function(req, res)
+router.get("/callback", dClient.middleware.completeSignIn, function(req, res)
 {
     if (!req.session.user)
     {
@@ -38,23 +39,27 @@ router.get("/callback", middleware.completeSignIn, function(req, res)
         return res.redirect("/");
     }
 
-    let userDir = join(__data, "users", req.session.user.id);
-    fs.ensureDir(userDir, (err) => {
+    let userDir = dClient.libs.join(__data, "users", req.session.user.id);
+    dClient.libs.fs.ensureDir(userDir, function(err)
+    {
         if (err) console.error(err);
 
-        fs.readdir(userDir, (err, files) => {
+        dClient.libs.fs.readdir(userDir, function(err, files)
+        {
             if (err) console.error(err);
 
-            fs.outputJson(join(userDir, "user.json"), req.session.user, (err) => {
+            dClient.libs.fs.outputJson(dClient.libs.join(userDir, "user.json"), req.session.user, function(err)
+            {
                 if (err) console.error(err);
 
-                if (files.indexOf("characters.json") === -1) fs.outputJson(join(userDir, "characters.json"), [], (err) => { if (err) console.error(err) });
+                if (files.indexOf("characters.json") === -1) dClient.libs.fs.outputJson(dClient.libs.join(userDir, "characters.json"), [], (err) => { if (err) console.error(err) });
                 if (files.indexOf("account.json") === -1)
                 {
-                    let userAccount = JSON.parse(JSON.stringify(_templates.account));
+                    let userAccount = JSON.parse(JSON.stringify(dClient.config.templates.account));
                     userAccount.id = req.session.user.id;
 
-                    fs.outputJson(join(userDir, "account.json"), userAccount, (err) => {
+                    dClient.libs.fs.outputJson(dClient.libs.join(userDir, "account.json"), userAccount, function(err)
+                    {
                         if (err) console.error(err);
 
                         res.redirect("/dashboard");
@@ -77,7 +82,7 @@ function resetLocals(req, res, next)
 {
     if (req.session.user) req.user = req.session.user;
 
-    let webApp = webApps["esoi.grogsile.org"];
+    let webApp = dClient.webApps["esoi.grogsile.org"];
     res.render = function(view, _locals)
     {
         webApp.render(view, { _locals }, function(err, htmlString)
@@ -85,7 +90,7 @@ function resetLocals(req, res, next)
             if (err) throw err;
             else res.send(htmlString);
         });
-    }
+    };
 
     locals = {
         location: "",
@@ -93,10 +98,11 @@ function resetLocals(req, res, next)
         user: req.user || null,
         account: {}
     };
-    
+
     if (locals.user)
     {
-        fs.readJson(join(__data, "users", req.user.id, "account.json"), (err, account) => {
+        dClient.libs.fs.readJson(dClient.libs.join(__data, "users", req.user.id, "account.json"), function(err, account)
+        {
             if (err) console.error(err);
 
             locals.account = account;
@@ -115,10 +121,11 @@ router.get("/", resetLocals, function(req, res)
 
 // ===== [ DASHBOARD ] ===== //
 
-router.get("/dashboard", middleware.isLoggedIn, resetLocals, middleware.isAccountSetup, function(req, res)
+router.get("/dashboard", dClient.middleware.isLoggedIn, resetLocals, dClient.middleware.isAccountSetup, function(req, res)
 {
-    let userDir = join(__data, "users", req.user.id);
-    fs.readJson(join(userDir, "characters.json"), (err, characters) => {
+    let userDir = dClient.libs.join(__data, "users", req.user.id);
+    dClient.libs.fs.readJson(dClient.libs.join(userDir, "characters.json"), function(err, characters)
+    {
         if (err) console.error(err.message);
 
         locals.characters = characters;
@@ -128,23 +135,27 @@ router.get("/dashboard", middleware.isLoggedIn, resetLocals, middleware.isAccoun
 
 // ===== [ ACCOUNT ] ===== //
 
-router.get("/account", middleware.isLoggedIn, resetLocals, function(req, res)
+router.get("/account", dClient.middleware.isLoggedIn, resetLocals, function(req, res)
 {
-    let userDir = join(__data, "users", req.user.id);
-    fs.readdir(userDir, (err, files) => {
-        if (err) console.error(err);
+    let userDir = dClient.libs.join(__data, "users", req.user.id);
+    dClient.libs.fs.readdir(userDir, function(err, files)
+    {
+        if (err) return console.error(err);
 
         if (files.indexOf("account.json") === -1)
         {
-            fs.outputJson(join(userDir, "account.json"), _templates.account, (err) => {
+            dClient.libs.fs.outputJson(dClient.libs.join(userDir, "account.json"), dClient.config.templates.account, function(err)
+            {
                 if (err) console.error(err);
 
                 res.redirect("/account");
             });
         }
 
-        else {
-            fs.readJson(join(userDir, "account.json"), (err, account) => {
+        else
+        {
+            dClient.libs.fs.readJson(dClient.libs.join(userDir, "account.json"), function(err, account)
+            {
                 if (err) console.error(err);
 
                 locals.content.account = account;
@@ -155,17 +166,17 @@ router.get("/account", middleware.isLoggedIn, resetLocals, function(req, res)
     });
 });
 
-router.post("/account", middleware.isLoggedIn, resetLocals, function(req, res)
+router.post("/account", dClient.middleware.isLoggedIn, resetLocals, function(req, res)
 {
     if (req.body)
     {
-        let userDir = join(__data, "users", req.user.id);
-        fs.readJson(join(userDir, "account.json")).then(function(acc)
+        let userDir = dClient.libs.join(__data, "users", req.user.id);
+        dClient.libs.fs.readJson(dClient.libs.join(userDir, "account.json")).then(function(acc)
         {
             let oldAccount = JSON.parse(JSON.stringify(acc));
             let newAccount = {
                 id: req.user.id,
-                accountName: req.body.accountName.replace(/\@/g, ""),
+                accountName: req.body.accountName.replace(/@/g, ""),
                 champion: ((req.body.champion === "on") ? true : false),
                 level: req.body.level,
                 about: req.body.about,
@@ -177,13 +188,13 @@ router.post("/account", middleware.isLoggedIn, resetLocals, function(req, res)
                 nickname: ((req.body.nickname === "on") ? true : false)
             };
 
-            fs.outputJson(join(userDir, "account.json"), newAccount).then(function()
+            dClient.libs.fs.outputJson(dClient.libs.join(userDir, "account.json"), newAccount).then(function()
             {
                 locals.content.account = req.body;
                 locals.content.success = true;
                 res.render("pages/account.ejs", locals);
 
-                _esoi.emit("accountUpdate", oldAccount, newAccount);
+                dClient.eso.emit("accountUpdate", oldAccount, newAccount);
             }).catch(function(err)
             {
                 console.error(err);
@@ -199,7 +210,7 @@ router.post("/account", middleware.isLoggedIn, resetLocals, function(req, res)
 
 // ===== [ NEW CHARACTER | NEW GUILD ] ===== //
 
-router.get("/new", middleware.isLoggedIn, resetLocals, middleware.isAccountSetup, function(req, res)
+router.get("/new", dClient.middleware.isLoggedIn, resetLocals, dClient.middleware.isAccountSetup, function(req, res)
 {
     if (!req.query.type) req.query.type = "character";
 
@@ -210,7 +221,7 @@ router.get("/new", middleware.isLoggedIn, resetLocals, middleware.isAccountSetup
 
 // ===== [ EDIT CHARACTER | EDIT GUILD ] ===== //
 
-router.get("/edit", middleware.isLoggedIn, resetLocals, middleware.isAccountSetup, function(req, res)
+router.get("/edit", dClient.middleware.isLoggedIn, resetLocals, dClient.middleware.isAccountSetup, function(req, res)
 {
     if (!req.query.type) req.query.type = "character";
 
@@ -219,8 +230,9 @@ router.get("/edit", middleware.isLoggedIn, resetLocals, middleware.isAccountSetu
         if (req.query.id)
         {
             locals.charId = req.query.id;
-            fs.readJson(join(__data, "users", req.user.id, "characters.json"), (err, characters) => {
-                if (err) console.error(err);
+            dClient.libs.fs.readJson(dClient.libs.join(__data, "users", req.user.id, "characters.json"), function(err, characters)
+            {
+                if (err) return console.error(err);
 
                 if (characters.hasOwnProperty(req.query.id)) locals.character = characters[req.query.id];
                 else return res.status(400).send(`Cannot locate character with ID ${req.query.id}`);
@@ -230,8 +242,9 @@ router.get("/edit", middleware.isLoggedIn, resetLocals, middleware.isAccountSetu
         }
 
         else res.status(400).send("Need to provide a parameter for character 'id'");
-    }
-    else if (req.query.type.toLowerCase() === "guild")
+    } else
+
+    if (req.query.type.toLowerCase() === "guild")
     {
         res.render("pages/editGuild.ejs", locals);
     } else res.redirect("/edit?type=character");
@@ -241,12 +254,14 @@ router.get("/edit", middleware.isLoggedIn, resetLocals, middleware.isAccountSetu
 
 router.get("/u/:id", resetLocals, function(req, res)
 {
-    fs.readdir(join(__data, "users"), (err, users) => {
+    dClient.libs.fs.readdir(dClient.libs.join(__data, "users"), function(err, users)
+    {
         if (err) return res.send(err);
 
         if (users.indexOf(req.params.id) > -1)
         {
-            fs.readJson(join(__data, "users", req.params.id, "account.json"), (err, account) => {
+            dClient.libs.fs.readJson(dClient.libs.join(__data, "users", req.params.id, "account.json"), function(err, account)
+            {
                 if (err) return res.send(err);
 
                 if (req.user && req.user.id === req.params.id && account.accountName === "undefined") return res.redirect("/account");
@@ -263,12 +278,14 @@ router.get("/u/:id", resetLocals, function(req, res)
 
                 locals.targetAccount = account;
 
-                fs.readJson(join(__data, "users", req.params.id, "user.json"), (err, user) => {
+                dClient.libs.fs.readJson(dClient.libs.join(__data, "users", req.params.id, "user.json"), function(err, user)
+                {
                     if (err) return res.send(err);
 
                     locals.targetUser = user;
 
-                    fs.readJson(join(__data, "users", req.params.id, "characters.json"), (err, characters) => {
+                    dClient.libs.fs.readJson(dClient.libs.join(__data, "users", req.params.id, "characters.json"), function(err, characters)
+                    {
                         if (err) return res.send(err);
 
                         locals.characters = characters;
@@ -307,17 +324,18 @@ router.get("/u/:id", resetLocals, function(req, res)
 
 // ===== [ ESOI END-POINTS ] ===== //
 
-router.get("/api/users/:id", middleware.apiAuth, function(req, res)
+router.get("/api/users/:id", dClient.middleware.apiAuth, function(req, res)
 {
     const userId = (req.params.id === "@me" ? req.session.user.id : req.params.id);
 
-    fs.readdir(join(__data, "users"), (err, users) => {
+    dClient.libs.fs.readdir(dClient.libs.join(__data, "users"), function(err, users)
+    {
         if (err) console.error(err);
 
         if (users.indexOf(userId) === -1) res.status(404).send("User not found");
         else
         {
-            fs.readJson(join(__data, "users", userId, "account.json"), (err, account) => {
+            dClient.libs.fs.readJson(dClient.libs.join(__data, "users", userId, "account.json"), (err, account) => {
                 if (err) console.error(err);
 
                 res.json(account);
@@ -326,15 +344,17 @@ router.get("/api/users/:id", middleware.apiAuth, function(req, res)
     });
 });
 
-router.get("/api/users/:id/characters", middleware.apiAuth, function(req, res)
+router.get("/api/users/:id/characters", dClient.middleware.apiAuth, function(req, res)
 {
     const userId = (req.params.id === "@me" ? req.session.user.id : req.params.id);
-    const userDir = join(__data, "users", userId);
-    fs.access(userDir, (err) => {
+    const userDir = dClient.libs.join(__data, "users", userId);
+    dClient.libs.fs.access(userDir, function(err)
+    {
         if (err && err.code === "ENOENT") return res.status(400).send("This user does not exist");
         else if (err) return res.status(500).send("Something went wrong while reading characters for this user");
 
-        fs.readJson(join(userDir, "characters.json"), (err, characters) => {
+        dClient.libs.fs.readJson(dClient.libs.join(userDir, "characters.json"), function(err, characters)
+        {
             if (err) return res.status(500).send("Something went wrong while reading characters for this user");
 
             res.send(JSON.stringify(characters, null, 2));
@@ -349,7 +369,7 @@ var ValidationError = class extends Error
         super(message, fileName, lineNumber);
         this.code = code;
     }
-}
+};
 
 function validateFormElements(form)
 {
@@ -410,83 +430,91 @@ function validateFormElements(form)
 
 // New Character POST Method
 let upload = multer();
-router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avatar"), function(req, res)
+router.post("/api/users/:id/characters", dClient.middleware.apiAuth, upload.single("avatar"), function(req, res)
 {
     if (!req.body) return res.status(400).send("No form data was sent with the request");
 
     const userId = (req.params.id === "@me" ? req.session.user.id : req.params.id);
-    const userDir = join(__data, "users", userId);
+    const userDir = dClient.libs.join(__data, "users", userId);
 
     if (req.body._method.toUpperCase() === "POST")
     {
-        fs.access(userDir, (err) => {
+        dClient.libs.fs.access(userDir, function(err)
+        {
             if (err && err.code === "ENOENT") return res.status(400).send("This user does not exist");
             else if (err) return res.status(500).send(err);
 
-            fs.readJson(join(userDir, "characters.json"), (err, characters) => {
+            dClient.libs.fs.readJson(dClient.libs.join(userDir, "characters.json"), function(err, characters)
+            {
                 if (err) return res.status(500).send("Cannot read characters from user");
 
                 if (characters.length >= 12) return res.status(409).send("Characters are limited to 12 per user");
 
                 validateFormElements(req.body)
-                .then((charData) => {
-                    const character = { ownerId: req.session.user.id };
-                    Object.assign(character, charData);
-
-                    character.id = null, usedIds = characters.map(x => x.id);
-                    for (let i = 0; i < characters.length + 1; i++)
+                    .then(function(charData)
                     {
-                        if (!usedIds.includes(i)) character.id = i;
-                    }
+                        const character = { ownerId: req.session.user.id };
+                        Object.assign(character, charData);
 
-                    if (!characters.length && !character.primary) character.primary = true;
-
-                    const userAvatarDir = join(__webdir, ".pub_src", "esoi", "users", userId);
-                    fs.ensureDir(userAvatarDir, (err) => {
-                        if (err) return res.status(500).send("Could not establish user avatar directory");
-
-                        if (!req.file) req.file = { buffer: join(__src, "esoi", "img", "new", "default_char.png") };
-                        jimp.read(req.file.buffer).then(function(image)
+                        character.id = null;
+                        let usedIds = characters.map(x => x.id);
+                        for (let i = 0; i < characters.length + 1; i++)
                         {
-                            const avatarData = JSON.parse(req.body.avatarData);
-                            image.crop(avatarData.x, avatarData.y, avatarData.width, avatarData.height);
-                            delete character.avatarData;
+                            if (!usedIds.includes(i)) character.id = i;
+                        }
 
-                            image.write(join(userAvatarDir, `${character.id}.png`), function(err)
+                        if (!characters.length && !character.primary) character.primary = true;
+
+                        const userAvatarDir = dClient.libs.join(__webdir, ".pub_src", "esoi", "users", userId);
+                        dClient.libs.fs.ensureDir(userAvatarDir, function(err)
+                        {
+                            if (err) return res.status(500).send("Could not establish user avatar directory");
+
+                            if (!req.file) req.file = { buffer: dClient.libs.join(__src, "esoi", "img", "new", "default_char.png") };
+                            jimp.read(req.file.buffer).then(function(image)
                             {
-                                if (err) return res.status(500).send("Cannot write avatar to file");
+                                const avatarData = JSON.parse(req.body.avatarData);
+                                image.crop(avatarData.x, avatarData.y, avatarData.width, avatarData.height);
+                                delete character.avatarData;
 
-                                character.avatarURL = `https://i.grogsile.org/esoi/users/${userId}/${character.id}.png`;
-                                
-                                characters.push(character);
-
-                                fs.outputJson(join(userDir, "characters.json"), characters, function(err)
+                                image.write(dClient.libs.join(userAvatarDir, `${character.id}.png`), function(err)
                                 {
-                                    if (err) return res.status(500).send("Could not save character to file");
+                                    if (err) return res.status(500).send("Cannot write avatar to file");
 
-                                    _esoi.emit("characterAdd", character);
+                                    character.avatarURL = `https://i.grogsile.org/esoi/users/${userId}/${character.id}.png`;
+                                    
+                                    characters.push(character);
 
-                                    res.redirect("/dashboard");
+                                    dClient.libs.fs.outputJson(dClient.libs.join(userDir, "characters.json"), characters, function(err)
+                                    {
+                                        if (err) return res.status(500).send("Could not save character to file");
+
+                                        dClient.eso.emit("characterAdd", character);
+
+                                        res.redirect("/dashboard");
+                                    });
                                 });
-                            });
-                        }).catch(console.error);
+                            }).catch(console.error);
+                        });
+                    })
+                    .catch(function(error)
+                    {
+                        console.warn(error);
+                        res.status(error.code).send(error.message);
                     });
-                })
-                .catch((error) => {
-                    console.warn(error);
-                    res.status(error.code).send(error.message);
-                });
             });
         });
     } else
 
     if (req.body._method.toUpperCase() === "PUT")
     {
-        fs.access(userDir, (err) => {
+        dClient.libs.fs.access(userDir, function(err)
+        {
             if (err && err.code === "ENOENT") return res.status(400).send("This user does not exist");
             else if (err) return res.status(500).send(err);
 
-            fs.readJson(join(userDir, "characters.json"), (err, characters) => {
+            dClient.libs.fs.readJson(dClient.libs.join(userDir, "characters.json"), function(err, characters)
+            {
                 if (err) return res.status(500).send("Cannot read characters from user");
 
                 validateFormElements(req.body).then(function(charData)
@@ -512,20 +540,21 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
                         let characterIndex = characters.map(x => parseInt(x.id)).indexOf(parseInt(character.id));
                         characters.splice(characterIndex, 1, character);
 
-                        fs.outputJson(join(userDir, "characters.json"), characters).then(function()
+                        dClient.libs.fs.outputJson(dClient.libs.join(userDir, "characters.json"), characters).then(function()
                         {
-                            _esoi.emit("characterEdit", oldChar, character);
+                            dClient.eso.emit("characterEdit", oldChar, character);
 
                             res.redirect("/dashboard");
-                        }).catch((error) => {
+                        }).catch(function(error)
+                        {
                             res.status(500).send("Could not save character to file");
                         });
                     }
 
                     else
                     {
-                        const userAvatarDir = join(__webdir, ".pub_src", "esoi", "users", userId);
-                        fs.ensureDir(userAvatarDir, function(err)
+                        const userAvatarDir = dClient.libs.join(__webdir, ".pub_src", "esoi", "users", userId);
+                        dClient.libs.fs.ensureDir(userAvatarDir, function(err)
                         {
                             if (err) return res.status(500).send("Could not establish user avatar directory");
 
@@ -535,23 +564,23 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
                                 image.crop(avatarData.x, avatarData.y, avatarData.width, avatarData.height);
                                 delete character.avatarData;
 
-                                fs.remove(join(userAvatarDir, `${character.id}.png`), function(err)
+                                dClient.libs.fs.remove(dClient.libs.join(userAvatarDir, `${character.id}.png`), function(err)
                                 {
                                     if (err) return res.status(500).send("Could not remove avatar");
 
-                                    image.write(join(userAvatarDir, `${character.id}.png`), function(err)
+                                    image.write(dClient.libs.join(userAvatarDir, `${character.id}.png`), function(err)
                                     {
                                         if (err) return res.status(500).send("Could not write avatar to file");
 
                                         character.avatarURL = `https://i.grogsile.org/esoi/users/${userId}/${character.id}.png`;
-                                        
+
                                         characters.splice(characters.findIndex((x, i) => x.id === i), 1, character);
 
-                                        fs.outputJson(join(userDir, "characters.json"), characters, function(err)
+                                        dClient.libs.fs.outputJson(dClient.libs.join(userDir, "characters.json"), characters, function(err)
                                         {
                                             if (err) return res.status(500).send("Could not save character to file");
 
-                                            _esoi.emit("characterEdit", oldChar, character);
+                                            dClient.eso.emit("characterEdit", oldChar, character);
 
                                             res.redirect("/dashboard");
                                         });
@@ -561,8 +590,9 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
                         });
                     }
                 })
-                .catch((error) => {
-                    console.warn(error);
+                .catch(function(error)
+                {
+                    console.error(error);
                     res.status(error.code).send(error.message);
                 });
             });
@@ -573,19 +603,20 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
     {
         if (req.body.id)
         {
-            fs.readJson(join(userDir, "characters.json")).then(function(characters)
+            dClient.libs.fs.readJson(dClient.libs.join(userDir, "characters.json")).then(function(characters)
             {
                 if (characters.some(x => parseInt(x.id) === parseInt(req.body.id)))
                 {
                     // delete relative avatar
-                    fs.remove(join(__src, "esoi", "users", userId, `${req.body.id}.png`)).catch(console.warn);
+                    dClient.libs.fs.remove(dClient.libs.join(__src, "esoi", "users", userId, `${req.body.id}.png`)).catch(console.warn);
 
-                    _esoi.emit("characterDelete", characters.find(c => parseInt(c.id) === parseInt(req.body.id)));
+                    dClient.eso.emit("characterDelete", characters.find(c => parseInt(c.id) === parseInt(req.body.id)));
 
                     // delete the specified character
                     characters.splice(characters.findIndex(x => parseInt(x.id) === parseInt(req.body.id)), 1);
 
-                    fs.outputJson(join(userDir, "characters.json"), characters, (err) => {
+                    dClient.libs.fs.outputJson(dClient.libs.join(userDir, "characters.json"), characters, function(err)
+                    {
                         if (err) console.error(err);
 
                         res.redirect("/dashboard");
@@ -600,7 +631,7 @@ router.post("/api/users/:id/characters", middleware.apiAuth, upload.single("avat
 
 router.get("/discord", function(req, res)
 {
-    res.redirect(dClient.config.eso.inviteURL);
+    res.redirect(dClient.config.bot.eso.inviteURL);
 });
 
 // ===== [ ROUTER EXPORT ] ===== //

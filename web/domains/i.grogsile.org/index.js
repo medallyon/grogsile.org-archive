@@ -1,10 +1,9 @@
-const express = require("express")
-, join = require("path").join;
+const express = require("express");
 
 // create app for "i.grogsile.org"
-app = express();
-// 
-app.use(express.static(join(__src)));
+let app = express();
+//
+app.use(express.static(dClient.libs.join(__src)));
 /////////////////////////////////////////////////////////////
 
 module.exports = app;

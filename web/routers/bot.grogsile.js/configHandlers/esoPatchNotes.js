@@ -14,7 +14,7 @@ function patchNotes(req, res, next)
 
     let config = dClient.guilds.get(req.params.id).config;
     let configSetting = config.eso.patchNotes;
-    let body = utils.convertAllInputsToBoolean(ensureAttributesExist(req.body));
+    let body = dClient.modules.utils.convertAllInputsToBoolean(ensureAttributesExist(req.body));
 
     body.roles = (body["roles-enabled"]) ? (Array.isArray(body["roles"]) ? body["roles"] : [ body["roles"] ]) : [],
     delete body["roles-enabled"];

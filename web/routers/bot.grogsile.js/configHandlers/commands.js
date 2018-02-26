@@ -17,7 +17,7 @@ function commands(req, res, next)
 
     let config = dClient.guilds.get(req.params.id).config;
     let configSetting = config.guild.commands;
-    let body = utils.convertAllInputsToBoolean(ensureAttributesExist(req.body));
+    let body = dClient.modules.utils.convertAllInputsToBoolean(ensureAttributesExist(req.body));
 
     for (let c in body)
     {
