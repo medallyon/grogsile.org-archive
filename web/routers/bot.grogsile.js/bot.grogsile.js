@@ -11,7 +11,7 @@ let router = express.Router()
 // ===== [ DISCORD AUTH ] ===== //
 
 router.use(session({
-    secret: dClient.constants.web.session.secret,
+    secret: dClient.config.web.session.secret,
     resave: false,
     saveUninitialized: false,
     cookie: { path: "/", httpOnly: false, secure: false, maxAge: 864000000 },
