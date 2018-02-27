@@ -3,6 +3,10 @@
     "protocol": "http",
     "host": "grogsile.org"
   },
+  "session":
+  {
+    "secret": ""
+  },
   "discord": {
     "auth": {
       "key": "",

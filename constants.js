@@ -3,11 +3,8 @@ let constants = {
     web: {}
 };
 
-// === [ WEB SESSION ] === //
+// === [ WEB ] === //
 
-constants.web.session = {
-    secret: ""
-};
 constants.web.bot = {
     redirectURL: "https://bot.grogsile.org/callback"
 };
