@@ -1,6 +1,6 @@
 function ensureAttributesExist(form)
 {
-    let template = _templates.guild.eso.youtube;
+    let template = dClient.config.templates.guild.eso.youtube;
     if (!form.hasOwnProperty("enabled")) form.enabled = false;
     if (!form.hasOwnProperty("channel")) form.channel = template.channel;
     if (!form.hasOwnProperty("roles")) form.roles = template.roles;

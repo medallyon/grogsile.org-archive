@@ -1,6 +1,6 @@
 function ensureAttributesExist(form)
 {
-    let template = _templates.guild.guild.commands;
+    let template = dClient.config.templates.guild.guild.commands;
     for (let c in template)
     {
         if (!form.hasOwnProperty(`${c}-enabled`)) form[`${c}-enabled`] = false;

@@ -1,4 +1,4 @@
-global.constants = {
+let constants = {
     discord: {},
     web: {}
 };
@@ -7,20 +7,20 @@ global.constants = {
 
 constants.web.session = {
     secret: ""
-}
+};
 constants.web.bot = {
     redirectURL: "https://bot.grogsile.org/callback"
-}
+};
 
 // === [ BOT INVITE ] === //
 
-constants.discord.bot = { inviteURL: "https://discordapp.com/oauth2/authorize?scope=bot&client_id=231606856663957505&permissions=339012678" }
+constants.discord.bot = { inviteURL: "https://discordapp.com/oauth2/authorize?scope=bot&client_id=231606856663957505&permissions=339012678" };
 
 // === [ ICONS ] === //
 constants.icons = {
     "eso": "https://cdn.discordapp.com/icons/130716876937494528/5e66980df808cf1cdbaf73efaf36e6ee.png",
     "grogsile": "https://i.grogsile.org/favicon.png"
-}
+};
 
 // === [ DISCORD ESOI ] ===
 
@@ -275,13 +275,13 @@ constants.discord.esoi = {
             }
         }
     }
-}
+};
 
 // === [ DISCORD DEV SERVER ] === //
 
 constants.discord.devServer = {
     inviteURL: "http://discord.gg/eKSPgvF"
-}
+};
 
 // === [ DEFAULT EMBED ] === //
 
@@ -300,13 +300,13 @@ constants.discord.embed = {
         icon_url: "https://i.grogsile.org/favicon.png",
         text: "Brought to you by Grogsile, Inc."
     }
-}
+};
 
 // === [ API URLS ] === //
 
 constants.apiURLS = [
     ["discordBotsOrg", "https://discordbots.org/api/bots/231606856663957505/stats"],
     ["botsDiscordPW", "https://bots.discord.pw/api/bots/231606856663957505/stats"]
-]
+];
 
 module.exports = constants;

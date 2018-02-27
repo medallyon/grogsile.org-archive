@@ -1,6 +1,6 @@
 function ensureAttributesExist(form)
 {
-    let template = _templates.guild.eso.liveServerStatus;
+    let template = dClient.config.templates.guild.eso.liveServerStatus;
     if (!form.hasOwnProperty("panel-enabled")) form["panel-enabled"] = false;
     if (!form.hasOwnProperty("panel-channel")) form["panel-channel"] = template.panel.channel;
     if (!form.hasOwnProperty("update-enabled")) form["update-enabled"] = false;

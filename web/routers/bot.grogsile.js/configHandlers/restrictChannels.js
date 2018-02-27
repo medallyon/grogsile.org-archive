@@ -1,6 +1,6 @@
 function ensureAttributesExist(form)
 {
-    let template = _templates.guild.guild.restricted;
+    let template = dClient.config.templates.guild.guild.restricted;
     if (!form.hasOwnProperty("channels")) form.channels = template;
     return form;
 }

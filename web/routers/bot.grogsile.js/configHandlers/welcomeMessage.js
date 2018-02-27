@@ -1,6 +1,6 @@
 function ensureAttributesExist(form)
 {
-    let template = _templates.guild.guild.welcomeMessage;
+    let template = dClient.config.templates.guild.guild.welcomeMessage;
     if (!form.hasOwnProperty("enabled")) form.enabled = false;
     if (!form.hasOwnProperty("maxMembers")) form.maxMembers = template.maxMembers;
     if (!form.hasOwnProperty("message")) form.message = template.message;
