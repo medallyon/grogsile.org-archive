@@ -29,7 +29,7 @@
               <span class="input-group-text">@</span>
             </div>
 
-            <input type="text" id="accountName" class="form-control text-center" autocomplete="off" pattern="[a-zA-Z0-9\.\-'_]{3,20}" name="accountName" value="<% if (account.accountName !== "undefined") { %><%- content.account.accountName %><% } %>" placeholder="RinkydinkFrumblesnatch123" required>
+            <input type="text" id="accountName" class="form-control text-center" autocomplete="off" pattern="[a-zA-Z0-9\.\-'_]{3,20}" name="accountName" value="<% if (account.accountName !== "undefined") { %><%- content.account.accountName %><% } %>" placeholder="UserName123" required>
 
           </div>
         </div>
@@ -46,7 +46,7 @@
             <input type="checkbox" id="championBox" name="champion" aria-label="Champion Input" <% if (content.account.champion) { %> checked <% } %>>
             <label for="championBox" data-toggle="tooltip" data-placement="top" title="" data-original-title="Champion Level"></label>
 
-            <% if (content.account.champion) { %><input type="number" id="championInput" name="level" class="form-control text-center" value="<%- content.account.level %>" min="1" max="690" placeholder="<%- content.account.level %>" required><% } %>
+            <% if (content.account.champion) { %><input type="number" id="championInput" name="level" class="form-control text-center" value="<%- content.account.level %>" min="10" max="3000" placeholder="<%- content.account.level %>" required><% } %>
           </div>
           <p class="form-text text-muted">If you have achieved level 50 in-game, you should check this icon.</p>
         </div>
@@ -135,7 +135,7 @@
 
     <div class="row justify-content-center">
 
-      <div class="col-md-8">
+      <div class="col-md-4">
 
         <div class="form-group">
           <label><b>Other Settings</b></label>
@@ -146,11 +146,6 @@
           </div>
 
           <div class="abc-checkbox">
-            <input type="checkbox" id="updates" name="updates" <% if (content.account.updates) { %> checked <% } %>>
-            <label for="updates">Get notified on the <a href="https://esoi.grogsile.org/discord">ESOI Discord Server</a> whenever an ESO Server goes off- or online</label>
-          </div>
-
-          <div class="abc-checkbox">
             <input type="checkbox" id="nickname" name="nickname" <% if (content.account.nickname) { %> checked <% } %>>
             <label for="nickname">Reflect your Platform [PC|PS4|XB1] as part of your nickname on the ESOI Discord Server</label>
           </div>
@@ -158,6 +153,25 @@
         </div>
 
       </div>
+      <div class="col-md-4">
+
+        <div class="form-group">
+          <label><b>Notification Settings</b></label>
+
+          <div class="abc-checkbox">
+            <input type="checkbox" id="updates" name="updates" <% if (content.account.updates) { %> checked <% } %>>
+            <label for="updates">Get notified on the <a href="https://esoi.grogsile.org/discord">ESOI Discord Server</a> whenever an ESO Server goes off- or online</label>
+          </div>
+
+          <div class="abc-checkbox">
+            <input type="checkbox" id="news" name="news" <% if (content.account.news) { %> checked <% } %>>
+            <label for="news">Get notified on the <a href="https://esoi.grogsile.org/discord">ESOI Discord Server</a> whenever ESO News are available</label>
+          </div>
+
+        </div>
+
+      </div>
+
 
     </div>
 
