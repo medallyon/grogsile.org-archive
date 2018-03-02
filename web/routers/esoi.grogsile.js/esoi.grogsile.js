@@ -185,6 +185,7 @@ router.post("/account", dClient.middleware.isLoggedIn, resetLocals, function(req
                 alliance: req.body.alliance || null,
                 private: ((req.body.private === "on") ? true : false),
                 updates: ((req.body.updates === "on") ? true : false),
+                news: ((req.body.news === "on") ? true : false),
                 nickname: ((req.body.nickname === "on") ? true : false)
             };
 
