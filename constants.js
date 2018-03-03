@@ -1,3 +1,6 @@
+const join = require("path").join
+, Discord = require("discord.js");
+
 let constants = {
     discord: {},
     web: {}
@@ -283,7 +286,7 @@ constants.discord.devServer = {
 // === [ DEFAULT EMBED ] === //
 
 constants.discord.embed = {
-    color: "",
+    color: undefined,
     author: {
         name: "",
         icon_url: ""
@@ -298,6 +301,13 @@ constants.discord.embed = {
         text: "Brought to you by Grogsile, Inc."
     }
 };
+
+Object.defineProperty(constants.discord.embed, "color", {
+    get()
+    {
+        return require(join(__lib, "utils", "randColor.js"))();
+    }, configurable: true
+});
 
 // === [ API URLS ] === //
 
