@@ -1,6 +1,6 @@
 function ensureAttributesExist(form)
 {
-    let template = _templates.guild.guild.commands;
+    let template = dClient.config.templates.guild.guild.commands;
     for (let c in template)
     {
         if (!form.hasOwnProperty(`${c}-enabled`)) form[`${c}-enabled`] = false;
@@ -17,7 +17,7 @@ function commands(req, res, next)
 
     let config = dClient.guilds.get(req.params.id).config;
     let configSetting = config.guild.commands;
-    let body = utils.convertAllInputsToBoolean(ensureAttributesExist(req.body));
+    let body = dClient.modules.utils.convertAllInputsToBoolean(ensureAttributesExist(req.body));
 
     for (let c in body)
     {

@@ -1,6 +1,7 @@
 function isAccountSetup(req, res, next)
 {
-    fs.readJson(join(__data, "users", req.session.user.id, "account.json"), (err, account) => {
+    dClient.libs.fs.readJson(dClient.libs.join(__data, "users", req.session.user.id, "account.json"), function(err, account)
+    {
         if (err) return res.send(err.message);
 
         if (account.accountName === "undefined") res.redirect("/account");

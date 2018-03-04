@@ -14,7 +14,6 @@
     "brace-style": [1, "allman"],
     "camelcase": 1,
     "computed-property-spacing": [2, "never"],
-    "curly": [1, "multi"],
     "eol-last": 2,
     "eqeqeq": [2, "smart"],
     "implicit-arrow-linebreak": [2, "beside"],

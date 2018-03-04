@@ -1,6 +1,6 @@
 function ensureAttributesExist(form)
 {
-    let template = _templates.guild.eso.youtube;
+    let template = dClient.config.templates.guild.eso.youtube;
     if (!form.hasOwnProperty("enabled")) form.enabled = false;
     if (!form.hasOwnProperty("channel")) form.channel = template.channel;
     if (!form.hasOwnProperty("roles")) form.roles = template.roles;
@@ -14,7 +14,7 @@ function esoYouTube(req, res, next)
 
     let config = dClient.guilds.get(req.params.id).config;
     let configSetting = config.eso.youtube;
-    let body = utils.convertAllInputsToBoolean(ensureAttributesExist(req.body));
+    let body = dClient.modules.utils.convertAllInputsToBoolean(ensureAttributesExist(req.body));
 
     body.roles = (body["roles-enabled"]) ? (Array.isArray(body["roles"]) ? body["roles"] : [ body["roles"] ]) : [],
     delete body["roles-enabled"];

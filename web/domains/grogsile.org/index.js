@@ -1,11 +1,10 @@
-const express = require("express")
-, join = require("path").join;
+const express = require("express");
 
 // create app for "grogsile.me"
-app = express();
+let app = express();
 //
-app.set("views", join(__webdir, "views", "main"));
-app.use(require(join(__webdir, "routers", "grogsile.js", "grogsile.js")));
+app.set("views", dClient.libs.join(__webdir, "views", "main"));
+app.use(require(dClient.libs.join(__webdir, "routers", "grogsile.js", "grogsile.js")));
 /////////////////////////////////////////////////////////////
 
 module.exports = app;

@@ -3,7 +3,8 @@ function apiAuth(req, res, next)
     if (req.originalUrl.indexOf("@me") > -1 && req.session.user) return next();
     else if (req.originalUrl.indexOf("@me") > -1 && !req.session.user) return res.status(400).send("You may not request @me data without being authenticated.");
 
-    fs.readJson(join(__dirname, "keys.json"), (err, keys) => {
+    dClient.libs.fs.readJson(dClient.libs.join(__dirname, "keys.json"), function(err, keys)
+    {
         if (err) console.error(err);
 
         let apiKey;

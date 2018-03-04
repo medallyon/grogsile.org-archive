@@ -1,6 +1,6 @@
 function ensureAttributesExist(form)
 {
-    let template = _templates.guild.guild.welcomeMessage;
+    let template = dClient.config.templates.guild.guild.welcomeMessage;
     if (!form.hasOwnProperty("enabled")) form.enabled = false;
     if (!form.hasOwnProperty("maxMembers")) form.maxMembers = template.maxMembers;
     if (!form.hasOwnProperty("message")) form.message = template.message;
@@ -17,7 +17,7 @@ function welcomeMessage(req, res, next)
 
     let config = dClient.guilds.get(req.params.id).config;
     let configSetting = config.guild.welcomeMessage;
-    let body = utils.convertAllInputsToBoolean(ensureAttributesExist(req.body));
+    let body = dClient.modules.utils.convertAllInputsToBoolean(ensureAttributesExist(req.body));
 
     body.direct = {
         enabled: body["direct-enabled"],

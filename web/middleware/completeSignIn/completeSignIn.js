@@ -1,6 +1,6 @@
 const request = require("request");
 
-const DISCORD_ENDPOINT = "https://discordapp.com/api/v6"
+const DISCORD_ENDPOINT = "https://discordapp.com/api/v6";
 
 function fetchUser(accessData)
 {
@@ -42,8 +42,8 @@ function completeSignIn(req, res, next)
         uri: `${DISCORD_ENDPOINT}/oauth2/token`,
         method: "POST",
         form: {
-            "client_id": dClient.config.discord.auth.id,
-            "client_secret": dClient.config.discord.auth.secret,
+            "client_id": dClient.config.web.discord.auth.key,
+            "client_secret": dClient.config.web.discord.auth.secret,
             "grant_type": "authorization_code",
             "code": req.query.code,
             "redirect_uri": `https://${req.hostname}/callback`

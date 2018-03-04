@@ -1,6 +1,6 @@
 function ensureAttributesExist(form)
 {
-    let template = _templates.guild.eso.patchNotes;
+    let template = dClient.config.templates.guild.eso.patchNotes;
     if (!form.hasOwnProperty("enabled")) form.enabled = false;
     if (!form.hasOwnProperty("channel")) form.channel = template.channel;
     if (!form.hasOwnProperty("roles")) form.roles = template.roles;
@@ -14,7 +14,7 @@ function patchNotes(req, res, next)
 
     let config = dClient.guilds.get(req.params.id).config;
     let configSetting = config.eso.patchNotes;
-    let body = utils.convertAllInputsToBoolean(ensureAttributesExist(req.body));
+    let body = dClient.modules.utils.convertAllInputsToBoolean(ensureAttributesExist(req.body));
 
     body.roles = (body["roles-enabled"]) ? (Array.isArray(body["roles"]) ? body["roles"] : [ body["roles"] ]) : [],
     delete body["roles-enabled"];

@@ -3,9 +3,15 @@
     "protocol": "http",
     "host": "grogsile.org"
   },
+  "session":
+  {
+    "secret": ""
+  },
   "discord": {
-    "key": "231606856663957505",
-    "secret": "1L_6WzNCdboP4OWG3iUWtLPFoYqhFad3",
+    "auth": {
+      "key": "",
+      "secret": ""
+    },
     "callback": "/callback",
     "scope": [
       "identify"

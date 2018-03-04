@@ -1,6 +1,6 @@
 function ensureAttributesExist(form)
 {
-    let template = _templates.guild.guild.restricted;
+    let template = dClient.config.templates.guild.guild.restricted;
     if (!form.hasOwnProperty("channels")) form.channels = template;
     return form;
 }
@@ -11,7 +11,7 @@ function restrictChannels(req, res, next)
 
     let config = dClient.guilds.get(req.params.id).config;
     let configSetting = config.guild.restricted;
-    let body = utils.convertAllInputsToBoolean(ensureAttributesExist(req.body));
+    let body = dClient.modules.utils.convertAllInputsToBoolean(ensureAttributesExist(req.body));
 
     body = Array.isArray(body.channels) ? body.channels : [ body.channels ];
 
