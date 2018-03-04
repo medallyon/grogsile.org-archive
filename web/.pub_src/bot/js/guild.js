@@ -1,10 +1,44 @@
+// credit to https://github.com/davidstutz/bootstrap-multiselect/issues/576
+function attachLabelsToMultipleSelects()
+{
+    $('.multiselect-container div.abc-checkbox').each(function (index) {
+
+        let id = 'multiselect-' + index,
+            $input = $(this).find('input');
+
+        // Associate the label and the input
+        $(this).find('label').attr('for', id);
+        $input.attr('id', id);
+
+        // Remove the input from the label wrapper
+        $input.detach();
+
+        // Place the input back in before the label
+        $input.prependTo($(this));
+
+        $(this).css("padding-left", "1rem");
+
+        $(this).click(function (e) {
+            // Prevents the click from bubbling up and hiding the dropdown
+            e.stopPropagation();
+        });
+
+    });
+}
+
 $(document).ready(function()
 {
     $(` [data-toggle="tooltip"] `).tooltip();
+
     $(" select[multiple] ").multiselect({
         buttonWidth: "100%",
-        enableFiltering: true
+        maxHeight: 350,
+        enableFiltering: true,
+        templates: {
+            li: "<li><div class=\"abc-checkbox\"><label></label></div></li>"
+        }
     });
+    attachLabelsToMultipleSelects();
 
     if (/.+\/\d+[\/#](?:list-)?(.+)/g.test(document.location))
     {
