@@ -41,7 +41,7 @@
   },
   "scripts": {
     "lint": "./node_modules/.bin/eslint **/*.js",
-    "test": "./node_modules/.bin/mocha --reporter spec"
+    "test": "echo no tests specified yet && echo 0"
   },
   "author": "https://github.com/medallyon",
   "license": "MPL-2.0",
