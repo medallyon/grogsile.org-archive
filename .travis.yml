@@ -4,3 +4,4 @@ node_js:
 scripts:
   - npm run lint
   - npm test
+webhooks: https://api.grogsile.org/travis-ci/webhooks
