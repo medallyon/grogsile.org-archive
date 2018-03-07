@@ -1,7 +1,6 @@
 const request = require("request")
 , express = require("express")
 , multer = require("multer")
-, parseXML = require("xml2js").parseString;
 , Discord = require("discord.js")
 , crypto = require("crypto");
 
@@ -36,7 +35,7 @@ function verifySignature(req, res, next)
     if (!req.headers.signature) return res.status(400).json({ status: 400, error: "No signature found" });
 
     const signature = Buffer.from(req.headers.signature, "base64")
-    , payload = req.body.payload;
+    , payload = JSON.stringify(req.body.payload, null);
     let status = false;
 
     request(TRAVIS_CONFIG_URL, function(err, response, config)
@@ -44,10 +43,18 @@ function verifySignature(req, res, next)
         if (err) return res.status(500).json({ status: 500, error: "Something went wrong while requesting Travis Config" });
 
         const pubKey = JSON.parse(response.body).config.notifications.webhook.public_key;
-        
-        let verifier = crypto.createVerify("sha1");
-        verifier.update(payload);
-        status = verifier.verify(signature, pubKey);
+
+        try
+        {
+            let verifier = crypto.createVerify("sha1");
+            verifier.update(payload);
+            status = verifier.verify(signature, pubKey);
+        }
+        catch (error)
+        {
+            console.error(error);
+            return res.status(500).json({ status: 500, error: "There was an error trying to verify the signature: " + error });
+        }
 
         if (status) next();
         else return res.status(401).json({ status: 401, error: "Invalid Signature" });
@@ -57,7 +64,7 @@ function verifySignature(req, res, next)
 router.post("/travis-ci/webhooks", verifySignature, async (req, res) =>
 {
     const payload = req.body.payload
-    , githubUser = await fetchGithubUser(payload.committer_name);
+    , githubUser = JSON.parse(await fetchGithubUser(payload.committer_name));
 
     let embed = new Discord.MessageEmbed()
         .setAuthor("Travis CI - Build Overview", githubUser.avatar_url || TRAVIS_HOOK_ICON_URL, payload.build_url)
@@ -65,8 +72,8 @@ router.post("/travis-ci/webhooks", verifySignature, async (req, res) =>
         .addField("Status", payload.status_message, true)
         .addField("Duration", dClient.modules.utils.timeSince(Date.now() - payload.duration * 1000), true)
         .addField("Commit", `[View this commit](${payload.compare_url})`, true)
-        .addField("Finished at", new Date(payload._finished_at))
-        .setTimestamp(Date.parse(payload.commited_at))
+        .addField("Finished at", new Date(payload.finished_at))
+        .setTimestamp(new Date(payload.committed_at))
         .setFooter(dClient.constants.discord.embed.footer.text, dClient.constants.discord.embed.footer.icon_url);
 
     if (payload.status === 0)
