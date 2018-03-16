@@ -11,7 +11,7 @@ const rotations = require(dClient.libs.join(__dirname, "content", "eso", "rotati
 
 router.get("/eso/pledges", function(req, res)
 {
-    let daysPassed = Math.floor((Date.now() - Date.parse(rotations.start.date)) / 1000 / 60 / 60 / 24) * -1
+    let daysPassed = Math.floor((Date.now() - Date.parse(rotations.start.date)) / 1000 / 60 / 60 / 24)
     , pledgeIndexes = {
         "Maj al-Ragath": rotations["Maj al-Ragath"].indexOf(rotations.start["Maj al-Ragath"]),
         "Glirion the Redbeard": rotations["Glirion the Redbeard"].indexOf(rotations.start["Glirion the Redbeard"]),
