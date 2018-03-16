@@ -1,0 +1,46 @@
+{
+  "start": {
+    "date": "Thu Mar 15 2018 6:00:00 GMT+0000",
+    "Maj al-Ragath": "Darkshade II",
+    "Glirion the Redbeard": "Tempest Island",
+    "Urgarlag Chief-bane": "Falkreath Hold"
+  },
+  "Maj al-Ragath": [
+    "Spindleclutch II",
+    "Banished Cells I",
+    "Fungal Grotto II",
+    "Spindleclutch I",
+    "Darkshade II",
+    "Elden Hollow I",
+    "Wayrest Sewers II",
+    "Fungal Grotto I",
+    "Banished Cells II",
+    "Darkshade Caverns I",
+    "Elden Hollow II",
+    "Wayrest Sewers I"
+  ],
+  "Glirion the Redbeard": [
+    "Direfrost Keep",
+    "Vaults of Madness",
+    "Crypt of Hearts II",
+    "City of Ash I",
+    "Tempest Island",
+    "Blackheart Haven",
+    "Arx Corinium",
+    "Selene's Web",
+    "City of Ash II",
+    "Crypt of Hearts I",
+    "Volenfell",
+    "Blessed Crucible"
+  ],
+  "Urgarlag Chief-bane": [
+    "Ruins of Mazzatun",
+    "White-Gold Tower",
+    "Cradle of Shadows",
+    "Imperial City Prison",
+    "Bloodroot Forge",
+    "Falkreath Hold",
+    "Fang Lair",
+    "Scalecaller Peak"
+  ]
+}

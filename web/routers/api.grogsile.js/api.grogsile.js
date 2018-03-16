@@ -3,16 +3,51 @@ const request = require("request")
 , multer = require("multer")
 , Discord = require("discord.js")
 , crypto = require("crypto");
+, Discord = require("discord.js");
 
 let router = express.Router();
 
 // ===== [ TRAVIS CI ] ===== //
+// ===== [ ESO PLEDGE ROTATION ] ===== //
 
 const TRAVIS_CONFIG_URL = "https://api.travis-ci.org/config"
 , TRAVIS_HOOK_ICON_URL = "https://koenig-media.raywenderlich.com/uploads/2015/07/Featured4-320x320.png";
+const rotations = require(dClient.libs.join(__dirname, "content", "eso", "rotations.json"));
 
 let travisHook = new Discord.WebhookClient(dClient.config.web.discord.webhooks.travis.id, dClient.config.web.discord.webhooks.travis.token);
 travisHook.edit({ name: "Travis CI", avatar: TRAVIS_HOOK_ICON_URL }).catch(console.error);
+router.get("/eso/pledges", function(req, res)
+{
+    let daysPassed = Math.floor((Date.now() - Date.parse(rotations.start.date)) / 1000 / 60 / 60 / 24) * -1
+    , pledgeIndexes = {
+        "Maj al-Ragath": rotations["Maj al-Ragath"].indexOf(rotations.start["Maj al-Ragath"]),
+        "Glirion the Redbeard": rotations["Glirion the Redbeard"].indexOf(rotations.start["Glirion the Redbeard"]),
+        "Urgarlag Chief-bane": rotations["Urgarlag Chief-bane"].indexOf(rotations.start["Urgarlag Chief-bane"])
+    }
+    , pledges = {
+        "Maj al-Ragath": rotations.start["Maj al-Ragath"],
+        "Glirion the Redbeard": rotations.start["Glirion the Redbeard"],
+        "Urgarlag Chief-bane": rotations.start["Urgarlag Chief-bane"]
+    };
+
+    for (let questGiver in pledgeIndexes)
+    {
+        let questIndex = pledgeIndexes[questGiver];
+
+        for (let i = 0; i < daysPassed; i++)
+        {
+            if (++questIndex === rotations[questGiver].length)
+                questIndex = 0;
+        }
+
+        pledges[questGiver] = [
+            rotations[questGiver][questIndex],
+            rotations[questGiver][(++questIndex < rotations[questGiver].length) ? questIndex : 0]
+        ];
+    }
+
+    res.json(pledges);
+});
 
 const GITHUB_API_ROOT = "https://api.github.com"
 , GITHUB_API_USERS_ENDPOINT = "/users/";

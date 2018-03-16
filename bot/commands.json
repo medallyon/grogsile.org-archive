@@ -180,5 +180,21 @@
     "arguments": {},
     "userPermissions": 100,
     "example": ""
+  },
+
+  "pledges": {
+    "description": "Displays today's pledges.",
+    "alias": [
+      "pledges",
+      "pledge"
+    ],
+    "arguments": {
+      "Quest Giver": {
+        "description": "Displays the pledge for this Quest Giver.",
+        "optional": true
+      }
+    },
+    "userPermissions": 100,
+    "example": "[ Maj | Glirion | Urgalarg ]"
   }
 }
