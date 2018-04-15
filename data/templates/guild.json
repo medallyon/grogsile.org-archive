@@ -40,7 +40,13 @@
       "commands": {
         "enabled": true
       },
+      "esoNews": {
+        "enabled": true
+      },
       "ping": {
+        "enabled": true
+      },
+      "pledges": {
         "enabled": true
       },
       "profile": {
