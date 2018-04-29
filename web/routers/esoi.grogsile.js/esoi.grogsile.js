@@ -632,7 +632,7 @@ router.post("/api/users/:id/characters", dClient.middleware.apiAuth, upload.sing
 
 router.get("/discord", function(req, res)
 {
-    res.redirect(dClient.config.bot.eso.inviteURL);
+    res.redirect(dClient.config.bot.eso.invite);
 });
 
 // ===== [ ROUTER EXPORT ] ===== //
