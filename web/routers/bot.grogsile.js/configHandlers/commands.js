@@ -34,9 +34,6 @@ function commands(req, res, next)
     delete body["esoItem-usage-command"];
     delete body["esoItem-usage-inline"];
 
-    console.log(configSetting);
-    console.log(body);
-
     config._save({ commands: Object.assign(configSetting, body) })
         .then(next)
         .catch(function(err)
