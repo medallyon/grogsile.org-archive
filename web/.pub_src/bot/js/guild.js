@@ -1,8 +1,8 @@
 // credit to https://github.com/davidstutz/bootstrap-multiselect/issues/576
 function attachLabelsToMultipleSelects()
 {
-    $('.multiselect-container div.abc-checkbox').each(function (index) {
-
+    $(` .multiselect-container div.abc-checkbox `).each(function(index)
+    {
         let id = 'multiselect-' + index,
             $input = $(this).find('input');
 
@@ -22,7 +22,6 @@ function attachLabelsToMultipleSelects()
             // Prevents the click from bubbling up and hiding the dropdown
             e.stopPropagation();
         });
-
     });
 }
 
@@ -30,7 +29,7 @@ $(document).ready(function()
 {
     $(` [data-toggle="tooltip"] `).tooltip();
 
-    $(" select[multiple] ").multiselect({
+    $(` select[multiple] `).multiselect({
         buttonWidth: "100%",
         maxHeight: 350,
         enableFiltering: true,
@@ -44,7 +43,7 @@ $(document).ready(function()
     {
         let currentTab = /.+\/\d+[\/#](.+)/g.exec(document.location)[1];
         $(` #list-${currentTab}-list `).tab("show");
-        $(" #list-tab ").children().not(` #list-${currentTab}-list `).each(function(x) { $(this).removeClass("active") });
+        $(` #list-tab `).children().not(` #list-${currentTab}-list `).each(function(x) { $(this).removeClass("active") });
     }
 });
 
