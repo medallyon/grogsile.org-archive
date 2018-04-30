@@ -10,7 +10,7 @@
     "sourceType": "module"
   },
   "rules": {
-    "array-bracket-spacing": [2, "never"],
+    "array-bracket-spacing": [2, "always"],
     "block-scoped-var": 2,
     "brace-style": [1, "allman"],
     "camelcase": 1,
