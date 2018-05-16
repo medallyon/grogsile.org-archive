@@ -302,6 +302,23 @@ constants.discord.embed = {
     }
 };
 
+constants.discord.errorEmbed = {
+    color: "#bb0011",
+    author: {
+        name: "Error",
+        icon_url: ""
+    },
+    title: "",
+    url: "",
+    description: "Something unexpected happened. If this keeps happening, tell a developer over at https//bot.grogsile.org/discord.",
+    fields: [],
+    timestamp: "",
+    footer: {
+        icon_url: "https://i.grogsile.org/favicon.png",
+        text: "Brought to you by Grogsile, Inc."
+    }
+};
+
 Object.defineProperty(constants.discord.embed, "color", {
     get()
     {
