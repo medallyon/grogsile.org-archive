@@ -10,11 +10,14 @@ let router = express.Router()
 
 // ===== [ DISCORD AUTH ] ===== //
 
+let now = new Date();
 router.use(session({
     secret: dClient.config.web.session.secret,
+    // generate secret based on the week of the month
+    secret: parseInt(Math.pow(now.getUTCFullYear() + now.getUTCMonth() + Math.floor(now.getUTCDate() / dClient.modules.utils.daysInMonth(now) * 4), 4).toString(8)).toString(16),
     resave: false,
     saveUninitialized: false,
-    cookie: { path: "/", httpOnly: false, secure: false, maxAge: 864000000 },
+    cookie: { path: "/", httpOnly: false, secure: false, maxAge: 1000 * 60 * 60 * 24 * (dClient.modules.utils.daysInMonth(now) / 4) },
     store: new FileStore({ path: dClient.libs.join(__data, "sessions") })
 }));
 router.use(grant);
