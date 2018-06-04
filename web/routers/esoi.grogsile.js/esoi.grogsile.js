@@ -195,9 +195,10 @@ router.post("/account", dClient.middleware.isLoggedIn, resetLocals, function(req
             {
                 locals.content.account = req.body;
                 locals.content.success = true;
-                res.render("pages/account.ejs", locals);
 
                 dClient.eso.emit("accountUpdate", oldAccount, newAccount);
+                
+                res.render("pages/account.ejs", locals);
             }).catch(function(err)
             {
                 console.error(err);
